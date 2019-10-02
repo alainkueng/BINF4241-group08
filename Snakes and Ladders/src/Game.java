@@ -1,21 +1,21 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class Game {
 
-
-
+    private boolean winner;
+    public int current;
     public List<PlayerS> players;
-
 
 
     //Constructor
     Game(){
+
         this.players = new ArrayList<PlayerS>(4);
+        this.winner = false;
+        this.current = 0;
     }
-
-
 
     //add players to the board
     public void addplayer() {
@@ -30,14 +30,13 @@ public class Game {
 
             }
             if(user.getName().equals("") && players.size() < 2){
-                System.out.println("One is the lonliest number");
+                System.out.println("One is the lonliest number, but sure play by yourself");
                 break;
             }
             else if(user.getName().equals("") && players.size() >= 2){
                 System.out.println("No other player entered");
                 break;
             }
-
             players.add(user);
 
         }
@@ -46,12 +45,24 @@ public class Game {
         }
     }
 
-//    public static void remove(){
+    public int turn(){
+        this.current += 1 % 4;
+        return this.current;
+    }
+
+    //have an int current that keeps track of whos turn it is to play, USE public int turn as i
+    public void remove(int i){
+        //delete from board
+        players.get(i).pos = -1;
+
+        //delete from player list
+        players.remove(i);
+        //TODO: Remove from gameboard/square
+    }
 //
-//    }
-//
-//    public static Square whatsquare(){
-//        return;
+//    return position
+//    public int whatsquare(){
+//        return players.get(turn()).pos;
 //    }
 //
 //    public boolean islastsquare(){

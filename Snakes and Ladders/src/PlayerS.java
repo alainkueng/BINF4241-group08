@@ -2,8 +2,11 @@ import java.util.Scanner;
 
 public class PlayerS {
     String name;
+    int pos;
 
     PlayerS(){
+        //starting at block 0
+        pos = 0;
     }
 
     public void setName(){
