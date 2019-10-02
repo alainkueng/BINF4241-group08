@@ -18,8 +18,8 @@ public class Square {
     }
 
 
-    public static void findSquare(int to_move){
-        Game.getSquare(to_move);
-    }
+//    public static void findSquare(int to_move){
+//        Game.getSquare(to_move);
+//    }
 
 }

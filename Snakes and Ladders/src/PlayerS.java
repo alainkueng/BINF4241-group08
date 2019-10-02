@@ -8,9 +8,12 @@ public class PlayerS {
 
     public void setName(){
         Scanner s = new Scanner(System.in);
-        if(s.nextLine().equals(" ")){
+        name = s.nextLine();
 
-        }
-        name = s.toString();
     }
+
+    public String getName(){
+        return this.name;
+    }
+
 }
