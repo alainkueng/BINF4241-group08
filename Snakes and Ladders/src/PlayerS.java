@@ -9,8 +9,10 @@ public class PlayerS {
         pos = 0;
     }
 
-    public void setName(){
+    public void setName(int i){
         Scanner s = new Scanner(System.in);
+        System.out.println("Player " + i + ":");
+
         name = s.nextLine();
 
     }

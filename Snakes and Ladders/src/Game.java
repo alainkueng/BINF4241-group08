@@ -21,36 +21,37 @@ public class Game {
     public void addplayer() {
         for (int i = 1; i <= 4; i++) {
             PlayerS user = new PlayerS();
-            System.out.println("Player " + i + ":");
 
-            user.setName();
+            user.setName(i);
             while (user.getName().equals("") && players.isEmpty()){
                 System.out.println("Please input a Name");
-                user.setName();
+                user.setName(i);
 
             }
             if(user.getName().equals("") && players.size() < 2){
-                System.out.println("One is the lonliest number, but sure play by yourself");
+                System.out.println("One is the loneliest number, but sure play by yourself");
                 break;
             }
             else if(user.getName().equals("") && players.size() >= 2){
-                System.out.println("No other player entered");
+                System.out.println("No other was player entered");
                 break;
             }
             players.add(user);
+        }
+//        for(PlayerS player : players){
+//            System.out.println(player.getName());
+//        }
+        System.out.println("\nGame starting now!");
 
-        }
-        for(PlayerS player : players){
-            System.out.println(player.getName());
-        }
     }
 
-    public int turn(){
+
+    //keeps track of whos turn it is
+    public int next(){
         this.current += 1 % 4;
         return this.current;
     }
 
-    //have an int current that keeps track of whos turn it is to play, USE public int turn as i
     public void remove(int i){
         //delete from board
         players.get(i).pos = -1;
@@ -65,7 +66,7 @@ public class Game {
 //        return players.get(turn()).pos;
 //    }
 //
-//    public boolean islastsquare(){
+//    public boolean islastsquare(Square s){
 //        return true;
 //    }
 
