@@ -27,14 +27,18 @@ public class Square {
 
 
     public Square landHereOrGoHome(){
-        if (isOccupied()){
+            boolean occupied = false;
+            occupied = isOccupied();
+        if (occupied){
             return Square FirstSquare;
         }
         else{
-            return null;
+            return this;
         }
 
-        public static boolean isOccupied(){
+    }
+
+        public boolean isOccupied(){
             if(this.player == null){
                 return true;
             }
