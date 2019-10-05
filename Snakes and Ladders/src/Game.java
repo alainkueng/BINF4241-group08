@@ -7,6 +7,7 @@ public class Game {
     private boolean winner;
     public int current;
     public List<Player> players;
+    public List<Square> squares;
 
 
     //Constructor
@@ -16,8 +17,9 @@ public class Game {
         this.winner = false;
         this.current = 0;
     }
+    // creat Board with squares
 
-    //add players to the board
+    //add players to the board + muss noch
     public void addplayer() {
         for (int i = 1; i <= 4; i++) {
             Player user = new Player();
@@ -60,6 +62,10 @@ public class Game {
         players.remove(i);
         //TODO: Remove from gameboard/square
     }
+    public Square getfirstsquare(){
+
+    }
+
 //
 //    return position
 //    public int whatsquare(){

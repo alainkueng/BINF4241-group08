@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class Player { // Attribute
     String name;
-    int pos;
+    Square square;
 
 
-    public Player() { //the constructor
-        this.pos = 0;  //position on board, starting at 0
+    public Player(square) { //the constructor
+       this.square = square;
     }
 
     public void setName(int i) {
@@ -18,6 +18,13 @@ public class Player { // Attribute
     public String getName() {
         return this.name;
     }
+    public void move(int i) {
+
+
+
+    }
 }
 
 
+// moveforward muss position ändern von int her, muss square sagen das sich attribute ändern
+// move and land methode in moveforward
