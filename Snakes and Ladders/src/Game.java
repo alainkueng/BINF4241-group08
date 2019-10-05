@@ -7,6 +7,8 @@ public class Game {
 
     private boolean winner;
     public int current;
+    public int board_width;
+    public int board_height;
     public List<Player> players;
     public List<Square> squares;
 
@@ -35,10 +37,14 @@ public class Game {
     }
     // create Board with squares
     public void createboard(){
-        System.out.println("Please input number of fields: ");
+        System.out.println("Please input height: ");
         Scanner s = new Scanner(System.in);
-        String size = s.nextLine();
-        int boardsize = Integer.valueOf(size);  // reads boardsize
+        String h_size = s.nextLine();
+        this.board_height = Integer.parseInt(h_size);  // for boardsize
+        System.out.println("Please input width: ");
+        String w_size = s.nextLine();
+        this.board_width = Integer.parseInt(w_size);
+        int boardsize = this.board_height * this.board_width;
         Square square = new FirstSquare(1, this);
         squares.add(square);
         for (int i = 2; i < boardsize; i++) {
