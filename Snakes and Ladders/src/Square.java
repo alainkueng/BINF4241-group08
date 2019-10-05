@@ -1,22 +1,23 @@
-public class Square {
-        Player player;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Square{
+        List<Player> player_list = new ArrayList<Player>();
+        Game game;
         int position;
 
-        public Square(int number){
-            player = null;
+        public Square(int number, Game game_obj){
             position = number;
-            if (position == 1){
-                new FirstSquare();
-            }
+            game = game_obj;
         }
 
     public void enter(Player player) {
-        this.player = player;
+        this.player_list.add(player);
     }
 
     public void leave(Player player_leaves){
-            if(player_leaves.name == this.player.name){
-                this.player = null;
+            if(this.player_list.get(0).name == player_leaves.name){
+                this.player_list.remove(0);
             }
             else{
                 System.out.println("You want to move a player which is not on this field");
@@ -28,7 +29,7 @@ public class Square {
     }
 
     private Square findSquare(int to_move){
-            Square new_Square = Game.getSquare(to_move);
+            Square new_Square = game.get_square(to_move, this);
             if (new_Square.isOccupied()){
                 return findSquare(1);
             }
@@ -38,7 +39,7 @@ public class Square {
     }
 
         public boolean isOccupied() {
-            if (this.player == null) {
+            if (this.player_list.get(0) == null) {
                 return true;
             } else {
                 return false;

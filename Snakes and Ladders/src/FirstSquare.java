@@ -1,12 +1,11 @@
 class FirstSquare extends Square {
-    player =
-    public FirstSquare() {
-        super(1);
-        player =
+
+    public FirstSquare(int number, Game game_obj) {
+        super(number, game_obj);
     }
 
     @Override
     public boolean isOccupied() {
-        return true;
+        return false;
     }
 }

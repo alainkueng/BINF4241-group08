@@ -74,6 +74,9 @@ public class Game {
 
     }
 
+    public Square get_square(int move, Square requestor){
+        int index = requestor.position + move - 1;
+        return players.get(index).square;
     }
 
     //keeps track of whos turn it is
