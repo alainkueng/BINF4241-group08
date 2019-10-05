@@ -19,7 +19,7 @@ public class Game {
     }
     // creat Board with squares
 
-    //add players to the board + muss noch
+    //add players to the board + muss noch jedem player den ersten Square zuteilen
     public void addplayer() {
         for (int i = 1; i <= 4; i++) {
             Player user = new Player();
