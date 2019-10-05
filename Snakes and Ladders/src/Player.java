@@ -5,8 +5,8 @@ public class Player { // Attribute
     Square square;
 
 
-    public Player(square) { //the constructor
-       this.square = square;
+    public Player(Square i) { //the constructor
+       this.square = i;
     }
 
     public void setName(int i) {
