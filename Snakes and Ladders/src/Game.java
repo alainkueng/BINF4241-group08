@@ -25,12 +25,10 @@ public class Game {
         int randomnumber = dice.dice();
 
 
-
-
     }
     // create Board with squares
     public void createboard(){
-        System.out.println("Please input boardsize: ");
+        System.out.println("Please input number of fields: ");
         Scanner s = new Scanner(System.in);
         String size = s.nextLine();
         int boardsize = Integer.valueOf(size);  // reads boardsize
@@ -67,6 +65,10 @@ public class Game {
 
     }
 
+    public Square get_square(int i){
+        Square Current = squares.get(i-1);
+        return Current;
+    }
 
     //keeps track of whos turn it is
     public int next(){
