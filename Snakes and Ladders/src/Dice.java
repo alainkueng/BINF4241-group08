@@ -1,17 +1,11 @@
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Dice {
     private int number;
-    private int maxNum;
-    private int minNum;
-    Random r = new Random();
 
-    Dice(){
-        number = 0;
-        maxNum = 6;
-   }
-
-    public int diced(){
-        number = r.nextInt(maxNum);
+    public int dice(){
+        this.number = ThreadLocalRandom.current().nextInt(0,7);
         return number;
     }
+
 }

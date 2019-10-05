@@ -20,6 +20,13 @@ public class Game {
         this.squares = new ArrayList<Square>();
         createboard();
         addplayer();
+        Dice dice = new Dice();
+        // here while lastsquare not reached:
+        int randomnumber = dice.dice();
+
+
+
+
     }
     // create Board with squares
     public void createboard(){
@@ -66,16 +73,7 @@ public class Game {
         this.current += 1 % 4;
         return this.current;
     }
-
-    public void remove(int i){
-        //delete from board
-        players.get(i).pos = -1;
-
-        //delete from player list
-        players.remove(i);
-        //TODO: Remove from gameboard/square
-    }
-    public Square getfirstsquare(){
+    public void getfirstsquare(){
 
     }
 
