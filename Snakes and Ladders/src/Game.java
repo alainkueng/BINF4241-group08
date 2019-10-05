@@ -74,8 +74,8 @@ public class Game {
 
     }
 
-    public Square get_square(int move, Square requestor){
-        int index = requestor.position + move - 1;
+    public Square get_square(int move, Square requester){
+        int index = requester.position + move - 1;
         return players.get(index).square;
     }
 
