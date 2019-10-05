@@ -41,9 +41,10 @@ public class Game {
         int boardsize = Integer.valueOf(size);  // reads boardsize
         Square square = new FirstSquare(1, this);
         squares.add(square);
-        for (int i = 2; i < boardsize; i++){
+        for (int i = 2; i < boardsize; i++) {
             square = new Square(i, this);
             squares.add(square); // creates Squares in list
+        }
     }
 
     //add players to the board + muss noch jedem player den ersten Square zuteilen
@@ -81,6 +82,7 @@ public class Game {
         return this.current;
     }
     public void getfirstsquare(){
+
 
     }
 
