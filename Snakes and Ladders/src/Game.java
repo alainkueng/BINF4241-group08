@@ -19,10 +19,17 @@ public class Game {
         this.current = 0;
         this.squares = new ArrayList<Square>();
         createboard();
-        addplayer();
+        addplayer(); // anzahl spieler vorher herausfinden wie auf Blatt beschrieben?
         Dice dice = new Dice();
-        // here while lastsquare not reached:
-        int randomnumber = dice.dice();
+        while (this.winner==false){
+            int randomnumber = dice.dice();
+            Player Currentplayer= players.get(this.current);
+            Currentplayer.move(randomnumber);
+            // muss noch display einbauen für jeden move
+            next();
+        }
+
+
 
 
     }
@@ -32,10 +39,11 @@ public class Game {
         Scanner s = new Scanner(System.in);
         String size = s.nextLine();
         int boardsize = Integer.valueOf(size);  // reads boardsize
-        for (int i = 1; i <= boardsize; i++){
-            Square square = new Square(i);
+        Square square = new FirstSquare(1, this);
+        squares.add(square);
+        for (int i = 2; i < boardsize; i++){
+            square = new Square(i, this);
             squares.add(square); // creates Squares in list
-        }
     }
 
     //add players to the board + muss noch jedem player den ersten Square zuteilen
@@ -65,9 +73,6 @@ public class Game {
 
     }
 
-    public Square get_square(int i){
-        Square Current = squares.get(i-1);
-        return Current;
     }
 
     //keeps track of whos turn it is
