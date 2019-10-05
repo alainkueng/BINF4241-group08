@@ -1,16 +1,19 @@
 public class Square {
         Player player;
+        int position;
 
-        public Square(){
+        public Square(int number){
             player = null;
+            position = number;
         }
 
     public void enter(Player player) {
         this.player = player;
     }
 
-    public void leave(){
-        this.player = null;
+    public void leave(Player player_leaves){
+            this.player = null;
+            //if (){}
     }
 
     public void move(int to_move){
@@ -30,5 +33,11 @@ public class Square {
         else{
             return null;
         }
-    }
+
+        public static boolean isOccupied(){
+            if(this.player == null){
+                return true;
+            }
+            else{
+        }
 }
