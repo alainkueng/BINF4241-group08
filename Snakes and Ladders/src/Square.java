@@ -5,6 +5,9 @@ public class Square {
         public Square(int number){
             player = null;
             position = number;
+            if (position == 1){
+                new FirstSquare();
+            }
         }
 
     public void enter(Player player) {
@@ -12,36 +15,33 @@ public class Square {
     }
 
     public void leave(Player player_leaves){
-            this.player = null;
-            //if (){}
-    }
-
-    public void move(int to_move){
-            Square next = findSquare(to_move);
-            landHereOrGoHome();
-    }
-
-    private static Square findSquare(int to_move){
-            return Game.getSquare(to_move);
-    }
-
-
-    public Square landHereOrGoHome(){
-            boolean occupied = false;
-            occupied = isOccupied();
-        if (occupied){
-            return Square FirstSquare;
-        }
-        else{
-            return this;
-        }
-
-    }
-
-        public boolean isOccupied(){
-            if(this.player == null){
-                return true;
+            if(player_leaves.name == this.player.name){
+                this.player = null;
             }
             else{
+                System.out.println("You want to move a player which is not on this field");
+            }
+    }
+
+    public void moveAndLand(int to_move){
+            findSquare(to_move);
+    }
+
+    private Square findSquare(int to_move){
+            Square new_Square = Game.getSquare(to_move);
+            if (new_Square.isOccupied()){
+                return findSquare(1);
+            }
+            else{
+                return new_Square;
+            }
+    }
+
+        public boolean isOccupied() {
+            if (this.player == null) {
+                return true;
+            } else {
+                return false;
+            }
         }
 }
