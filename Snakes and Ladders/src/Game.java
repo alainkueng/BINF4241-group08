@@ -6,13 +6,13 @@ public class Game {
 
     private boolean winner;
     public int current;
-    public List<PlayerS> players;
+    public List<Player> players;
 
 
     //Constructor
     Game(){
 
-        this.players = new ArrayList<PlayerS>(4);
+        this.players = new ArrayList<Player>(4);
         this.winner = false;
         this.current = 0;
     }
@@ -20,7 +20,7 @@ public class Game {
     //add players to the board
     public void addplayer() {
         for (int i = 1; i <= 4; i++) {
-            PlayerS user = new PlayerS();
+            Player user = new Player();
 
             user.setName(i);
             while (user.getName().equals("") && players.isEmpty()){
