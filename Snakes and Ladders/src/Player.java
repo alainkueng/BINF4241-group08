@@ -19,6 +19,9 @@ public class Player { // Attribute
         return this.name;
     }
     public void move(int i) {
+        this.square.leave(this);
+        this.square.moveAndLand(i);
+
 
 
 

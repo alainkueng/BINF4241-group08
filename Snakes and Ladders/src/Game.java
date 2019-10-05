@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Game {
@@ -16,8 +17,22 @@ public class Game {
         this.players = new ArrayList<Player>(4);
         this.winner = false;
         this.current = 0;
+        this.squares = new ArrayList<Square>();
+        createboard();
+        addplayer();
     }
-    // creat Board with squares
+    // create Board with squares
+    public void createboard(){
+        System.out.println("Please input boardsize: ");
+        Scanner s = new Scanner(System.in);
+        String size = s.nextLine();
+        int boardsize = Integer.valueOf(size);  // reads boardsize
+        for (int i = 1; i <= boardsize; i++){
+            Square square = new Square(i);
+            squares.add(square); // creates Squares in list
+        }
+    }
+
 
     //add players to the board + muss noch jedem player den ersten Square zuteilen
     public void addplayer() {
