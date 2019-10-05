@@ -5,10 +5,12 @@ public class Square{
         List<Player> player_list = new ArrayList<Player>();
         Game game;
         int position;
+        boolean last;
 
         public Square(int number, Game game_obj){
             position = number;
             game = game_obj;
+            last = false;
         }
 
     public void enter(Player player) {

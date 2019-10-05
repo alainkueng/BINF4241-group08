@@ -75,11 +75,10 @@ public class Game {
     }
 
     public Square get_square(int move, Square requester){
-        int index = requester.position + move - 1;
-        return players.get(index).square;
+        return squares.get(requester.position + move - 1);
     }
 
-    //keeps track of whos turn it is
+    //keeps track of whose turn it is
     public int next(){
         this.current += 1 % 4;
         return this.current;

@@ -1,5 +1,6 @@
-public class Snake extends Square {
+public class Snake extends Ladder {
     public Snake(int number, Game game_obj) {
         super(number, game_obj);
+        new_position = 10;
     }
 }
