@@ -74,6 +74,7 @@ public class Game {
                 break;
             }
             players.add(user);
+            squares.get(0).enter(user);
         }
 //        for(PlayerS player : players){
 //            System.out.println(player.getName());
