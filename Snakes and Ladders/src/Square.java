@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Square{
         List<Player> player_list = new ArrayList<Player>();//keeps track of which players are on this square
-        Game game; //is needed to have access to game methods like get_square()
+        Game game; //is needed to have access to game methods like getSquare()
         int position; //square's position
         boolean last; //shows if this square is the last
 
@@ -27,7 +27,7 @@ public class Square{
          * @param Player player_leaves: The player who leaves the field
          *               Checks if the player who wants to leave is on this field and then removes it from player_list
          */
-        if(this.player_list.get(0).name == player_leaves.name){
+        if(this.player_list.get(0).name.equals(player_leaves.name)){
                 this.player_list.remove(0);
             }
             else{
@@ -47,11 +47,11 @@ public class Square{
     private Square findSquare(int to_move){
         /**
          * @param int to_move: Number of fields a player wants to move
-         *            invokes game.get_square() to get square where player wants to move
+         *            invokes game.getSquare() to get square where player wants to move
          *            invokes then isOccupied() to check if square isn't occupied with another player
          * @return Square next_square: The square the player will have to move
          */
-        Square new_square = game.get_square(to_move, this);
+        Square new_square = game.getSquare(to_move, this);
         Square next_square;
             if (new_square.isOccupied()){
                 next_square = findSquare(1);

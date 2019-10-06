@@ -10,7 +10,7 @@ public class Game {
     public int current;
     public int board_width;
     public int board_height;
-    public int boardsize;
+    public int board_size;
     public List<Player> players;
     public List<Square> squares;
 
@@ -22,17 +22,17 @@ public class Game {
         this.winner = null;
         this.current = 0;
         this.squares = new ArrayList<Square>();
-        createboard();
-        addplayer(); // anzahl spieler vorher herausfinden wie auf Blatt beschrieben?
+        createBoard();
+        addPlayer(); // anzahl spieler vorher herausfinden wie auf Blatt beschrieben?
         Dice dice = new Dice();
         while (this.winner == null){
-            int randomnumber = dice.dice();
-            Player Currentplayer= players.get(this.current);
-            int movenumber = checknumber(randomnumber);
-            Currentplayer.move(movenumber);
-            checklast(Currentplayer);
+            int random_number = dice.dice();
+            Player current_player= players.get(this.current);
+            int to_move = checkNumber(random_number);
+            current_player.move(to_move);
+            checkLast(current_player);
             // muss noch display einbauen für jeden move
-            next();
+            nextPlayer();
         }
 
 
@@ -40,27 +40,27 @@ public class Game {
 
     }
     // create Board with squares
-    public void createboard(){
+    public void createBoard(){
         System.out.println("Please input height: ");
         Scanner s = new Scanner(System.in);
         String h_size = s.nextLine();
-        this.board_height = Integer.parseInt(h_size);  // for boardsize
+        this.board_height = Integer.parseInt(h_size);  // for board_size
         System.out.println("Please input width: ");
         String w_size = s.nextLine();
         this.board_width = Integer.parseInt(w_size);
-        boardsize = this.board_height * this.board_width;
+        board_size = this.board_height * this.board_width;
         Square square = new FirstSquare(1, this);
         squares.add(square);
-        for (int i = 2; i < boardsize; i++) {
+        for (int i = 2; i < board_size; i++) {
             square = new Square(i, this);
             squares.add(square); // creates Squares in list
         }
-        square = new LastSquare(boardsize,this);
+        square = new LastSquare(board_size,this);
         squares.add(square);
     }
 
     //add players to the board + muss noch jedem player den ersten Square zuteilen
-    public void addplayer() {
+    public void addPlayer() {
         for (int i = 1; i <= 4; i++) {
             Player user = new Player(squares.get(0));
             user.setName(i);
@@ -87,25 +87,25 @@ public class Game {
 
     }
 
-    public Square get_square(int move, Square requester){
+    public Square getSquare(int move, Square requester){
         return squares.get(requester.position + move - 1);
     }
 
     //keeps track of whose turn it is
-    public int next(){
+    public int nextPlayer(){
         this.current += 1 % 4;
         return this.current;
     }
-    public void checklast(Player current_player){
-        if (squares.get(squares.size()-1).player_list != null){
+    public void checkLast(Player current_player){
+        if (current_player.square.last){
             this.winner = current_player;
             System.out.format("Seems like %s just won the game.", current_player.name);
         }
     }
-    public int checknumber(int to_move){
+    public int checkNumber(int to_move){
         int new_position = to_move + players.get(current).square.position;
-        int adjusted_position = boardsize - (new_position - boardsize);
-        if (new_position > boardsize){
+        if (new_position > board_size){
+            int adjusted_position = board_size - (new_position - board_size);
             return adjusted_position;
         }
         else{
