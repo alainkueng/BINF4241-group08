@@ -34,9 +34,6 @@ public class Game {
             next();
         }
 
-
-
-
     }
     // create Board with squares
     public void createboard(){
@@ -103,7 +100,7 @@ public class Game {
             this.winner = true;
         }
     }
-    public int checknumber(int i){
+    public int checknumber(int i){ // check if number is over gameboardsize if moved
         if (i+players.get(current).square.position>board_width*board_height){
             return (board_width*board_height)-(players.get(current).square.position+i-(board_width*board_height));
         }
@@ -111,14 +108,6 @@ public class Game {
             return i;
         }
     }
-//
-//    return position
-//    public int whatsquare(){
-//        return players.get(turn()).pos;
-//    }
-//
-//    public boolean islastsquare(Square s){
-//        return true;
-//    }
+
 
 }
