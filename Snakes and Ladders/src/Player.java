@@ -13,6 +13,10 @@ public class Player { // Attribute
         Scanner s = new Scanner(System.in);
         System.out.println("Player " + number + ":");
         name = s.nextLine();
+        while(!name.matches("[a-zA-Z ]+")){
+            System.out.println("Please enter a valid name!");
+            name = s.nextLine();
+        }
     }
 
     public String getName() {

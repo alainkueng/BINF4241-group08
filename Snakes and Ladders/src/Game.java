@@ -43,9 +43,15 @@ public class Game {
     public void createBoard(){
         System.out.println("Please input height: ");
         Scanner s = new Scanner(System.in);
+        while (!s.hasNextInt()) {
+            System.out.println("Input is not a number. Retry");
+            s.nextLine();}
         String h_size = s.nextLine();
         this.board_height = Integer.parseInt(h_size);  // for board_size
         System.out.println("Please input width: ");
+        while (!s.hasNextInt()) {
+            System.out.println("Input is not a number. Retry");
+            s.nextLine();}
         String w_size = s.nextLine();
         this.board_width = Integer.parseInt(w_size);
         board_size = this.board_height * this.board_width;
