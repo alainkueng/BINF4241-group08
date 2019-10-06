@@ -5,26 +5,24 @@ public class Player { // Attribute
     Square square;
 
 
-    public Player(Square i) { //the constructor
-       this.square = i;
+    public Player(Square number) { //the constructor
+       this.square = number;
     }
 
-    public void setName(int i) {
+    public void setName(int number) {
         Scanner s = new Scanner(System.in);
-        System.out.println("Player " + i + ":");
+        System.out.println("Player " + number + ":");
         name = s.nextLine();
     }
 
     public String getName() {
         return this.name;
     }
-    public void move(int i) {
+
+    public void move(int to_move) {
+        Square next_square = this.square.moveAndLand(to_move);
         this.square.leave(this);
-        this.square.moveAndLand(i);
-
-
-
-
+        this.square = next_square;
     }
 }
 

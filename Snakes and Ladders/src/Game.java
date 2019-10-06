@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private boolean winner;
+    private Player winner;
     public int current;
     public int board_width;
     public int board_height;
@@ -19,18 +19,18 @@ public class Game {
     Game(){
 
         this.players = new ArrayList<Player>(4);
-        this.winner = false;
+        this.winner = null;
         this.current = 0;
         this.squares = new ArrayList<Square>();
         createboard();
         addplayer(); // anzahl spieler vorher herausfinden wie auf Blatt beschrieben?
         Dice dice = new Dice();
-        while (this.winner==false){
+        while (this.winner == null){
             int randomnumber = dice.dice();
             Player Currentplayer= players.get(this.current);
             int movenumber = checknumber(randomnumber);
             Currentplayer.move(movenumber);
-            checklast();
+            checklast(Currentplayer);
             // muss noch display einbauen für jeden move
             next();
         }
@@ -96,12 +96,10 @@ public class Game {
         this.current += 1 % 4;
         return this.current;
     }
-    public void checklast(){
-        if (squares.get(squares.size()-1).player_list == null){
-            this.winner = false;
-        }
-        else {
-            this.winner = true;
+    public void checklast(Player current_player){
+        if (squares.get(squares.size()-1).player_list != null){
+            this.winner = current_player;
+            System.out.format("Seems like %s just won the game.", current_player.name);
         }
     }
     public int checknumber(int to_move){
