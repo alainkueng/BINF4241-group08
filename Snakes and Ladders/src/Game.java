@@ -50,7 +50,7 @@ public class Game {
     //add players to the board + muss noch jedem player den ersten Square zuteilen
     public void addplayer() {
         for (int i = 1; i <= 4; i++) {
-            Player user = new Player(squares.get(1));
+            Player user = new Player(squares.get(0));
             user.setName(i);
             while (user.getName().equals("") && players.isEmpty()){
                 System.out.println("Please input a Name");
