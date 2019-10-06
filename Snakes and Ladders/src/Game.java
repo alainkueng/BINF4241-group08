@@ -1,3 +1,4 @@
+import javax.lang.model.type.NullType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -27,6 +28,7 @@ public class Game {
             int randomnumber = dice.dice();
             Player Currentplayer= players.get(this.current);
             Currentplayer.move(randomnumber);
+            checklast()
             // muss noch display einbauen für jeden move
             next();
         }
@@ -92,9 +94,13 @@ public class Game {
         this.current += 1 % 4;
         return this.current;
     }
-    public void getfirstsquare(){
-
-
+    public void checklast(){
+        if (squares.get(squares.size()-1).player_list == null){
+            this.winner = false;
+        }
+        else {
+            this.winner = true;
+        }
     }
 
 //
