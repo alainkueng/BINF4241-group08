@@ -28,7 +28,7 @@ public class Game {
             int randomnumber = dice.dice();
             Player Currentplayer= players.get(this.current);
             Currentplayer.move(randomnumber);
-            checklast()
+            checklast();
             // muss noch display einbauen für jeden move
             next();
         }
