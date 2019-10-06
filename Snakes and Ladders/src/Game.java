@@ -51,6 +51,8 @@ public class Game {
             square = new Square(i, this);
             squares.add(square); // creates Squares in list
         }
+        square = new LastSquare(boardsize,this);
+        squares.add(square);
     }
 
     //add players to the board + muss noch jedem player den ersten Square zuteilen
