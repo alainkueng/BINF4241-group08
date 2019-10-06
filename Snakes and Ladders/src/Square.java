@@ -41,23 +41,20 @@ public class Square{
              *            invokes findSquare() to check to which square player will move and if it's not occupied
              * @return Square: Square on which the player will be placed next
              */
-            return findSquare(to_move);
+            int new_position = this.position + to_move;
+            return findSquare(new_position);
     }
 
-    private Square findSquare(int to_move){
+    private Square findSquare(int new_position){
         /**
-         * @param int to_move: Number of fields a player wants to move
+         * @param int new_position: The square number to which player will move next
          *            invokes game.getSquare() to get square where player wants to move
-         *            invokes then isOccupied() to check if square isn't occupied with another player
-         * @return Square next_square: The square the player will have to move
+         *            invokes then isOccupied() to check if square isn't occupied by another player
+         * @return Square next_square: The object Square the player will have to move
          */
-        Square new_square = game.getSquare(to_move, this);
-        Square next_square;
-            if (new_square.isOccupied()){
+        Square next_square = game.getSquare(new_position);;
+            if (next_square.isOccupied()){
                 next_square = findSquare(1);
-            }
-            else{
-                next_square = new_square;
             }
             return next_square;
     }

@@ -28,7 +28,7 @@ public class Game {
         while (this.winner == null){
             int random_number = dice.dice();
             Player current_player= players.get(this.current);
-            int to_move = checkNumber(random_number);
+            int to_move = checkNumber(random_number, current_player);
             current_player.move(to_move);
             checkLast(current_player);
             // muss noch display einbauen für jeden move
@@ -87,8 +87,8 @@ public class Game {
 
     }
 
-    public Square getSquare(int move, Square requester){
-        return squares.get(requester.position + move - 1);
+    public Square getSquare(int square_number){
+        return squares.get(square_number - 1);
     }
 
     //keeps track of whose turn it is
@@ -101,11 +101,12 @@ public class Game {
             System.out.format("Seems like %s just won the game.", current_player.name);
         }
     }
-    public int checkNumber(int to_move){
-        int new_position = to_move + players.get(current).square.position;
+    public int checkNumber(int to_move, Player current_player){
+        int current_position = current_player.square.position;
+        int new_position = to_move + current_position;
         if (new_position > board_size){
             int adjusted_position = board_size - (new_position - board_size);
-            return adjusted_position - players.get(current).square.position;
+            return adjusted_position - current_position;
         }
         else{
             return to_move;
