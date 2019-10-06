@@ -55,12 +55,11 @@ public class Square{
         Square next_square;
             if (new_square.isOccupied()){
                 next_square = findSquare(1);
-                return next_square;
             }
             else{
                 next_square = new_square;
-                return next_square;
             }
+            return next_square;
     }
 
         public boolean isOccupied() {

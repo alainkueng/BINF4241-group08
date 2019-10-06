@@ -23,6 +23,7 @@ public class Player { // Attribute
         Square next_square = this.square.moveAndLand(to_move);
         this.square.leave(this);
         this.square = next_square;
+        next_square.enter(this);
     }
 }
 
