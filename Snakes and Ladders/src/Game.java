@@ -27,7 +27,8 @@ public class Game {
         while (this.winner==false){
             int randomnumber = dice.dice();
             Player Currentplayer= players.get(this.current);
-            Currentplayer.move(randomnumber);
+            int movenumber = checknumber(randomnumber);
+            Currentplayer.move(movenumber);
             checklast();
             // muss noch display einbauen für jeden move
             next();
@@ -102,7 +103,14 @@ public class Game {
             this.winner = true;
         }
     }
-
+    public int checknumber(int i){
+        if (i+players.get(current).square.position>board_width*board_height){
+            return (board_width*board_height)-(players.get(current).square.position+i-(board_width*board_height));
+        }
+        else{
+            return i;
+        }
+    }
 //
 //    return position
 //    public int whatsquare(){
