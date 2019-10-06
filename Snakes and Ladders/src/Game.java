@@ -105,7 +105,7 @@ public class Game {
         int new_position = to_move + players.get(current).square.position;
         if (new_position > board_size){
             int adjusted_position = board_size - (new_position - board_size);
-            return adjusted_position;
+            return adjusted_position - players.get(current).square.position;
         }
         else{
             return to_move;
