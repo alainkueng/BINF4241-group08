@@ -92,9 +92,8 @@ public class Game {
     }
 
     //keeps track of whose turn it is
-    public int nextPlayer(){
-        this.current += 1 % 4;
-        return this.current;
+    public void nextPlayer(){
+        this.current = (this.current += 1) % 4;
     }
     public void checkLast(Player current_player){
         if (current_player.square.last){
