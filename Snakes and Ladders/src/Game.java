@@ -10,6 +10,7 @@ public class Game {
     public int current;
     public int board_width;
     public int board_height;
+    public int boardsize;
     public List<Player> players;
     public List<Square> squares;
 
@@ -47,7 +48,7 @@ public class Game {
         System.out.println("Please input width: ");
         String w_size = s.nextLine();
         this.board_width = Integer.parseInt(w_size);
-        int boardsize = this.board_height * this.board_width;
+        boardsize = this.board_height * this.board_width;
         Square square = new FirstSquare(1, this);
         squares.add(square);
         for (int i = 2; i < boardsize; i++) {
@@ -103,12 +104,14 @@ public class Game {
             this.winner = true;
         }
     }
-    public int checknumber(int i){
-        if (i+players.get(current).square.position>board_width*board_height){
-            return (board_width*board_height)-(players.get(current).square.position+i-(board_width*board_height));
+    public int checknumber(int to_move){
+        int new_position = to_move + players.get(current).square.position;
+        int adjusted_position = boardsize - (new_position - boardsize);
+        if (new_position > boardsize){
+            return adjusted_position;
         }
         else{
-            return i;
+            return to_move;
         }
     }
 //

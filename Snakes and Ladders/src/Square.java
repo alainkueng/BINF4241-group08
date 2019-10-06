@@ -67,7 +67,7 @@ public class Square{
              * Checks if this square has a player on it and returns true if so, and false otherwise
              * @return boolean
              */
-            if (this.player_list.get(0) == null) {
+            if (this.player_list == null) {
                 return true;
             } else {
                 return false;
