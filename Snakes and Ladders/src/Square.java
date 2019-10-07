@@ -20,6 +20,7 @@ public class Square{
          *               This method adds the player which enters the field to the player_list
          */
         this.player_list.add(player);
+
     }
 
     public void leave(Player player_leaves){

@@ -37,13 +37,15 @@ public class Game {
             //
         }
     }
+
     // create Board with squares
-    public void createBoard(){
+    public void createBoard() {
         System.out.println("Please input height: ");
         Scanner s = new Scanner(System.in);
         while (!s.hasNextInt()) {
             System.out.println("Input is not a number. Retry");
-            s.nextLine();}
+            s.nextLine();
+        }
         String h_size = s.nextLine();
         this.board_height = Integer.parseInt(h_size);  // for board_size
         System.out.println("Please input width: ");
@@ -60,7 +62,7 @@ public class Game {
             square = new Square(i, this);
             squares.add(square); // creates Squares in list
         }
-        square = new LastSquare(board_size,this);
+        square = new LastSquare(board_size, this);
         squares.add(square);
     }
 
@@ -73,12 +75,12 @@ public class Game {
         for (int i = 1; i <= numPlayer; i++) {
             Player user = new Player(squares.get(0));
             user.setName(i);
-            while (user.getName().equals("") && players.isEmpty()){
+            while (user.getName().equals("") && players.isEmpty()) {
                 System.out.println("Please input a Name");
                 user.setName(i);
 
             }
-            if(numPlayer < 2){
+            if (numPlayer < 2) {
                 System.out.println("One is the loneliest number, but sure play by yourself");
             }
             players.add(user);
@@ -92,40 +94,32 @@ public class Game {
     }
 
 
-    public Square getSquare(int square_number){
+    public Square getSquare(int square_number) {
         return squares.get(square_number - 1);
     }
 
     //keeps track of whose turn it is
-    public void nextPlayer(){
+    public void nextPlayer() {
         this.current = (this.current += 1) % numPlayer;
     }
-    public void checkLast(Player current_player){
-        if (current_player.square.last){
+
+    public void checkLast(Player current_player) {
+        if (current_player.square.last) {
             this.winner = current_player;
             System.out.format("Seems like %s just won the game.", current_player.name);
         }
     }
-    public int checkNumber(int to_move, Player current_player){
-        int current_position = current_player.square.position;
-        while (to_move + current_position > board_size || to_move + current_position <= 1 || current_position == board_size){
-            if (to_move + current_position > board_size){
-                to_move = ((to_move - (board_size - (current_position - to_move - 1)))*-1);
-                current_position = board_size;
-            }
-            else if (to_move == 0){
-                break;
-            }
 
-            else{
-                if(to_move + board_size < 1){
-                    current_position = 1;//crt_pos to 1st square to count again from there
-                    to_move = (to_move*-1) - (board_size - current_position);
-                 }
-                else{
-                    to_move = to_move + current_player.square.position;
-                }
-            }
+    public int checkNumber(int to_move, Player current_player) {
+        int current_position = current_player.square.position;
+        int new_position = to_move + current_position;
+        if(new_position > board_size) {
+            int offset = (current_player.square.position + to_move) % board_size;
+            int realPos = board_size - offset;
+            to_move = realPos - current_position;
+//            int adjusted_position = board_size - (new_position - board_size);
+//            return adjusted_position - current_position;
+
         }
         return to_move;
     }
