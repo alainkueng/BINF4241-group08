@@ -16,7 +16,7 @@ public class Game {
 
 
     //Constructor
-    Game(){
+    Game() {
 
         this.players = new ArrayList<Player>(4);
         this.winner = null;
@@ -25,19 +25,16 @@ public class Game {
         createBoard();
         addPlayer(); // anzahl spieler vorher herausfinden wie auf Blatt beschrieben?
         Dice dice = new Dice();
-        while (this.winner == null){
+        while (this.winner == null) {
             int random_number = dice.dice();
-            Player current_player= players.get(this.current);
+            Player current_player = players.get(this.current);
             int to_move = checkNumber(random_number, current_player);
             current_player.move(to_move);
             checkLast(current_player);
             // muss noch display einbauen für jeden move
             nextPlayer();
+            //
         }
-
-
-
-
     }
     // create Board with squares
     public void createBoard(){
@@ -109,23 +106,25 @@ public class Game {
     }
     public int checkNumber(int to_move, Player current_player){
         int current_position = current_player.square.position;
-        int new_position = to_move + current_position;
-        if (new_position > board_size){
-            int adjusted_position = board_size - (new_position - board_size);
-            return adjusted_position - current_position;
-        }
-        else{
-            return to_move;
-        }
-    }
-//
-//    return position
-//    public int whatsquare(){
-//        return players.get(turn()).pos;
-//    }
-//
-//    public boolean islastsquare(Square s){
-//        return true;
-//    }
+        while (to_move + current_position > board_size || to_move + current_position <= 1 || current_position == board_size){
+            if (to_move + current_position > board_size){
+                to_move = (to_move - (board_size - current_position))*-1;
+                current_position = board_size;
+            }
+            else if (to_move == 0){
+                break;
+            }
 
+            else{
+                if(to_move + board_size < 1){
+                    current_position = 1;//crt_pos to 1st square to count again from there
+                    to_move = (to_move*-1) - (board_size - current_position);
+                 }
+                else{
+                    to_move = to_move + current_player.square.position;
+                }
+            }
+        }
+        return to_move;
+    }
 }
