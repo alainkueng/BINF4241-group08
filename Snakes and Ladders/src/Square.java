@@ -6,6 +6,8 @@ public class Square{
         Game game; //is needed to have access to game methods like getSquare()
         int position; //square's position
         boolean last; //shows if this square is the last
+        boolean hasLadder;
+        boolean hasSnake;
 
         // constructor
         public Square(int number, Game game_obj){
@@ -43,6 +45,7 @@ public class Square{
              * @return Square: Square on which the player will be placed next
              */
             int new_position = this.position + to_move;
+            this.position = new_position;
             return findSquare(new_position);
     }
 
@@ -65,10 +68,26 @@ public class Square{
              * Checks if this square has a player on it and returns true if so, and false otherwise
              * @return boolean
              */
-            if (this.player_list == null) {
+            if (this.player_list.size() != 0) {
                 return true;
             } else {
                 return false;
             }
+        }
+
+        public void setHasLadder(boolean ladder){
+            hasLadder = ladder;
+        }
+
+        public boolean getHasLadder(){
+            return hasLadder;
+        }
+
+        public void setHasSnake(boolean snake){
+            hasSnake = snake;
+        }
+
+        public boolean getHasSnake(){
+            return hasSnake;
         }
 }

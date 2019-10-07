@@ -1,4 +1,3 @@
-import javax.lang.model.type.NullType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +10,7 @@ public class Game {
     public int board_width;
     public int board_height;
     public int board_size;
-    int numPlayer;
+    public int numPlayer;
     public List<Player> players;
     public List<Square> squares;
 
@@ -32,9 +31,8 @@ public class Game {
             int to_move = checkNumber(random_number, players.get(this.current));
             players.get(this.current).move(to_move);
             checkLast(players.get(this.current));
-            // muss noch display einbauen für jeden move
+//            printGame();
             nextPlayer();
-            //
         }
     }
 
@@ -58,7 +56,7 @@ public class Game {
         board_size = this.board_height * this.board_width;
         Square square = new FirstSquare(1, this);
         squares.add(square);
-        for (int i = 2; i < board_size; i++) {
+        for (int i = 1; i < board_size - 1; i++) {
             square = new Square(i, this);
             squares.add(square); // creates Squares in list
         }
@@ -86,9 +84,6 @@ public class Game {
             players.add(user);
             user.square.enter(user);
         }
-//        for(PlayerS player : players){
-//            System.out.println(player.getName());
-//        }
         System.out.println("\nGame starting now!");
 
     }
@@ -112,15 +107,60 @@ public class Game {
 
     public int checkNumber(int to_move, Player current_player) {
         int current_position = current_player.square.position;
-        int new_position = to_move + current_position;
-        if(new_position > board_size) {
-            int offset = (current_player.square.position + to_move) % board_size;
-            int realPos = board_size - offset;
-            to_move = realPos - current_position;
-//            int adjusted_position = board_size - (new_position - board_size);
-//            return adjusted_position - current_position;
+
+        if (to_move + current_position > board_size) {
+            int offset = (current_position + to_move) % board_size;
+            to_move = (board_size - offset) - current_position;
 
         }
         return to_move;
+
     }
-}
+
+
+//    public void addSnakesAndLadders(){
+//        int i = 0;
+//        int j = 0;
+//        Snake snake = new Snake(i, );
+//        Ladder ladder = new Ladder(j,);
+//    }
+
+        public void printGame() {
+            for (int i = 0; i < squares.size(); i++) {
+                //square 1
+                if (!squares.get(i).isOccupied()) {
+                    System.out.print(" [" + (i + 1));
+                    for (int j = 0; j < squares.get(i).player_list.size(); j++) {
+                        System.out.print(" <" + squares.get(i).player_list.get(j).getName() + ">");
+                    }
+                    System.out.print("] ");
+                    System.out.println(" ");
+                } else if (squares.get(i).isOccupied()) {
+                    System.out.print(" [" + (i + 1) + "] ");
+                } else {
+                    break;
+                }
+            }
+        }
+//            else if(!squares.get(i).isOccupied() && !squares.get(i).hasSnake && !squares.get(i).hasLadder){
+//                System.out.println(" [" + i + "] ");
+//
+//                //is empty but has a snake
+//            } else if (!squares.get(i).isOccupied() && squares.get(i).hasSnake){
+//                System.out.println(" [" + i + " <- " + "Snake get position" + "]");
+//            }
+//            // is empty but has ladder
+//            else if(!squares.get(i).isOccupied() && squares.get(i).hasLadder){
+//                System.out.println(" [" + i + " -> " + "Ladder.getnewPosition" + "]");
+//            }
+//
+//            else if(squares.get(i).isOccupied()){
+//                System.out.println(" [" + i + "< " + squares.get(i).player_list.get(i).getName() + " >" + "]");
+//            }
+//
+
+        }
+
+
+
+
