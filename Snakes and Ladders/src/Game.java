@@ -28,10 +28,10 @@ public class Game {
         Dice dice = new Dice();
         while (this.winner == null) {
             int random_number = dice.dice();
-            Player current_player = players.get(this.current);
-            int to_move = checkNumber(random_number, current_player);
-            current_player.move(to_move);
-            checkLast(current_player);
+            players.get(this.current);
+            int to_move = checkNumber(random_number, players.get(this.current));
+            players.get(this.current).move(to_move);
+            checkLast(players.get(this.current));
             // muss noch display einbauen für jeden move
             nextPlayer();
             //
@@ -49,7 +49,8 @@ public class Game {
         System.out.println("Please input width: ");
         while (!s.hasNextInt()) {
             System.out.println("Input is not a number. Retry");
-            s.nextLine();}
+            s.nextLine();
+        }
         String w_size = s.nextLine();
         this.board_width = Integer.parseInt(w_size);
         board_size = this.board_height * this.board_width;
@@ -97,7 +98,7 @@ public class Game {
 
     //keeps track of whose turn it is
     public void nextPlayer(){
-        this.current = (this.current += 1) % current;
+        this.current = (this.current += 1) % numPlayer;
     }
     public void checkLast(Player current_player){
         if (current_player.square.last){
@@ -109,7 +110,7 @@ public class Game {
         int current_position = current_player.square.position;
         while (to_move + current_position > board_size || to_move + current_position <= 1 || current_position == board_size){
             if (to_move + current_position > board_size){
-                to_move = (to_move - (board_size - current_position))*-1;
+                to_move = ((to_move - (board_size - (current_position - to_move - 1)))*-1);
                 current_position = board_size;
             }
             else if (to_move == 0){

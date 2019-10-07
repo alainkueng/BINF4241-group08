@@ -52,7 +52,7 @@ public class Square{
          *            invokes then isOccupied() to check if square isn't occupied by another player
          * @return Square next_square: The object Square the player will have to move
          */
-        Square next_square = game.getSquare(new_position);;
+        Square next_square = game.getSquare(new_position);
             if (next_square.isOccupied()){
                 next_square = findSquare(1);
             }
