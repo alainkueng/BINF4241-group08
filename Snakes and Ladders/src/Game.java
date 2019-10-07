@@ -11,6 +11,7 @@ public class Game {
     public int board_width;
     public int board_height;
     public int board_size;
+    int numPlayer;
     public List<Player> players;
     public List<Square> squares;
 
@@ -64,7 +65,11 @@ public class Game {
 
     //add players to the board + muss noch jedem player den ersten Square zuteilen
     public void addPlayer() {
-        for (int i = 1; i <= 4; i++) {
+
+        Scanner numPlayers = new Scanner(System.in);
+        System.out.println("Number of players?");
+        numPlayer = numPlayers.nextInt();
+        for (int i = 1; i <= numPlayer; i++) {
             Player user = new Player(squares.get(0));
             user.setName(i);
             while (user.getName().equals("") && players.isEmpty()){
@@ -72,13 +77,8 @@ public class Game {
                 user.setName(i);
 
             }
-            if(user.getName().equals("") && players.size() < 2){
+            if(numPlayer < 2){
                 System.out.println("One is the loneliest number, but sure play by yourself");
-                break;
-            }
-            else if(user.getName().equals("") && players.size() >= 2){
-                System.out.println("No other was player entered");
-                break;
             }
             players.add(user);
             user.square.enter(user);
@@ -90,13 +90,14 @@ public class Game {
 
     }
 
+
     public Square getSquare(int square_number){
         return squares.get(square_number - 1);
     }
 
     //keeps track of whose turn it is
     public void nextPlayer(){
-        this.current = (this.current += 1) % 4;
+        this.current = (this.current += 1) % current;
     }
     public void checkLast(Player current_player){
         if (current_player.square.last){

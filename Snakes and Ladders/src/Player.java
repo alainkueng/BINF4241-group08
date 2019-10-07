@@ -13,7 +13,7 @@ public class Player { // Attribute
         Scanner s = new Scanner(System.in);
         System.out.println("Player " + number + ":");
         name = s.nextLine();
-        while(!name.matches("[a-zA-Z ]+")){
+        while(!name.matches("[a-zA-Z ]+" )){
             System.out.println("Please enter a valid name!");
             name = s.nextLine();
         }
@@ -30,7 +30,3 @@ public class Player { // Attribute
         next_square.enter(this);
     }
 }
-
-
-// moveforward muss position ändern von int her, muss square sagen das sich attribute ändern
-// move and land methode in moveforward
