@@ -45,7 +45,6 @@ public class Square{
              * @return Square: Square on which the player will be placed next
              */
             int new_position = this.position + to_move;
-            this.position = new_position;
             return findSquare(new_position);
     }
 
