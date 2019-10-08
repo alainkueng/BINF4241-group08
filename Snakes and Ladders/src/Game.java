@@ -79,7 +79,7 @@ public class Game {
              for (int i=0;i < snakes; i++){//start
                  int randomint = ThreadLocalRandom.current().nextInt(2,board_size-1);;
                  while (squares.get(randomint).partner){
-                     randomint = ThreadLocalRandom.current().nextInt(2,board_size-1);
+                     randomint = ThreadLocalRandom.current().nextInt(2,board_size-1);}
                  int position = squares.get(randomint).position;
                  Snake snake = new Snake(position, this, 0); //new snake
                  squares.set(position-1, snake);//delete out of list
@@ -93,7 +93,7 @@ public class Game {
                      }
                      }
                  }
-             }
+
              for (int i = 0;i < ladders;i++){//start
                  int randmint = ThreadLocalRandom.current().nextInt(1, board_size-3);;
                  while(squares.get(randmint).partner){
