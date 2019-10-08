@@ -6,14 +6,15 @@ public class Square{
         Game game; //is needed to have access to game methods like getSquare()
         int position; //square's position
         boolean last; //shows if this square is the last
-        boolean hasLadder;
-        boolean hasSnake;
+        boolean partner;
+
 
         // constructor
         public Square(int number, Game game_obj){
             position = number;
             game = game_obj;
             last = false;
+            partner = false;
         }
 
     public void enter(Player player) {
@@ -74,19 +75,5 @@ public class Square{
             }
         }
 
-        public void setHasLadder(boolean ladder){
-            hasLadder = ladder;
-        }
 
-        public boolean getHasLadder(){
-            return hasLadder;
-        }
-
-        public void setHasSnake(boolean snake){
-            hasSnake = snake;
-        }
-
-        public boolean getHasSnake(){
-            return hasSnake;
-        }
 }
