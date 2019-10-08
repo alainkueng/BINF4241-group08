@@ -24,14 +24,17 @@ public class Game {
         this.squares = new ArrayList<Square>();
         createBoard();
         addPlayer(); // anzahl spieler vorher herausfinden wie auf Blatt beschrieben?
+        System.out.print("Initial state: ");
+        printGame();
         Dice dice = new Dice();
         while (this.winner == null) {
             int random_number = dice.dice();
-            players.get(this.current);
-            int to_move = checkNumber(random_number, players.get(this.current));
-            players.get(this.current).move(to_move);
-            checkLast(players.get(this.current));
-//            printGame();
+            Player current_player = players.get(this.current);
+            System.out.format("%s rolls %d: ", current_player.name, random_number);
+            printGame();
+            int to_move = checkNumber(random_number, current_player);
+            current_player.move(to_move);
+            checkLast(current_player);
             nextPlayer();
         }
     }
@@ -101,7 +104,9 @@ public class Game {
     public void checkLast(Player current_player) {
         if (current_player.square.last) {
             this.winner = current_player;
-            System.out.format("Seems like %s just won the game.", current_player.name);
+            System.out.print("Final state: ");
+            printGame();
+            System.out.format("%s wins!", current_player.name);
         }
     }
 
@@ -129,19 +134,21 @@ public class Game {
             for (int i = 0; i < squares.size(); i++) {
                 //square 1
                 if (!squares.get(i).isOccupied()) {
-                    System.out.print(" [" + (i + 1));
+                    System.out.print("[" + (i + 1));
                     for (int j = 0; j < squares.get(i).player_list.size(); j++) {
-                        System.out.print(" <" + squares.get(i).player_list.get(j).getName() + ">");
+                            System.out.print("<" + squares.get(i).player_list.get(j).getName() + ">");
                     }
-                    System.out.print("] ");
-                    System.out.println(" ");
+                    System.out.print("]");
                 } else if (squares.get(i).isOccupied()) {
-                    System.out.print(" [" + (i + 1) + "] ");
+                    System.out.print("[" + (i + 1) + "]");
                 } else {
                     break;
                 }
             }
+            System.out.println("");
         }
+            
+            
 //            else if(!squares.get(i).isOccupied() && !squares.get(i).hasSnake && !squares.get(i).hasLadder){
 //                System.out.println(" [" + i + "] ");
 //
@@ -158,8 +165,7 @@ public class Game {
 //                System.out.println(" [" + i + "< " + squares.get(i).player_list.get(i).getName() + " >" + "]");
 //            }
 //
-
-        }
+    }
 
 
 
