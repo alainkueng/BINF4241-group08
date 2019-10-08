@@ -13,6 +13,6 @@ public class Snake extends Square {
     @Override
     public void enter(Player player) {
         super.enter(player);
-        player.move(new_position-this.position);
+        player.move(this.position-new_position);
 }
 }

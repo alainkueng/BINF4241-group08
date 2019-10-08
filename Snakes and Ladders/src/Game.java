@@ -188,16 +188,27 @@ public class Game {
 
         public void printGame() {
             for (int i = 0; i < squares.size(); i++) {
-                //square 1
-                if (squares.get(i).player_list.size() != 0) {
+                Square current_square = squares.get(i);
+                List current_player_list = squares.get(i).player_list;
+                if (current_player_list.size() != 0) {
                     System.out.print("[" + (i + 1));
-                    for (int j = 0; j < squares.get(i).player_list.size(); j++) {
-                            System.out.print("<" + squares.get(i).player_list.get(j).name + ">");
+                    for (int j = 0; j < current_player_list.size(); j++) {
+                            System.out.print("<" + current_square.player_list.get(j).name + ">");
                     }
                     System.out.print("]");
-                } else{
-                    System.out.print("[" + (i + 1) + "]");
+                    continue;
                 }
+                else if(current_square.getClass() == Snake.class){
+                    Snake snake = (Snake) squares.get(i);
+                    System.out.print("[" + snake.new_position + "<-" + (i + 1) + "]");
+                    continue;
+                }
+                else if(current_square.getClass() == Ladder.class){
+                    Ladder ladder = (Ladder) squares.get(i);
+                    System.out.print("[" + (i+1) + "->" + ladder.new_position + "]" );
+                    continue;
+                }
+                    System.out.print("[" + (i + 1) + "]");
             }
             System.out.println("");
         }

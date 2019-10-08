@@ -11,7 +11,7 @@ public class Ladder extends Square {
     @Override
     public void enter(Player player) {
         super.enter(player);
-        player.move(this.position-new_position);
+        player.move(new_position-this.position);
 
     }
     public void settrue(Ladder ladder){
