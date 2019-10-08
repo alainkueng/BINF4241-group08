@@ -59,13 +59,17 @@ public class Game {
         board_size = this.board_height * this.board_width;
         Square square = new FirstSquare(1, this);
         squares.add(square);
-        for (int i = 1; i < board_size - 1; i++) {
+        for (int i = 2; i < board_size; i++) {
             square = new Square(i, this);
             squares.add(square); // creates Squares in list
         }
         square = new LastSquare(board_size, this);
         squares.add(square);
-    }
+//        if (board_size>=6){
+//            int numsnakesladders =
+        }
+
+
 
     //add players to the board + muss noch jedem player den ersten Square zuteilen
     public void addPlayer() {
