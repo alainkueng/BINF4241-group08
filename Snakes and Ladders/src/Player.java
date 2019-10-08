@@ -24,9 +24,11 @@ public class Player { // Attribute
     }
 
     public void move(int to_move) {
-        Square next_square = this.square.moveAndLand(to_move);
-        this.square.leave(this);
-        this.square = next_square;
-        next_square.enter(this);
+        if(to_move != 0) {
+            Square next_square = this.square.moveAndLand(to_move);
+            this.square.leave(this);
+            this.square = next_square;
+            next_square.enter(this);
+        }
     }
 }

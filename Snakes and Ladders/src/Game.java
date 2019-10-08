@@ -137,16 +137,14 @@ public class Game {
         public void printGame() {
             for (int i = 0; i < squares.size(); i++) {
                 //square 1
-                if (!squares.get(i).isOccupied()) {
+                if (squares.get(i).player_list.size() != 0) {
                     System.out.print("[" + (i + 1));
                     for (int j = 0; j < squares.get(i).player_list.size(); j++) {
-                            System.out.print("<" + squares.get(i).player_list.get(j).getName() + ">");
+                            System.out.print("<" + squares.get(i).player_list.get(j).name + ">");
                     }
                     System.out.print("]");
-                } else if (squares.get(i).isOccupied()) {
+                } else{
                     System.out.print("[" + (i + 1) + "]");
-                } else {
-                    break;
                 }
             }
             System.out.println("");
