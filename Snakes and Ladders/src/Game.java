@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.lang.Math;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 
 public class Game {
@@ -65,9 +68,50 @@ public class Game {
         }
         square = new LastSquare(board_size, this);
         squares.add(square);
-//        if (board_size>=6){
-//            int numsnakesladders =
-        }
+         if (board_size>=6){
+             int numsnakesladders = Math.round(board_size/4);
+             int snakes = Math.round(numsnakesladders/2);
+             int ladders = Math.round(numsnakesladders/2);
+             for (int i=0;i < snakes; i++){//start
+                 int randomint = ThreadLocalRandom.current().nextInt(2,board_size-1);;
+                 while (squares.get(randomint).partner){
+                     randomint = ThreadLocalRandom.current().nextInt(2,board_size-1);
+                 int position = squares.get(randomint).position;
+                 Snake snake = new Snake(position, this, 0); //new snake
+                 squares.set(position-1, snake);//delete out of list
+                 snake.settrue(snake);
+                 while (snake.new_position==0){//check if there is a free position
+                     int random = ThreadLocalRandom.current().nextInt(1, snake.position-1);
+                     if (squares.get(random).partner == false) {
+                         squares.get(random).partner = true;
+                         snake.new_position = random;
+
+                     }
+                     }
+                 }
+             }
+             for (int i = 0;i < ladders;i++){//start
+                 int randmint = ThreadLocalRandom.current().nextInt(1, board_size-3);;
+                 while(squares.get(randmint).partner){
+                     randmint = ThreadLocalRandom.current().nextInt(1, board_size-3);}//könnte man ändern zum liste/kein partner konflikt zu verhindern
+                 int position = squares.get(randmint).position;
+                 Ladder ladder = new Ladder(position, this, 0);//new ladder
+                 squares.set(position-1, ladder);//delete out of list
+                 ladder.settrue(ladder);
+                 while (ladder.new_position == 0){ //check if there is a free position
+                     int rando = ThreadLocalRandom.current().nextInt(ladder.position-1, board_size-2);
+                     if (squares.get(rando).partner == false) {
+                         squares.get(rando).partner = true;
+                         ladder.new_position = rando;
+                                 }
+
+                         }
+                     }
+                 }
+                 }
+
+
+
 
 
 
