@@ -31,9 +31,10 @@ public class Game {
             int random_number = dice.dice();
             Player current_player = players.get(this.current);
             System.out.format("%s rolls %d: ", current_player.name, random_number);
-            printGame();
             int to_move = checkNumber(random_number, current_player);
             current_player.move(to_move);
+            printGame();
+
             checkLast(current_player);
             nextPlayer();
         }
@@ -41,21 +42,24 @@ public class Game {
 
     // create Board with squares
     public void createBoard() {
+
         System.out.println("Please input height: ");
         Scanner s = new Scanner(System.in);
+
         while (!s.hasNextInt()) {
-            System.out.println("Input is not a number. Retry");
+            System.out.println("Input is not a number, please input height: ");
             s.nextLine();
         }
-        String h_size = s.nextLine();
-        this.board_height = Integer.parseInt(h_size);  // for board_size
+        int h_size = s.nextInt();
+        this.board_height = h_size;  // for board_size
+
         System.out.println("Please input width: ");
         while (!s.hasNextInt()) {
-            System.out.println("Input is not a number. Retry");
+            System.out.println("Input is not a number, please input width: ");
             s.nextLine();
         }
-        String w_size = s.nextLine();
-        this.board_width = Integer.parseInt(w_size);
+        int w_size = s.nextInt();
+        this.board_width = w_size;
         board_size = this.board_height * this.board_width;
         Square square = new FirstSquare(1, this);
         squares.add(square);
@@ -76,6 +80,10 @@ public class Game {
 
         Scanner numPlayers = new Scanner(System.in);
         System.out.println("Number of players?");
+        while(!numPlayers.hasNextInt()){
+            System.out.println("Wrong input, please enter number of players: ");
+            numPlayers.nextLine();
+        }
         numPlayer = numPlayers.nextInt();
         for (int i = 1; i <= numPlayer; i++) {
             Player user = new Player(squares.get(0));
