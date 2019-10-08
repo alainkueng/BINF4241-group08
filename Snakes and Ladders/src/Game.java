@@ -46,24 +46,29 @@ public class Game {
     // create Board with squares
     public void createBoard() {
 
-        System.out.println("Please input height: ");
-        Scanner s = new Scanner(System.in);
+        while(this.board_size < 2) {
+            System.out.println("Please input height: ");
+            Scanner s = new Scanner(System.in);
 
-        while (!s.hasNextInt()) {
-            System.out.println("Input is not a number, please input height: ");
-            s.nextLine();
-        }
-        int h_size = s.nextInt();
-        this.board_height = h_size;  // for board_size
+            while (!s.hasNextInt()) {
+                System.out.println("Input is not a number, please input height: ");
+                s.nextLine();
+            }
+            int h_size = s.nextInt();
+            this.board_height = h_size;  // for board_size
 
-        System.out.println("Please input width: ");
-        while (!s.hasNextInt()) {
-            System.out.println("Input is not a number, please input width: ");
-            s.nextLine();
+            System.out.println("Please input width: ");
+            while (!s.hasNextInt()) {
+                System.out.println("Input is not a number, please input width: ");
+                s.nextLine();
+            }
+            int w_size = s.nextInt();
+            this.board_width = w_size;
+            board_size = this.board_height * this.board_width;
+            if (board_size < 2){
+                System.out.println("Please try again, a board with one field is strongly considered as cheating!");
+            }
         }
-        int w_size = s.nextInt();
-        this.board_width = w_size;
-        board_size = this.board_height * this.board_width;
         Square square = new FirstSquare(1, this);
         squares.add(square);
         for (int i = 2; i < board_size; i++) {
@@ -131,10 +136,10 @@ public class Game {
         numPlayer = numPlayers.nextInt();
         for (int i = 1; i <= numPlayer; i++) {
             Player user = new Player(squares.get(0));
-            user.setName(i);
+            user.setName(i, this.players);
             while (user.getName().equals("") && players.isEmpty()) {
                 System.out.println("Please input a Name");
-                user.setName(i);
+                user.setName(i, this.players);
 
             }
             if (numPlayer < 2) {

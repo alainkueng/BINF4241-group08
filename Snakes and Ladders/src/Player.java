@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Player { // Attribute
@@ -9,18 +10,17 @@ public class Player { // Attribute
        this.square = number;
     }
 
-    public void setName(int number) {
-        String[] past = new String[4];
+    public void setName(int number, List<Player> player_list) {
         Scanner s = new Scanner(System.in);
         System.out.println("Player " + number + ":");
         name = s.nextLine();
-        past[number-1] = name;
-        for (int i = 0; i <= number-1; i++) {
-            // no repeated names
-            if (i != 0 && past[i].equals(name)) {
-                while (past[i].equals(name)) {
-                    System.out.println("This name is already in use, please use another one: ");
-                    name = s.nextLine().toLowerCase();
+        if (player_list.size() > 0) {
+            for (int i = 0; i < player_list.size(); i++) {
+                // no repeated names
+                while (name.equals(player_list.get(i).name)) {
+                    System.out.println("This name has already been used, please try another one:");
+                    name = s.nextLine();
+                    i = 0;
                 }
             }
         }
@@ -28,7 +28,7 @@ public class Player { // Attribute
             System.out.println("Please enter a valid name!");
             name = s.nextLine();
         }
-
+        this.name = name;
     }
 
 
