@@ -66,7 +66,7 @@ public class Game {
             this.board_width = w_size;
             board_size = this.board_height * this.board_width;
             if (board_size < 2) {
-                System.out.println("Please try again, a board with one field is strongly considered as cheating!");
+                System.out.println("Don't be silly, have you ever played Snakes and Ladders in real life?");
             }
         }
         Square square = new FirstSquare(1, this);
@@ -140,6 +140,13 @@ public class Game {
             numPlayers.nextLine();
         }
         numPlayer = numPlayers.nextInt();
+        while(numPlayer < 1 || numPlayer > 4){
+            System.out.println("This game is for 1 to 4 players, please adjust: ");
+            while(!numPlayers.hasNextInt()){
+                System.out.println("Wrong input, please enter number of players: ");
+            }
+            numPlayer = numPlayers.nextInt();
+        }
         for (int i = 1; i <= numPlayer; i++) {
             Player user = new Player(squares.get(0));
             user.setName(i, this.players);
