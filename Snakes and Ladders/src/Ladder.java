@@ -6,9 +6,9 @@ public class Ladder extends Square {
 
     public Ladder(int number, Game game_obj, int squarepos) {
         super(number, game_obj);
-        new_position = squarepos;
         partner = true;
-    }
+        new_position = squarepos;}
+
 
     @Override
     public void enter(Player player) {
@@ -16,10 +16,9 @@ public class Ladder extends Square {
         player.move(new_position-this.position);
 
     }
-    public void settrue(Ladder ladder){
-        ladder.partner = true;
+
     }
-}
+
 
 
 //    public int move_length(){

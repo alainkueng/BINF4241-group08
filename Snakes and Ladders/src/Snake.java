@@ -8,9 +8,8 @@ public class Snake extends Square {
         partner = true;
     }
 
-    public void settrue(Snake snake){
-        snake.partner = true;
-    }
+
+
     @Override
     public void enter(Player player) {
         super.enter(player);
