@@ -27,13 +27,13 @@ public class Game {
         this.squares = new ArrayList<Square>();
         createBoard();
         addPlayer(); // anzahl spieler vorher herausfinden wie auf Blatt beschrieben?
-        System.out.print("Initial state: ");
+        System.out.print("Initial state:\t");
         printGame();
         Dice dice = new Dice();
         while (this.winner == null) {
             int random_number = dice.dice();
             Player current_player = players.get(this.current);
-            System.out.format("%s rolls %d: ", current_player.name, random_number);
+            System.out.format("%s rolls %d:\t", current_player.name, random_number);
             int to_move = checkNumber(random_number, current_player);
             current_player.move(to_move);
             printGame();
@@ -165,7 +165,7 @@ public class Game {
     public void checkLast(Player current_player) {
         if (current_player.square.last) {
             this.winner = current_player;
-            System.out.print("Final state: ");
+            System.out.print("Final state:\t");
             printGame();
             System.out.format("%s wins!", current_player.name);
         }
