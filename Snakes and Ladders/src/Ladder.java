@@ -18,25 +18,3 @@ public class Ladder extends Square {
     }
 
     }
-
-
-
-//    public int move_length(){
-//        int length;
-//        if (game.board_width == 1 || game.board_height == 1){
-//            if(game.board_width == 1){
-//                length = ThreadLocalRandom.current().nextInt(2, game.board_height/3);
-//            }
-//            else{
-//                length = ThreadLocalRandom.current().nextInt(2, game.board_width/3);
-//            }
-//        }
-//        else if(game.board_width >= game.board_height){
-//            length = game.board_width;
-//        }
-//        else{
-//            length = game.board_height;
-//        }
-//        return length;
-//    }
-//}
