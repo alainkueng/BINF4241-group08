@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.lang.Math;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -92,11 +91,11 @@ public class Game {
                     while (square_to_transform.partner) {
                         random_position = ThreadLocalRandom.current().nextInt(2, board_size - 1);
                         square_to_transform = squares.get(random_position);
-                        random_partner = ThreadLocalRandom.current().nextInt(1, random_position - 1);
+                        random_partner = ThreadLocalRandom.current().nextInt(1, random_position);
                         new_partner = squares.get(random_partner);
                     }
                     while (iterations < board_size && new_partner.partner) {
-                        random_partner = ThreadLocalRandom.current().nextInt(1, random_position - 1);
+                        random_partner = ThreadLocalRandom.current().nextInt(1, random_position );
                         new_partner = squares.get(random_partner);
                         iterations++;
                     }
@@ -129,49 +128,6 @@ public class Game {
 
         }
     }
-             /*
-             int numsnakesladders = board_size/4;
-             int snakes = numsnakesladders/2;
-             int ladders = numsnakesladders/2;
-             for (int i=0;i < snakes; i++){//start
-                 int randomint = ThreadLocalRandom.current().nextInt(3,board_size-1);;
-                 while (squares.get(randomint).partner){
-                     randomint = ThreadLocalRandom.current().nextInt(3,board_size-1);}
-                 int position = squares.get(randomint).position;
-                 Snake snake = new Snake(position, this, 0); //new snake
-                 squares.set(position-1, snake);//delete out of list
-                 while (snake.new_position==0){//check if there is a free position
-                     int random = ThreadLocalRandom.current().nextInt(2, snake.position-1);
-                     if (squares.get(random).partner == false) {
-                         squares.get(random).partner = true;
-                         snake.new_position = random;
-
-                     }
-                     }
-                 }
-
-             for (int i = 0;i < ladders;i++){//start
-                 int randmint = ThreadLocalRandom.current().nextInt(1, board_size-3);;
-                 while(squares.get(randmint).partner){
-                     randmint = ThreadLocalRandom.current().nextInt(1, board_size-3);}//könnte man ändern zum liste/kein partner konflikt zu verhindern
-                 int position = squares.get(randmint).position;
-                 Ladder ladder = new Ladder(position, this, 0);//new ladder
-                 squares.set(position-1, ladder);//delete out of list
-                 while (ladder.new_position == 0){ //check if there is a free position
-                     int rando = ThreadLocalRandom.current().nextInt(ladder.position-1, board_size-2);
-                     if (squares.get(rando).partner == false) {
-                         squares.get(rando).partner = true;
-                         ladder.new_position = rando;
-                                 }
-
-                         }
-                     }
-                 }
-                 }
-*/
-
-
-
 
 
     //add players to the board + muss noch jedem player den ersten Square zuteilen
@@ -234,12 +190,7 @@ public class Game {
     }
 
 
-//    public void addSnakesAndLadders(){
-//        int i = 0;
-//        int j = 0;
-//        Snake snake = new Snake(i, );
-//        Ladder ladder = new Ladder(j,);
-//    }
+
 
         public void printGame() {
             for (int i = 0; i < squares.size(); i++) {
@@ -267,24 +218,6 @@ public class Game {
             }
             System.out.println("");
         }
-            
-            
-//            else if(!squares.get(i).isOccupied() && !squares.get(i).hasSnake && !squares.get(i).hasLadder){
-//                System.out.println(" [" + i + "] ");
-//
-//                //is empty but has a snake
-//            } else if (!squares.get(i).isOccupied() && squares.get(i).hasSnake){
-//                System.out.println(" [" + i + " <- " + "Snake get position" + "]");
-//            }
-//            // is empty but has ladder
-//            else if(!squares.get(i).isOccupied() && squares.get(i).hasLadder){
-//                System.out.println(" [" + i + " -> " + "Ladder.getnewPosition" + "]");
-//            }
-//
-//            else if(squares.get(i).isOccupied()){
-//                System.out.println(" [" + i + "< " + squares.get(i).player_list.get(i).getName() + " >" + "]");
-//            }
-//
     }
 
 
