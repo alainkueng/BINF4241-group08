@@ -1,4 +1,4 @@
-import java.util.concurrent.ThreadLocalRandom;
+
 
 public class Ladder extends Square {
 
