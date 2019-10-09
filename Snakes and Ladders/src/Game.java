@@ -35,8 +35,9 @@ public class Game {
             Player current_player = players.get(this.current);
             System.out.format("%s rolls %d:\t", current_player.name, random_number);
             int to_move = checkNumber(random_number, current_player);
-            current_player.move(to_move);
             printGame();
+            current_player.move(to_move);
+
 
             checkLast(current_player);
             nextPlayer();
@@ -46,7 +47,7 @@ public class Game {
     // create Board with squares
     public void createBoard() {
 
-        while(this.board_size < 2) {
+        while (this.board_size < 2) {
             System.out.println("Please input height: ");
             Scanner s = new Scanner(System.in);
 
@@ -65,7 +66,7 @@ public class Game {
             int w_size = s.nextInt();
             this.board_width = w_size;
             board_size = this.board_height * this.board_width;
-            if (board_size < 2){
+            if (board_size < 2) {
                 System.out.println("Please try again, a board with one field is strongly considered as cheating!");
             }
         }
@@ -77,20 +78,70 @@ public class Game {
         }
         square = new LastSquare(board_size, this);
         squares.add(square);
-         if (board_size>=6){
-             int numsnakesladders = Math.round(board_size/4);
-             int snakes = Math.round(numsnakesladders/2);
-             int ladders = Math.round(numsnakesladders/2);
+        if (board_size >= 6) {
+            int special_number = board_size / 4;
+            int snakes_number = special_number / 2;
+            int ladders_number = special_number / 2;
+            for (int i = 0; i < snakes_number; i++) {
+                int random_position = ThreadLocalRandom.current().nextInt(2, board_size - 1);
+                int random_partner = ThreadLocalRandom.current().nextInt(1, random_position - 1);
+                Square square_to_transform = squares.get(random_position);
+                Square new_partner = squares.get(random_partner);
+                int iterations = 0;
+                while (square_to_transform.partner || new_partner.partner) {
+                    while (square_to_transform.partner) {
+                        random_position = ThreadLocalRandom.current().nextInt(2, board_size - 1);
+                        square_to_transform = squares.get(random_position);
+                        random_partner = ThreadLocalRandom.current().nextInt(1, random_position - 1);
+                        new_partner = squares.get(random_partner);
+                    }
+                    while (iterations < board_size && new_partner.partner) {
+                        random_partner = ThreadLocalRandom.current().nextInt(1, random_position - 1);
+                        new_partner = squares.get(random_partner);
+                        iterations++;
+                    }
+                }
+                Snake snake = new Snake(random_position + 1, this, random_partner + 1);
+                squares.set(random_position, snake);
+            }
+            for (int i = 0; i < ladders_number; i++) {
+                int random_position = ThreadLocalRandom.current().nextInt(1, board_size - 3);
+                int random_partner = ThreadLocalRandom.current().nextInt(random_position + 1, board_size - 2);
+                Square square_to_transform = squares.get(random_position);
+                Square new_partner = squares.get(random_partner);
+                int iterations = 0;
+                while (square_to_transform.partner || new_partner.partner) {
+                    while (square_to_transform.partner) {
+                        random_position = ThreadLocalRandom.current().nextInt(1, board_size - 3);
+                        square_to_transform = squares.get(random_position);
+                        random_partner = ThreadLocalRandom.current().nextInt(random_position + 1, board_size - 2);
+                        new_partner = squares.get(random_partner);
+                    }
+                    while (iterations < board_size && new_partner.partner) {
+                        random_partner = ThreadLocalRandom.current().nextInt(random_position + 1, board_size - 2);
+                        new_partner = squares.get(random_partner);
+                        iterations++;
+                    }
+                }
+                Ladder ladder = new Ladder(random_position + 1, this, random_partner + 1);
+                squares.set(random_position, ladder);
+            }
+
+        }
+    }
+             /*
+             int numsnakesladders = board_size/4;
+             int snakes = numsnakesladders/2;
+             int ladders = numsnakesladders/2;
              for (int i=0;i < snakes; i++){//start
-                 int randomint = ThreadLocalRandom.current().nextInt(2,board_size-1);;
+                 int randomint = ThreadLocalRandom.current().nextInt(3,board_size-1);;
                  while (squares.get(randomint).partner){
-                     randomint = ThreadLocalRandom.current().nextInt(2,board_size-1);}
+                     randomint = ThreadLocalRandom.current().nextInt(3,board_size-1);}
                  int position = squares.get(randomint).position;
                  Snake snake = new Snake(position, this, 0); //new snake
                  squares.set(position-1, snake);//delete out of list
-                 snake.settrue(snake);
                  while (snake.new_position==0){//check if there is a free position
-                     int random = ThreadLocalRandom.current().nextInt(1, snake.position-1);
+                     int random = ThreadLocalRandom.current().nextInt(2, snake.position-1);
                      if (squares.get(random).partner == false) {
                          squares.get(random).partner = true;
                          snake.new_position = random;
@@ -106,7 +157,6 @@ public class Game {
                  int position = squares.get(randmint).position;
                  Ladder ladder = new Ladder(position, this, 0);//new ladder
                  squares.set(position-1, ladder);//delete out of list
-                 ladder.settrue(ladder);
                  while (ladder.new_position == 0){ //check if there is a free position
                      int rando = ThreadLocalRandom.current().nextInt(ladder.position-1, board_size-2);
                      if (squares.get(rando).partner == false) {
@@ -118,7 +168,7 @@ public class Game {
                      }
                  }
                  }
-
+*/
 
 
 

@@ -5,6 +5,7 @@ public class Snake extends Square {
     public Snake(int number, Game game_obj, int squarenumber) {
         super(number, game_obj);
         new_position = squarenumber;
+        partner = true;
     }
 
     public void settrue(Snake snake){

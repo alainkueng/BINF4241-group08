@@ -6,7 +6,9 @@ public class Ladder extends Square {
 
     public Ladder(int number, Game game_obj, int squarepos) {
         super(number, game_obj);
-        new_position = squarepos;}
+        new_position = squarepos;
+        partner = true;
+    }
 
     @Override
     public void enter(Player player) {
