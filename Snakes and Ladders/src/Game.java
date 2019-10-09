@@ -25,7 +25,7 @@ public class Game {
         this.current = 0;
         this.squares = new ArrayList<Square>();
         createBoard();
-        addPlayer(); // anzahl spieler vorher herausfinden wie auf Blatt beschrieben?
+        addPlayer();
         System.out.print("Initial state:\t");
         printGame();
         Dice dice = new Dice();
@@ -83,7 +83,7 @@ public class Game {
             int ladders_number = special_number / 2;
             for (int i = 0; i < snakes_number; i++) {
                 int random_position = ThreadLocalRandom.current().nextInt(2, board_size - 1);
-                int random_partner = ThreadLocalRandom.current().nextInt(1, random_position - 1);
+                int random_partner = ThreadLocalRandom.current().nextInt(1, random_position);
                 Square square_to_transform = squares.get(random_position);
                 Square new_partner = squares.get(random_partner);
                 int iterations = 0;
