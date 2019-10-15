@@ -6,8 +6,10 @@ public class Tower implements Figure {
         this.color = color;
     }
     public boolean isValidMove(Board gameboard,int x_current, int y_current, int x_move, int y_move, Player player){
+        boolean valid = false;
         if(x_move > 8 || y_move > 8){
-            return false;
+            valid = false;
+            return valid;
         }
         //check if its a valid move for the tower
         else if(x_current == x_move || y_current == y_move){
@@ -15,11 +17,16 @@ public class Tower implements Figure {
             if(gameboard.board[x_move][y_move][1] != null){
                 //check if there is a white or black figure
                 if(player.getColor().equals(gameboard.board[x_move][y_move][1])){
-                    return false; //figure at new position is from the same player
+                    valid = false;   //figure at new position is from the same player
+
                 } else {
-                    return true;
+                    valid = true;
                 }
+            } else {
+                valid = true;
             }
         }
+        return valid;
+    }
     public void move(){}
 }

@@ -5,6 +5,8 @@ public class Queen implements Figure {
         this.color = color;
     }
 
-    public boolean isValidMove(Board gameboard){}
-    public void move(){}
+    @Override
+    public boolean isValidMove(Board gameboard,int x_current, int y_current, int x_move, int y_move, Player player){
+        return true;
+    }    public void move(){}
 }
