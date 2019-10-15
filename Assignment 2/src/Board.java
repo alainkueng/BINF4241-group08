@@ -1,12 +1,12 @@
-import java.awt.*;
+import java.util.List;
 
 public class Board {
 
-    public Square[][] board;
+    public Object[][][] board;
     public Figure.Type[] figureFirstRow;
 
     public Board(){
-        board = new Square[8][8];
+        board = new Object[8][8][2];
         Figure.Type[] figureFirstRow = new Figure.Type[]
                 {Figure.Type.TOWER, Figure.Type.KNIGHT, Figure.Type.BISHOP, Figure.Type.KING, Figure.Type.QUEEN,
                 Figure.Type.BISHOP, Figure.Type.KNIGHT, Figure.Type.TOWER};
@@ -20,39 +20,52 @@ public class Board {
             for (int j = 0; j < 8; j++){
                 if (i % 2 != 0 && j % 2 != 0){
                     Square new_square = new Square(Square.Colors.WHITE);
-                    board[i][j] = new_square;
+                    board[i][j][0] = new_square;
                 }
                 else if (i % 2 != 0 && j % 2 == 0){
                     Square new_square = new Square(Square.Colors.BLACK);
-                    board[i][j] = new_square;
+                    Object[] content = new Object[2];
+                    content[0] = new_square;
+                    board[i][j][0] = new_square;
                 }
                 else if (i % 2 == 0 && j % 2 != 0){
                     Square new_square = new Square(Square.Colors.BLACK);
-                    board[i][j] = new_square;
+                    Object[] content = new Object[2];
+                    content[0] = new_square;
+                    board[i][j][0] = new_square;
                 }
                 else{
                     Square new_square = new Square(Square.Colors.WHITE);
-                    board[i][j] = new_square;
+                    Object[] content = new Object[2];
+                    content[0] = new_square;
+                    board[i][j][0] = new_square;
                 }
             }
         }
     }
     private void initFigure(Figure.Colors color){
         if(color == Figure.Colors.BLACK){
+
+        }
+
+    }
+    /*
+    private void initFigure(Figure.Colors color){
+        if(color == Figure.Colors.BLACK){
             for(int i = 0; i < 8; i++){
-                board[0][i] = new Figure(figureFirstRow[i], color);
+                board[0][i][1] = new Figure(figureFirstRow[i], color);
             }
             for(int i = 0; i < 8; i++){
-                board[1][i] = new Figure(Figure.Type.PAWN, color);
+                board[1][i][1] = new Figure(Figure.Type.PAWN, color);
             }
         }
         else{
             for(int i = 0; i < 8; i++){
-                board[6][i] = new Figure(figureFirstRow[i], color);
+                board[7][i][1] = new Figure(figureFirstRow[i], color);
             }
             for(int i = 0; i < 8; i++){
-                board[7][i] = new Figure(Figure.Type.PAWN, color);
+                board[6][i][1] = new Figure(Figure.Type.PAWN, color);
             }
         }
-    }
+    }*/
 }
