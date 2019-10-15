@@ -11,10 +11,13 @@ import java.util.ArrayList;
         this.eatenPieces = new ArrayList<Figure>();
     }
     public String getName(){
-        return name;
+        return this.name;
     }
     public void setEatenPieces(Figure figure){
         eatenPieces.add(figure);
         //needs to check if a figure has been eaten or anyone could add a random figure to the dumbster
+    }
+    public colors getColor(){
+        return this.color;
     }
 }
