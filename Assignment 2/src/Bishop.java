@@ -1,3 +1,4 @@
+
 public class Bishop implements Figure{
 
     Colors color;
@@ -10,8 +11,12 @@ public class Bishop implements Figure{
 
 
 
-    public void isValidMove(Board gameboard){
+
+
+    @Override
+    public boolean isValidMove(Board gameboard) {
 
     }
+
     public void move(){}
 }

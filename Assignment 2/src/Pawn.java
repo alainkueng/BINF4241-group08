@@ -9,6 +9,6 @@ public class Pawn implements Figure {
 
 
 
-    public void isValidMove(){}
+    public boolean isValidMove(Board gameboard){}
     public void move(){}
 }
