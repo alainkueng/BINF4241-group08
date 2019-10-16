@@ -33,7 +33,7 @@ public class Game {
                 break;
             }
             else {
-                System.out.println("Try Again. Please input characters from A-Z. Max. length 15 letter");}
+                System.out.println("Try Again. Please input characters from A-Z. Max. length 15 letters");}
 
             }
         this.white = new Player(whitename, Player.colors.WHITE);
