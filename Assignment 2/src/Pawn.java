@@ -6,17 +6,11 @@ public class Pawn implements Figure {
         this.color = color;
     }
 
-
-
-
-    public boolean isValidMove(Board gameboard, int xCurrent, int yCurrent, int xMove, int yMove){
+    //check documentation of Interface
+    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
         boolean valid = false;
-        if(xMove > 8 || yMove > 8){
-            valid = false;
-            return valid;
-        }
         //check if its the first move and player wants to move forward
-        else if (yCurrent == 1 && yMove == 3 && xCurrent == xMove || yCurrent == 6 && yMove == 4 && xCurrent == xMove) {
+        if (yCurrent == 1 && yMove == 3 && xCurrent == xMove || yCurrent == 6 && yMove == 4 && xCurrent == xMove) {
             valid = true;
         }
         // pawn is not in initial position and wants to move forward}

@@ -1,14 +1,13 @@
-
 public class Bishop implements Figure{
 
-    Colors color;
 
+    Colors color;
     public Bishop(Colors color){
         this.color = color;
     }
 
-    @Override
-    public boolean isValidMove(Board gameboard, int xCurrent, int yCurrent, int xMove, int yMove){
+    //check documentation of Interface
+    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
         boolean valid = false;
         if(xMove > 8 || yMove > 8){
             valid = false;
@@ -17,6 +16,7 @@ public class Bishop implements Figure{
         else if(Math.abs(xMove - xCurrent) == Math.abs(yMove - yCurrent)){
             valid = true;
         }
+        else {valid = false;}
         return valid;
     }
 }
