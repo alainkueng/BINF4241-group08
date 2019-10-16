@@ -26,7 +26,7 @@ public class Game {
         boolean Scan_string_check_2 = false;
         String blackname= null;
         while (!Scan_string_check_2){
-            System.out.println("Please enter playername for black the side");
+            System.out.println("Please enter playername for the black side");
             blackname = player2.nextLine();
             if (blackname!= null && blackname.matches("^[a-zA-Z]*$")){
                 Scan_string_check_2 = true;
