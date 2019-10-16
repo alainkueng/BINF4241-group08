@@ -7,7 +7,7 @@ public class King implements Figure {
 
 
     @Override
-    public boolean isValidMove(Board gameboard,int x_current, int y_current, int x_move, int y_move, Player player){
+    public boolean isValidMove(Board gameboard, int xCurrent, int yCurrent, int xMove, int yMove, Player player){
         return true;
     }
     public void move(){}

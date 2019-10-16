@@ -36,14 +36,14 @@ public class Board {
     }
 
     private void initFigure(Figure.Colors color, int rowNumber) {
-        board[rowNumber][0][1] = new Tower(color);
+        board[rowNumber][0][1] = new Rook(color);
         board[rowNumber][1][1] = new Knight(color);
         board[rowNumber][2][1] = new Bishop(color);
         board[rowNumber][3][1] = new Queen(color);
         board[rowNumber][4][1] = new King(color);
         board[rowNumber][5][1] = new Bishop(color);
         board[rowNumber][6][1] = new Knight(color);
-        board[rowNumber][7][1] = new Tower(color);
+        board[rowNumber][7][1] = new Rook(color);
         if(color == Figure.Colors.BLACK) {
             rowNumber = 1;
         }
@@ -53,5 +53,11 @@ public class Board {
         for(int i = 0; i < 8; i++){
             board[rowNumber][i][1] = new Pawn(color);
         }
+    }
+
+    public Object[][][] getBoard(){
+        Object[][][] copyboard = new Object[8][8][2];
+        return Arrays.copyOf(board);
+
     }
 }
