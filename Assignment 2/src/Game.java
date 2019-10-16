@@ -31,5 +31,32 @@ public class Game {
         }
         return name;
     }
+
+    /**
+     * @param newX - x position where figure is to be moved
+     * @param newY - y position where figure is to be moved
+     * @return - true or false depending if the coordinates are in range
+     */
+    public boolean isLegalMove(int newX, int newY){
+        if((0 <= newX && newX >= 7) && (0 <= newY && newY >= 7))
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     *
+     * @param gameboard - chess game board
+     * @param newX - x position where figure is to be moved
+     * @param newY - y position where figure is to be moved
+     * @return - true or false depending if there is a figure in [newX,newY]: False = NOT occupied
+     */
+    public boolean isOccupied(Board gameboard, int newX, int newY){
+        if (gameboard.board[newX][newY][1] == null)
+            return false;
+        else
+            return true;
+    }
+
 }
 
