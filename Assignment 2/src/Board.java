@@ -92,7 +92,8 @@ public class Board {
     }
 
     public boolean check(){
-        //for every figure on board check on possible moves!
+        //where is the king
+        //for every figure on board check on possible moves that could hit king!
         //
         //if okay return true
 

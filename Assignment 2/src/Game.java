@@ -15,6 +15,7 @@ public class Game {
         this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK); //Create black Player
         this.current.add(this.white); //Add white Player to current list to track who's turn it is
         this.current.add(this.black); //Add black Player to current list to track who's turn it is
+        parseInput(inputmoveandcheck(white.getName())); // This needs to be changed for the loop/ gets input move and checks it and gives back an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,]
     }
     /**
      * @param color - to ask for player
@@ -64,6 +65,25 @@ public class Game {
             return false;
         else
             return true;
+    }
+    private String inputmoveandcheck(String currentplayer){
+        /**
+         * @param currentplayer - for asking whos turn it is
+         * @return: returns the move input from the player after getting checked
+         */
+        Scanner player = new Scanner(System.in);
+        boolean stringCheck = false; //boolean to check if input is correct
+        String input = null;
+        while (!stringCheck){
+            System.out.printf("Player %s enter your move:", currentplayer);
+            input = player.nextLine();
+            if (input.matches("^[a-hRBNQK1-9]*$")&& !input.equals("") && input.length() < 6 && input.length() > 1){ //checks for alphabet, for no input and for length of input
+                stringCheck = true;
+                }
+            else{System.out.println("Invalid Input");//prints if stringCheck is wrong, to let user know that input is wrong
+            }
+        }
+      return input;
     }
     private Object[] parseInput(String input){
         /**
