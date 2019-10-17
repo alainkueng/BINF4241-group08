@@ -57,7 +57,7 @@ public class Board {
 
     public Object[][][] getBoard(){
         Object[][][] copyboard = new Object[8][8][2];
-        return Arrays.copyOf(board);
+        return copyboard;
 
     }
 }

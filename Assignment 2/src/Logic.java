@@ -35,11 +35,14 @@ public class Logic {
         return true;
     }
 
-
-
     public boolean check(){
+        //for every figure on board check on possible moves!
+        //
+        //if okay return true
+
         return true;
     }
+
 
     public boolean checkMate(){
         return true;

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
@@ -5,12 +6,15 @@ public class Game {
     private Logic logic;
     private Player white;
     private Player black;
+    private ArrayList<Player> current; //to know who is playing
 
     Game(){
         this.gameboard = new Board();
         this.logic = new Logic();
         this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE);
         this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK);
+        this.current.add(this.white);
+        this.current.add(this.black);
     }
     private String initPlayer(Player.colors color){
         Scanner player = new Scanner(System.in);
