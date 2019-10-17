@@ -13,26 +13,30 @@ public class Game {
     Game(){
         this.gameboard = new Board();
         this.logic = new Logic();
-        this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE);
-        this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK);
-        this.current.add(this.white);
-        this.current.add(this.black);
+        this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE); //Create white Player
+        this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK); //Create black Player
+        this.current.add(this.white); //Add white Player to current list to track who's turn it is
+        this.current.add(this.black); //Add black Player to current list to track who's turn it is
     }
+    /**
+     * @param color - to ask for player
+     * @return - String Name to create a player() after
+     */
     private String initPlayer(Player.colors color){
         Scanner player = new Scanner(System.in);
-        boolean stringCheck = false;
+        boolean stringCheck = false; //boolean to check if input is correct
         String name = null;
         while (!stringCheck){
             System.out.printf("Please enter playername for the %s side.\n", color);
             name = player.nextLine();
-            if (name.matches("^[a-zA-Züöäéàèçëòêâôîï]*$")&& !name.equals("") && name.length() < 15){
+            if (name.matches("^[a-zA-Züöäéàèçëòêâôîï]*$")&& !name.equals("") && name.length() < 15){ //checks for alphabet, for no input and for input is longer than 15
                 stringCheck = true;
-                if(color == Player.colors.BLACK && white.getName().equals(name)){
+                if(color == Player.colors.BLACK && white.getName().equals(name)){// checks if name is already used
                     stringCheck = false;
                     System.out.println("Name already used!");
                 }
             }
-            else{System.out.println("Please input a name with max. length 15 letters on a Swiss Keyboard");
+            else{System.out.println("Please input a name with max. length 15 letters on a Swiss Keyboard");//prints if stringCheck is wrong, to let user know that input is wrong
             }
         }
         return name;

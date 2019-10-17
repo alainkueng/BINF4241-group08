@@ -13,6 +13,7 @@ import java.util.ArrayList;
     public String getName(){
         return this.name;
     }
+
     public void setEatenPieces(Figure figure){
         eatenPieces.add(figure);
         //needs to check if a figure has been eaten or anyone could add a random figure to the dumbster
