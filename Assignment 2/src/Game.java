@@ -8,7 +8,7 @@ public class Game {
     private Logic logic;
     private Player white;
     private Player black;
-    private ArrayList<Player> current; //to know who is playing
+    private ArrayList<Player> current = new ArrayList<>(); //to know who is playing
 
     Game(){
         this.gameboard = new Board();
