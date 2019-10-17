@@ -4,18 +4,18 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private Board gameboard;
+    private Board gameBoard;
     private Player white;
     private Player black;
-    private ArrayList<Player> current = new ArrayList<>(); //to know who is playing
+    private ArrayList<Player> current = new ArrayList<Player>(); //to know who is playing
 
     Game(){
-        this.gameboard = new Board();
+        this.gameBoard = new Board();
         this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE); //Create white Player
         this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK); //Create black Player
         this.current.add(this.white); //Add white Player to current list to track who's turn it is
         this.current.add(this.black); //Add black Player to current list to track who's turn it is
-        parseInput(inputmoveandcheck(white.getName())); // This needs to be changed for the loop/ gets input move and checks it and gives back an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,]
+        parseInput(inputMoveAndCheck(white.getName())); // This needs to be changed for the loop/ gets input move and checks it and gives back an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,]
     }
     /**
      * @param color - to ask for player
@@ -26,7 +26,7 @@ public class Game {
         boolean stringCheck = false; //boolean to check if input is correct
         String name = null;
         while (!stringCheck){
-            System.out.printf("Please enter playername for the %s side.\n", color);
+            System.out.printf("Please enter player name for the %s side.\n", color);
             name = player.nextLine();
             if (name.matches("^[a-zA-Züöäéàèçëòêâôîï]*$")&& !name.equals("") && name.length() < 15){ //checks for alphabet, for no input and for input is longer than 15
                 stringCheck = true;
@@ -55,27 +55,27 @@ public class Game {
 
     /**
      *
-     * @param gameboard - chess game board
+     * @param gameBoard - chess game board
      * @param newX - x position where figure is to be moved
      * @param newY - y position where figure is to be moved
      * @return - true or false depending if there is a figure in [newX,newY]: False = NOT occupied
      */
-    public boolean isOccupied(Board gameboard, int newX, int newY){
-        if (gameboard.board[newX][newY][1] == null)
+    public boolean isOccupied(Board gameBoard, int newX, int newY){
+        if (gameBoard.board[newX][newY][1] == null)
             return false;
         else
             return true;
     }
-    private String inputmoveandcheck(String currentplayer){
+    private String inputMoveAndCheck(String currentPlayer){
         /**
-         * @param currentplayer - for asking whos turn it is
+         * @param currentPlayer - for asking whos turn it is
          * @return: returns the move input from the player after getting checked
          */
         Scanner player = new Scanner(System.in);
         boolean stringCheck = false; //boolean to check if input is correct
         String input = null;
         while (!stringCheck){
-            System.out.printf("Player %s enter your move:", currentplayer);
+            System.out.printf("Player %s enter your move:", currentPlayer);
             input = player.nextLine();
             if (input.matches("^[a-hRBNQK1-9]*$")&& !input.equals("") && input.length() < 6 && input.length() > 1){ //checks for alphabet, for no input and for length of input
                 stringCheck = true;
