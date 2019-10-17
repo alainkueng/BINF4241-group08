@@ -5,14 +5,12 @@ import java.util.Scanner;
 
 public class Game {
     private Board gameboard;
-    private Logic logic;
     private Player white;
     private Player black;
     private ArrayList<Player> current = new ArrayList<>(); //to know who is playing
 
     Game(){
         this.gameboard = new Board();
-        this.logic = new Logic();
         this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE); //Create white Player
         this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK); //Create black Player
         this.current.add(this.white); //Add white Player to current list to track who's turn it is
