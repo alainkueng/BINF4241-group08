@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
@@ -61,6 +63,56 @@ public class Game {
         else
             return true;
     }
+    private Object[] parseInput(String input){
+        /**
+         * @return: returns an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,]
+         */
 
+        int length = input.length();
+        Object[] parsedInput = new Object[5];
+
+        ArrayList<Character> mapping = new ArrayList<Character>();
+        mapping.add('a');
+        mapping.add('b');
+        mapping.add('c');
+        mapping.add('d');
+        mapping.add('e');
+        mapping.add('f');
+        mapping.add('g');
+        mapping.add('h');
+
+
+        Map <Character, Class> figureCatalog = new HashMap<Character, Class>();
+        figureCatalog.put('R', Rook.class);
+        figureCatalog.put('B', Bishop.class);
+        figureCatalog.put('N', Knight.class);
+        figureCatalog.put('Q', Queen.class);
+        figureCatalog.put('K', King.class);
+
+        if (length == 2){
+            parsedInput[0] = Pawn.class;
+            parsedInput[3] = Character.digit(input.charAt(1),10);
+            parsedInput[4] = mapping.indexOf(input.charAt(1));
+        }
+        else if(length == 3){
+            parsedInput[0] = figureCatalog.get(input.charAt(0));
+            parsedInput[3] = Character.digit(input.charAt(2),10);
+            parsedInput[4] = mapping.indexOf(input.charAt(1));
+        }
+        else if(length == 4){
+            parsedInput[0] = figureCatalog.get(input.charAt(0));
+            parsedInput[2] = mapping.indexOf(input.charAt(1));
+            parsedInput[3] = Character.digit(input.charAt(3),10);
+            parsedInput[4] = mapping.indexOf(input.charAt(2));
+        }
+        else if(length == 5){
+            parsedInput[0] = figureCatalog.get(input.charAt(0));
+            parsedInput[1] = Character.digit(input.charAt(2), 10);
+            parsedInput[2] = mapping.indexOf(input.charAt(1));
+            parsedInput[3] = Character.digit(input.charAt(4),10);
+            parsedInput[4] = mapping.indexOf(input.charAt(3));
+        }
+        return parsedInput;
+    }
 }
 
