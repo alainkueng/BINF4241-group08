@@ -25,4 +25,9 @@ public class Pawn implements Figure {
         }
         return valid;
     }
+
+    @Override
+    public Colors getColor() {
+        return this.color;
+    }
 }

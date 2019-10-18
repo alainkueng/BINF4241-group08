@@ -1,9 +1,11 @@
 public class Rook implements Figure {
 
 
-    Colors color;
+    private Colors color;
+    private boolean moved;
     public Rook(Colors color){
         this.color = color;
+        this.moved = false;
     }
 
     //check documentation of Interface
@@ -18,5 +20,20 @@ public class Rook implements Figure {
             valid = true;
         }
         return valid;
+    }
+
+    @Override
+    public Colors getColor() {
+        return this.color;
+    }
+
+    //set moved to true
+    public void kingHasMoved(){
+        this.moved = true;
+    }
+
+    //returns true if king has moved
+    public boolean getHasMoved(){
+        return this.moved;
     }
 }

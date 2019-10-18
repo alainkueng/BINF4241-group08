@@ -11,6 +11,7 @@ public interface Figure {
      * @return boolean to check if move of the figure is even valid
      */
     public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove);
+    public Colors getColor();
 }
 
 

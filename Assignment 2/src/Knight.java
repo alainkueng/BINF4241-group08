@@ -1,7 +1,7 @@
 public class Knight implements Figure {
 
 
-    Colors color;
+    private Colors color;
     public Knight(Colors color){
         this.color = color;
     }
@@ -17,7 +17,20 @@ public class Knight implements Figure {
         else if(xMove == xCurrent - 1 && yMove == yCurrent - 2 || xMove == xCurrent + 1 && yMove == yCurrent - 2){
             valid = true;
         }
+        //move left-up or left-down
+        else if (xMove == xCurrent - 2 && yMove == yCurrent - 1 || xMove == xCurrent - 2 && yMove == yCurrent + 1){
+            valid = true;
+        }
+        //move right-up or right-down
+        else if (xMove == xCurrent + 2 && yMove == yCurrent - 1 || xMove == xCurrent + 2 && yMove == yCurrent + 1){
+            valid = true;
+        }
         else{ valid = false;}
         return valid;
+    }
+
+    @Override
+    public Colors getColor() {
+        return this.color;
     }
 }

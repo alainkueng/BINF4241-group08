@@ -1,9 +1,11 @@
 public class King implements Figure {
 
 
-    Colors color;
+    private Colors color;
+    private boolean moved;
     public King(Colors color){
         this.color = color;
+        moved = false;
     }
 
     //check documentation of Interface
@@ -20,5 +22,19 @@ public class King implements Figure {
         else if(xMove == xCurrent - 1 && yMove == yCurrent - 1 || xMove == xCurrent + 1 && yMove == yCurrent - 1){valid = true;}
         else {valid = false;}
         return valid;
+    }
+
+    @Override
+    public Colors getColor() {
+        return this.color;
+    }
+    //set moved to true
+    public void kingHasMoved(){
+        this.moved = true;
+    }
+
+    //returns true if king has moved
+    public boolean getHasMoved(){
+        return this.moved;
     }
 }

@@ -1,7 +1,7 @@
 public class Bishop implements Figure{
 
 
-    Colors color;
+    private Colors color;
     public Bishop(Colors color){
         this.color = color;
     }
@@ -18,5 +18,10 @@ public class Bishop implements Figure{
         }
         else {valid = false;}
         return valid;
+    }
+
+    @Override
+    public Colors getColor() {
+        return this.color;
     }
 }
