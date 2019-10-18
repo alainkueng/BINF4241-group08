@@ -66,24 +66,143 @@ public class Game {
         else
             return true;
     }
-    private String inputMoveAndCheck(String currentPlayer){
+    private ArrayList inputMoveAndCheck(String currentPlayer){
         /**
          * @param currentPlayer - for asking whos turn it is
          * @return: returns the move input from the player after getting checked
          */
+        ArrayList<Object> MoveKill = new ArrayList<Object>(); // List that should contain the input and if it kills the target
         Scanner player = new Scanner(System.in);
         boolean stringCheck = false; //boolean to check if input is correct
         String input = null;
+        boolean capture = false; //to know if player wants to capture something
         while (!stringCheck){
             System.out.printf("Player %s enter your move:", currentPlayer);
             input = player.nextLine();
-            if (input.matches("^[a-hRBNQK1-9]*$")&& !input.equals("") && input.length() < 6 && input.length() > 1){ //checks for alphabet, for no input and for length of input
+            int inputLength = input.length();
+
+            if (inputLength == 2){//to move Pawns to a new field "e5")
+                String char1 = Character.toString(input.charAt(0));
+                String char2 = Character.toString(input.charAt(1));
+
+                if (char1.matches("^[a-h]*$") & char2.matches("^[1-8]*$")){ //check for pawn move
+                    stringCheck = true;
+                }
+            }
+            if (inputLength == 3){  //to move a figure "Be5"
+                                    //casteling on king side "o-o"
+                                    //asking for a draw "(=)"
+                String char1 = Character.toString(input.charAt(0));
+                String char2 = Character.toString(input.charAt(1));
+                String char3 = Character.toString(input.charAt(2));
+
+                if (char1.matches("^[RBNQK]*$") & char2.matches("^[a-h]*$") & char3.matches("^[1-8]*$")){//normal move figure
+                    stringCheck = true;
+                }
+                if (char1.matches("^[o]*$") & char2.matches("^[-]*$") & char3.matches("^[o]*$") & char3.matches("^[-]*$")){//casteling check
+                    stringCheck = true;
+                }
+                if (char1.matches("^[(]*$") & char2.matches("^[=]*$") & char3.matches("^[)]*$")){//ask for drawcheck
+                    stringCheck = true;
+                }
+
+            }
+            if (inputLength == 4) {     //to kill with a figure if there is only one possibility "Bxd5"
+                                        //kill with a pawn since you always give a line which indicates which pawn to take "exd5".
+                                        //To move a figure if there are 2 possibilities "Bdb8"
+                                        //pawn promotion indicated  "e8=Q"
+                String char1 = Character.toString(input.charAt(0));
+                String char2 = Character.toString(input.charAt(1));
+                String char3 = Character.toString(input.charAt(2));
+                String char4 = Character.toString(input.charAt(3));
+
+                if (char1.matches("^[RBNQK]*$") & char2.matches("^[x]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$")) {//to kill with a figure check()
+                    stringCheck = true;
+                    capture = true;
+                    //change input
+                }
+                if (char1.matches("^[a-h]*$") & char2.matches("^[x]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$")) {//pawn kills someone check()
+                    stringCheck = true;
+                    capture = true;
+                    //change input
+                }
+                if (char1.matches("^[RBNQK]*$") & char2.matches("^[a-h]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$")) {//move figure if there are 2 possibilities
+                    stringCheck = true;
+                }
+                if (char1.matches("^[a-h]*$") & char2.matches("^[1-8]*$") & char3.matches("^[=]*$") & char4.matches("^[RBNQK]*$")) {//check for promotion input
+                    stringCheck = true;
+                }
+            }
+
+            if (inputLength == 5) { //to kill if 2 figures could kill the same enemy figure "Bdxb8"
+                                    //Casteling on Queenside "o-o-o"
+                                    //to move with a figure, both x and y since they could reach the same place e.g Queen "Qh4e1"
+                String char1 = Character.toString(input.charAt(0));
+                String char2 = Character.toString(input.charAt(1));
+                String char3 = Character.toString(input.charAt(2));
+                String char4 = Character.toString(input.charAt(3));
+                String char5 = Character.toString(input.charAt(4));
+
+                if (char1.matches("^[RBNQK]*$") & char2.matches("^[a-h]*$") & char3.matches("^[x]*$") & char4.matches("^[a-h]*$") & char5.matches("^[1-8]*$")) {//check for 2 figures input
+                    stringCheck = true;
+                    capture = true;
+                    //change input
+                }
+                if (char1.matches("^[o]*$") & char2.matches("^[-]*$") & char3.matches("^[o]*$") & char4.matches("^[-]*$")& char5.matches("^[o]*$")) {//casteling queenside input
+                    stringCheck = true;
+                }
+                if (char1.matches("^[RBNQK]*$") & char2.matches("^[a-h]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$")& char5.matches("^[1-8]*$")) {//move when 2 figures are on same x or y line input
+                    stringCheck = true;
+                }
+
+            }
+
+
+            if (inputLength == 6) { //to kill with a figure, both x and y since they are both are on the same line e.g Queen "Qh4xe1"
+                String char1 = Character.toString(input.charAt(0));
+                String char2 = Character.toString(input.charAt(1));
+                String char3 = Character.toString(input.charAt(2));
+                String char4 = Character.toString(input.charAt(3));
+                String char5 = Character.toString(input.charAt(4));
+                String char6 = Character.toString(input.charAt(5));
+
+                if (char1.matches("^[RBNQK]*$") & char2.matches("^[a-h]*$") & char3.matches("^[1-8]*$") & char4.matches("^[x]*$") & char5.matches("^[a-h]*$") & char6.matches("^[1-8]*$")) {//check for 2 figures input
+                    stringCheck = true;
+                    capture = true;
+                    //change input
+                }
+
+            }
+
+            if (inputLength == 8){ //make a en passant move "exd6e.p."
+                String char1 = Character.toString(input.charAt(0));
+                String char2 = Character.toString(input.charAt(1));
+                String char3 = Character.toString(input.charAt(2));
+                String char4 = Character.toString(input.charAt(3));
+                String char5 = Character.toString(input.charAt(4));
+                String char6 = Character.toString(input.charAt(5));
+                String char7 = Character.toString(input.charAt(5));
+                String char8 = Character.toString(input.charAt(5));
+
+                if (char1.matches("^[a-h]*$") & char2.matches("^[x]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$") & char5.matches("^[a-h]*$") & char6.matches("^[.]*$") & char7.matches("^[p]*$") & char8.matches("^[.]*$")) {//check for 2 figures input
+                    stringCheck = true;
+                    capture = true;
+                    //change input
+                }
+            }
+
+
+            if (input.matches("^[a-hRBNQK1-8]*$")&& !input.equals("") && input.length() < 6 && input.length() > 1){ //checks for alphabet, for no input and for length of input
                 stringCheck = true;
+                // deleted this
                 }
             else{System.out.println("Invalid Input");//prints if stringCheck is wrong, to let user know that input is wrong
-            }
+            } // need to add a boolean to check if input was wrong and then it gets printed
         }
-      return input;
+        MoveKill.add(input);
+        MoveKill.add(capture);
+
+        return MoveKill;
     }
     private Object[] parseInput(String input){
         /**
