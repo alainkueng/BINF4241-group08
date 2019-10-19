@@ -119,12 +119,14 @@ public class Game {
                 if (char1.matches("^[RBNQK]*$") & char2.matches("^[x]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$")) {//to kill with a figure check()
                     stringCheck = true;
                     capture = true;
-                    //change input
+                    input = char1 + char3 + char4; //input with no x
+
                 }
                 if (char1.matches("^[a-h]*$") & char2.matches("^[x]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$")) {//pawn kills someone check()
                     stringCheck = true;
                     capture = true;
-                    //change input
+                    input = char1 + char3 + char4; //input with no x
+
                 }
                 if (char1.matches("^[RBNQK]*$") & char2.matches("^[a-h]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$")) {//move figure if there are 2 possibilities
                     stringCheck = true;
@@ -146,7 +148,8 @@ public class Game {
                 if (char1.matches("^[RBNQK]*$") & char2.matches("^[a-h]*$") & char3.matches("^[x]*$") & char4.matches("^[a-h]*$") & char5.matches("^[1-8]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
-                    //change input
+                    input = char1 + char2 + char4 + char5;//change input
+
                 }
                 if (char1.matches("^[o]*$") & char2.matches("^[-]*$") & char3.matches("^[o]*$") & char4.matches("^[-]*$")& char5.matches("^[o]*$")) {//casteling queenside input
                     stringCheck = true;
@@ -169,7 +172,7 @@ public class Game {
                 if (char1.matches("^[RBNQK]*$") & char2.matches("^[a-h]*$") & char3.matches("^[1-8]*$") & char4.matches("^[x]*$") & char5.matches("^[a-h]*$") & char6.matches("^[1-8]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
-                    //change input
+                    input = char1 + char2 + char3 + char5 + char6;//change input
                 }
 
             }
@@ -187,17 +190,12 @@ public class Game {
                 if (char1.matches("^[a-h]*$") & char2.matches("^[x]*$") & char3.matches("^[a-h]*$") & char4.matches("^[1-8]*$") & char5.matches("^[a-h]*$") & char6.matches("^[.]*$") & char7.matches("^[p]*$") & char8.matches("^[.]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
-                    //change input
+                    //change input that raffi can make an enpassant
                 }
             }
 
-
-            if (input.matches("^[a-hRBNQK1-8]*$")&& !input.equals("") && input.length() < 6 && input.length() > 1){ //checks for alphabet, for no input and for length of input
-                stringCheck = true;
-                // deleted this
-                }
             else{System.out.println("Invalid Input");//prints if stringCheck is wrong, to let user know that input is wrong
-            } // need to add a boolean to check if input was wrong and then it gets printed
+            }
         }
         MoveKill.add(input);
         MoveKill.add(capture);
