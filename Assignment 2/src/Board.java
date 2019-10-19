@@ -9,6 +9,9 @@ public class Board {
         initFigure(Figure.Colors.WHITE, 7);
     }
 
+    /**
+     * Initalizes a chessboard 8x8 with the known white and black chequering.
+     */
     private void initBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -35,6 +38,11 @@ public class Board {
         }
     }
 
+    /**
+     * @param color The current color or side that should be initialized
+     * @param rowNumber The edge of the board, either on the black or the white side
+     *                  Initializes the figures in the right order on the chessboard.
+     */
     private void initFigure(Figure.Colors color, int rowNumber) {
         board[rowNumber][0][1] = new Rook(color);
         board[rowNumber][1][1] = new Knight(color);
@@ -55,12 +63,16 @@ public class Board {
         }
     }
 
+    /**
+     * creates a copy of the current game board
+     * @return returns a copy of the current game board
+     */
+
     public Object[][][] getBoard(){
-        Object[][][] copyboard = new Object[8][8][2];
-        return copyboard;
-
+        Object[][][] boardCopy;
+        boardCopy = board.clone();
+        return boardCopy;
     }
-
 
     /**
      *
@@ -79,9 +91,8 @@ public class Board {
             board[xCurrent][yCurrent][1] = new Queen(Figure.Colors.WHITE);
     }
 
-
     /**
-     * INPUT = 0-0 for Kingside castle and 0-0-0 for queenside castle -->
+     * INPUT = 0-0 for Kings' castle and 0-0-0 for queens' castle -->
      * User input has to be parsed to this 0-0:int 0 or 0-0-0: int 1
      * King has not moved
      * King not in check
@@ -94,7 +105,6 @@ public class Board {
         boolean blockedPath = false;
         if (input == 0) {
             if (!kingToCastle.getHasMoved() && !check(0,4,kingToCastle)) {
-
                 if (kingToCastle.getColor() == Figure.Colors.BLACK && board[0][7][1] != null && board[0][7][1].getClass() == Rook.class) {
                     Rook rook = (Rook) board[0][7][1];
                     if (rook.getColor() == Figure.Colors.BLACK && !rook.getHasMoved()) {
@@ -133,7 +143,6 @@ public class Board {
                 }
             }
         }
-
         else if (input == 1){
             if (!kingToCastle.getHasMoved() && !check(0,4,kingToCastle)) {
                 if (kingToCastle.getColor() == Figure.Colors.BLACK && board[0][0][1] != null && board[0][0][1].getClass() == Rook.class) {
