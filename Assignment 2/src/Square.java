@@ -4,8 +4,6 @@ public class Square {
     Colors color;
 
     /**
-     *
-     * *
      * @param color: color of square
      */
     Square(Colors color){

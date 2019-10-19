@@ -1,14 +1,40 @@
 public class King implements Figure {
 
-    Colors color;
+
+    private Colors color;
+    private boolean moved;
     public King(Colors color){
         this.color = color;
+        moved = false;
     }
 
+    //check documentation of Interface
+    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
+        boolean valid = false;
+        //move down or down
+        if(xCurrent == xMove && yMove == yCurrent + 1 || xCurrent == xMove && yMove == yCurrent - 1)
+            valid = true;
+        //move left or right
+        else if(yCurrent == yMove && xMove == xCurrent - 1 || yCurrent == yMove && xMove == xCurrent + 1){valid = true;}
+        //move down-diagonally
+        else if(xMove == xCurrent - 1 && yMove == yCurrent + 1 || xMove == xCurrent + 1 && yMove == yCurrent + 1){valid = true;}
+        //move up-diagonally
+        else if(xMove == xCurrent - 1 && yMove == yCurrent - 1 || xMove == xCurrent + 1 && yMove == yCurrent - 1){valid = true;}
+        else {valid = false;}
+        return valid;
+    }
 
     @Override
-    public boolean isValidMove(Board gameboard,int x_current, int y_current, int x_move, int y_move, Player player){
-        return true;
+    public Colors getColor() {
+        return this.color;
     }
-    public void move(){}
+    //set moved to true
+    public void kingHasMoved(){
+        this.moved = true;
+    }
+
+    //returns true if king has moved
+    public boolean getHasMoved(){
+        return this.moved;
+    }
 }

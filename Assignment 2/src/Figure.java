@@ -1,10 +1,17 @@
+import java.util.Collection;
+
 public interface Figure {
-    enum Type {PAWN, TOWER, KNIGHT, QUEEN, KING, BISHOP}
     enum Colors {BLACK, WHITE}
 
-    public boolean isValidMove(Board gameboard,int x_current, int y_current, int x_move, int y_move, Player player);
-    public void move();
-
+    /**
+     * @param xCurrent - current x coordinate of figure
+     * @param yCurrent - current y coordinate of figure
+     * @param xMove - x coordinate where figure has to be moved
+     * @param yMove - y coordinate where figure has to be moved
+     * @return boolean to check if move of the figure is even valid
+     */
+    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove);
+    public Colors getColor();
 }
 
 

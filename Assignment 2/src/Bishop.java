@@ -1,23 +1,27 @@
-
 public class Bishop implements Figure{
 
-    Colors color;
 
+    private Colors color;
     public Bishop(Colors color){
         this.color = color;
     }
 
-
-
-
-
-
-
-    @Override
-    public boolean isValidMove(Board gameboard,int x_current, int y_current, int x_move, int y_move, Player player){
-        return true;
+    //check documentation of Interface
+    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
+        boolean valid = false;
+        if(xMove > 8 || yMove > 8){
+            valid = false;
+        }
+        //move all diagonal ways
+        else if(Math.abs(xMove - xCurrent) == Math.abs(yMove - yCurrent)){
+            valid = true;
+        }
+        else {valid = false;}
+        return valid;
     }
 
-
-    public void move(){}
+    @Override
+    public Colors getColor() {
+        return this.color;
+    }
 }
