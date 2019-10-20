@@ -16,7 +16,7 @@ public class Rook implements Figure {
         if(xCurrent == xMove && yCurrent > yMove || xCurrent == xMove && yCurrent < yMove){
             valid = true;
         }
-        //move left
+        //move left or right
         else if(xCurrent > xMove && yCurrent == yMove || xCurrent < xMove && yCurrent == yMove){
             valid = true;
         }

@@ -7,6 +7,7 @@ public class Queen implements Figure {
     }
 
     //check documentation of Interface
+    @SuppressWarnings("Duplicates")
     public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove) {
         boolean valid = false;
 
@@ -14,7 +15,7 @@ public class Queen implements Figure {
         if(Math.abs(xMove - xCurrent) == Math.abs(yMove - yCurrent)){
             valid = true;
         }
-        //move down or down
+        //move down or up
         else if(xCurrent == xMove && yCurrent < yMove || xCurrent == xMove && yCurrent > yMove){
             valid = true;
         }
