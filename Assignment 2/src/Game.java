@@ -271,5 +271,8 @@ public class Game {
         }
         return this.white;
     }
+    public static void main(String[] args) {
+        Game game = new Game();
+    }
 }
 

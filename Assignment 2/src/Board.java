@@ -318,8 +318,5 @@ public class Board {
         }
         return checkMate;
     }
-    public void move(){
-
-    }
 }
 
