@@ -15,7 +15,6 @@ public class Game {
         this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE); //Create white Player
         this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK); //Create black Player
         this.currentPlayer = this.white; //Add white Player to current list to track whose turn it is
-//        this.currentPlayer[1] = this.black; //Add black Player to current list to track whose turn it is
         System.out.println("Start state:");
         printBoard(gameBoard.getBoard());
         while(!winner){
@@ -50,15 +49,6 @@ public class Game {
     }
 
     /**
-     * @param newX - x position where figure is to be moved
-     * @param newY - y position where figure is to be moved
-     * @return - true or false depending if the coordinates are in range
-     */
-    public boolean isLegalMove(int newX, int newY){
-        return (0 <= newX && newX >= 7) && (0 <= newY && newY >= 7);
-    }
-
-    /**
      *
      * @param gameBoard - chess game board
      * @param newX - x position where figure is to be moved
@@ -76,7 +66,6 @@ public class Game {
     private Object[] inputMoveAndCheck(String currentPlayer){
         String[] moveKill;
         Object[] checkedMove = new Object[2];
-//        ArrayList<Object> MoveKill = new ArrayList<Object>(); // List that should contain the input and if it kills the target
         Scanner player = new Scanner(System.in);
         boolean stringCheck = false; //boolean to check if input is correct
         String input = null;
@@ -87,8 +76,6 @@ public class Game {
             moveKill = input.split("");
             int inputLength = input.length();
             if (inputLength == 2){//to move Pawns to a new field "e5")
-//                String char1 = Character.toString(input.charAt(0));
-//                String char2 = Character.toString(input.charAt(1));
                 if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[1-8]*$")){ //check for pawn move
                     stringCheck = true;
                 }
@@ -96,9 +83,6 @@ public class Game {
             else if (inputLength == 3){  //to move a figure "Be5"
                                     //castling on king side "o-o"
                                     //asking for a draw "(=)"
-//                String char1 = Character.toString(input.charAt(0));
-//                String char2 = Character.toString(input.charAt(1));
-//                String char3 = Character.toString(input.charAt(2));
                 if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[1-8]*$")){//normal move figure
                     stringCheck = true;
                 }
@@ -113,21 +97,15 @@ public class Game {
                                         //kill with a pawn since you always give a line which indicates which pawn to take "exd5".
                                         //To move a figure if there are 2 possibilities "Bdb8"
                                         //pawn promotion indicated  "e8=Q"
-//                String char1 = Character.toString(input.charAt(0));
-//                String char2 = Character.toString(input.charAt(1));
-//                String char3 = Character.toString(input.charAt(2));
-//                String char4 = Character.toString(input.charAt(3));
                 if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[x]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")) {//to kill with a figure check()
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[2] + moveKill[3]; //input with no x
-
                 }
                 if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[x]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")) {//pawn kills someone check()
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[2] + moveKill[3]; //input with no x
-
                 }
                 if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")) {//move figure if there are 2 possibilities
                     stringCheck = true;
@@ -140,17 +118,10 @@ public class Game {
             else if (inputLength == 5) { //to kill if 2 figures could kill the same enemy figure "Bdxb8"
                                     //Castling on Queens' side "o-o-o"
                                     //to move with a figure, both x and y since they could reach the same place e.g Queen "Qh4e1"
-//                String char1 = Character.toString(input.charAt(0));
-//                String char2 = Character.toString(input.charAt(1));
-//                String char3 = Character.toString(input.charAt(2));
-//                String char4 = Character.toString(input.charAt(3));
-//                String char5 = Character.toString(input.charAt(4));
-
                 if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[x]*$") & moveKill[3].matches("^[a-h]*$") & moveKill[4].matches("^[1-8]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[1] + moveKill[3] + moveKill[4];//change input
-
                 }
                 if (moveKill[0].matches("^[o]*$") & moveKill[1].matches("^[-]*$") & moveKill[2].matches("^[o]*$") & moveKill[3].matches("^[-]*$")& moveKill[4].matches("^[o]*$")) {//casteling queenside input
                     stringCheck = true;
@@ -160,12 +131,6 @@ public class Game {
                 }
             }
             else if (inputLength == 6) { //to kill with a figure, both x and y since they are both are on the same line e.g Queen "Qh4xe1"
-//                String char1 = Character.toString(input.charAt(0));
-//                String char2 = Character.toString(input.charAt(1));
-//                String char3 = Character.toString(input.charAt(2));
-//                String char4 = Character.toString(input.charAt(3));
-//                String char5 = Character.toString(input.charAt(4));
-//                String char6 = Character.toString(input.charAt(5));
                 if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[1-8]*$") & moveKill[3].matches("^[x]*$") & moveKill[4].matches("^[a-h]*$") & moveKill[5].matches("^[1-8]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
@@ -173,15 +138,7 @@ public class Game {
                 }
             }
             else if (inputLength == 8){ //make a en passant move "exd6e.p."
-//                String char1 = Character.toString(input.charAt(0));
-//                String char2 = Character.toString(input.charAt(1));
-//                String char3 = Character.toString(input.charAt(2));
-//                String char4 = Character.toString(input.charAt(3));
-//                String char5 = Character.toString(input.charAt(4));
-//                String char6 = Character.toString(input.charAt(5));
-//                String char7 = Character.toString(input.charAt(5));
-//                String char8 = Character.toString(input.charAt(5));
-                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[x]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$") & moveKill[4].matches("^[a-h]*$") & moveKill[5].matches("^[.]*$") & moveKill[6].matches("^[p]*$") & moveKill[7].matches("^[.]*$")) {//check for 2 figures input
+                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[x]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$") & moveKill[4].matches("^[e]*$") & moveKill[5].matches("^[.]*$") & moveKill[6].matches("^[p]*$") & moveKill[7].matches("^[.]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[2] + moveKill[3];
@@ -191,14 +148,12 @@ public class Game {
             else{System.out.println("Invalid Input");//prints if stringCheck is wrong, to let user know that input is wrong
             }
         }
-//        MoveKill.add(input);
-//        MoveKill.add(capture);
         System.out.println("");
         checkedMove[0] = input;
         checkedMove[1] = capture;
-
         return checkedMove;
     }
+
     /**
      * @param checkedInput array Object[(String) input, (Boolean) capture] of already checked player input and information if player intends to do a capture move
      *                     parseInput parses the given input into the coordinates of a) the intended piece to move and b) the wished destination
@@ -248,17 +203,24 @@ public class Game {
         }
         return parsedInput;
     }
+
     /**
      * @param gameBoard Copy of the actual game board
      *                  Prints the chessboard with the current location of every piece
      */
     private void printBoard(Object[][][] gameBoard){
+        char type;
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if(gameBoard[i][j][1] != null){
                 Figure figure = (Figure)gameBoard[i][j][1];
                 char color = figure.getColor().toString().charAt(0);
-                char type = figure.getClass().getName().charAt(0);
+                if(figure.getClass() == Knight.class){
+                    type = 'N';
+                }
+                else{
+                    type = figure.getClass().getName().charAt(0);
+                }
                 System.out.format("[%s%s]", color, type);
                 }
                 else{
