@@ -7,7 +7,7 @@ public class Bishop implements Figure{
     }
 
     //check documentation of Interface
-    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
+    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove){
         boolean valid = false;
         if(xMove > 8 || yMove > 8){
             valid = false;
