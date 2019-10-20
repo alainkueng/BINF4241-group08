@@ -24,7 +24,7 @@ import java.util.ArrayList;
       */
     public void setEatenPieces(Figure figure){
         eatenPieces.add(figure);
-        //needs to check if a figure has been eaten or anyone could add a random figure to the dumbster
+        //needs to check if a figure has been eaten or anyone could add a random figure to the dumpster
     }
 
      /**

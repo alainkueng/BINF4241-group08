@@ -318,5 +318,8 @@ public class Board {
         }
         return checkMate;
     }
+    public static void main(String[] args) {
+        Game game = new Game();
+    }
 }
 
