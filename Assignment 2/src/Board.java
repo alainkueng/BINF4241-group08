@@ -1,6 +1,7 @@
 public class Board {
 
     public Object[][][] board;
+    private Object[] lastMove = new Object[3];
 
     public Board() {
         board = new Object[8][8][2];
@@ -422,6 +423,52 @@ public class Board {
         return freePath;
 
     }
+    public boolean move(Object[] moveInput){
+        //this method is not done
+        boolean validMove = true;
+        if((boolean)moveInput[6]){//check and do castleKing
+            validMove = castleKingSide((Player.colors)moveInput[10]);
+        }
+        else if((boolean)moveInput[7]){//check and do castleQueen
+            validMove = castleQueenSide((Player.colors)moveInput[10]);
+        }
+        else if((boolean)moveInput[8]) {//check and do enpassant
+            validMove = passant((Pawn)moveInput[0], (int)moveInput[1], (int)moveInput[2], (int)moveInput[3], (int)moveInput[4]);
+        }
+        else if((boolean)moveInput[9]){//check and do promotion
+            validMove = promote((Pawn)moveInput[0], (int)moveInput[1], (int)moveInput[2], (Object)moveInput[9]);
+        }
+        else if((boolean)moveInput[5]){//if there is a capture not a normal move, also validMove check
+        }
+        else{//if there is normal move, also check validMove
+
+        }
+        //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
+        //implement checkmate (why do i need to input king and where?), when moveOn from game is invalid this gets returned anyway?
+
+        if(!(boolean)moveInput[6] & !(boolean)moveInput[7] & !(boolean)moveInput[8] & !(boolean)moveInput[9]){//change attribute lastmove object newx, newy when there is no special move
+            lastMove[0] = moveInput[0];//Object this should only change if there was no castling etc.
+            lastMove[1] = moveInput[3];//x
+            lastMove[2] = moveInput[4];//y
+        }
+        if((boolean)moveInput[6] || (boolean)moveInput[7] || (boolean)moveInput[8] || (boolean)moveInput[9]){//when there is a castling, promotion or enPassant set lastmove to 0
+            lastMove[0] = null;
+            lastMove[1] = null;
+            lastMove[2] = null;
+        }
+        return validMove;
+    }
+
+    /**
+     *
+     * @param newX - x position where figure is to be moved
+     * @param newY - y position where figure is to be moved
+     * @return - true or false depending if there is a figure in [newX,newY]: False = NOT occupied
+     */
+    public boolean isOccupied( int newX, int newY){
+        return this.board[newX][newY][1] != null;
+    }
+}
 }
 
 

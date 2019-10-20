@@ -18,7 +18,10 @@ public class Game {
         System.out.println("Start state:");
         printBoard(gameBoard.getBoard());
         while(!winner){
-            parseInput(inputMoveAndCheck(currentPlayer.getName())); // This needs to be changed for the loop/ gets input move and checks it and gives back an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,]
+            boolean moveOn = false; //checks if input is valid or it will ask again
+            while(!moveOn) {
+                moveOn = gameBoard.move(parseInput(inputMoveAndCheck(currentPlayer.getName()))); //  gets input move and checks it and gives back an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,](bool) capture, (bool) castlingKing, (bool) castlingQueen, (bool) enPassant, (Object[2]) promotion ]
+            }
             printBoard(gameBoard.getBoard());
             this.currentPlayer = playersTurn(currentPlayer);
         }
@@ -48,16 +51,6 @@ public class Game {
         return name;
     }
 
-    /**
-     *
-     * @param gameBoard - chess game board
-     * @param newX - x position where figure is to be moved
-     * @param newY - y position where figure is to be moved
-     * @return - true or false depending if there is a figure in [newX,newY]: False = NOT occupied
-     */
-    public boolean isOccupied(Board gameBoard, int newX, int newY){
-        return gameBoard.board[newX][newY][1] != null;
-    }
 
     /**
      * @param currentPlayer - for asking whose turn it is
@@ -176,7 +169,7 @@ public class Game {
     /**
      * @param checkedInput array Object[(String) input, (Boolean) capture] of already checked player input and information if player intends to do a capture move
      *                     parseInput parses the given input into the coordinates of a) the intended piece to move and b) the wished destination
-     * @return array Object[(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move, (bool) capture, (bool) castlingKing, (bool) castlingQueen, (bool) enPassant, (Object[2]) promotion ]
+     * @return array Object[(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move, (bool) capture, (bool) castlingKing, (bool) castlingQueen, (bool) enPassant, (Object[2]) promotion, (Color) CurrentPlayerColor  ]
      */
     private Object[] parseInput(Object[] checkedInput){
         String input = (String)checkedInput[0];
@@ -228,6 +221,7 @@ public class Game {
         promotion = (Object[])checkedInput[5];
         promotion[1] =  figureCatalog.get(promotion[1].getClass().getName().charAt(0));
         parsedInput[9] = promotion;//promotion
+        parsedInput[10] = currentPlayer.getColor();
 
         return parsedInput;
     }
