@@ -9,8 +9,8 @@ public class King implements Figure {
     }
 
     //check documentation of Interface
-    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
-        boolean valid = false;
+    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove){
+        boolean valid;
         //move down or down
         if(xCurrent == xMove && yMove == yCurrent + 1 || xCurrent == xMove && yMove == yCurrent - 1)
             valid = true;
