@@ -318,8 +318,13 @@ public class Board {
         }
         return checkMate;
     }
-    public static void main(String[] args) {
-        Game game = new Game();
+
+
+    public boolean isPathFree(int xCurrent, int yCurrent, int xMove, int yMove){
+        boolean freePath = false;
+        if(xCurrent !=)
+        return freePath;
+
     }
 }
 
