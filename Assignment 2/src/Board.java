@@ -84,7 +84,7 @@ public class Board {
      *  and then we can call this method here to check if the pawn has to be promoted.
      *  If the pawn has to be promoted the method also does this automatically.
      */
-    public void promote(Pawn pawnToPromote, int xCurrent, int yCurrent){
+    public void promote(Pawn pawnToPromote, int xCurrent, int yCurrent){ //rewrite that you can promote any object you want
         if(pawnToPromote.getColor() == Figure.Colors.BLACK && yCurrent == 7)
             board[xCurrent][yCurrent][1] = new Queen(Figure.Colors.BLACK);
         else if(pawnToPromote.getColor() == Figure.Colors.WHITE && yCurrent == 0)

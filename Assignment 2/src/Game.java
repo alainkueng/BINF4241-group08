@@ -65,11 +65,17 @@ public class Game {
      */
     private Object[] inputMoveAndCheck(String currentPlayer){
         String[] moveKill;
-        Object[] checkedMove = new Object[2];
+        Object[] checkedMove = new Object[6];
         Scanner player = new Scanner(System.in);
         boolean stringCheck = false; //boolean to check if input is correct
         String input = null;
         boolean capture = false; //to know if player wants to capture something
+        boolean castlingKing = false;
+        boolean castlingQueen = false;
+        boolean enPassant = false;
+        Object[] promotion = new Object[2];
+        promotion[0] = false;
+        promotion[1] = "";
         while (!stringCheck){
             System.out.printf("Player %s enter your move: ", currentPlayer);
             input = player.nextLine();
@@ -89,11 +95,12 @@ public class Game {
                 if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[1-8]*$")){//normal move figure
                     stringCheck = true;
                 }
-                if (moveKill[0].matches("^[o]*$") & moveKill[1].matches("^[-]*$") & moveKill[2].matches("^[o]*$") & moveKill[2].matches("^[-]*$")){//casteling check
+                if (moveKill[0].matches("^[o]*$") & moveKill[1].matches("^[-]*$") & moveKill[2].matches("^[o]*$") & moveKill[2].matches("^[-]*$")){//castling check
                     stringCheck = true;
+                    castlingKing = true;
                 }
                 if (moveKill[0].matches("^[(]*$") & moveKill[1].matches("^[=]*$") & moveKill[2].matches("^[)]*$")){//ask for drawcheck
-                    stringCheck = true;
+                    stringCheck = true;//Change to return for draw
                 }
             }
             else if (inputLength == 4) {     //to kill with a figure if there is only one possibility "Bxd5"
@@ -115,6 +122,9 @@ public class Game {
                 }
                 if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[1-8]*$") & moveKill[2].matches("^[=]*$") & moveKill[3].matches("^[RBNQ]*$")) {//check for promotion input
                     stringCheck = true;
+                    promotion[0] = true;
+                    promotion[1] = moveKill[3].charAt(0);
+                    input = moveKill[0] + moveKill[1];
                 }
             }
 
@@ -126,8 +136,9 @@ public class Game {
                     capture = true;
                     input = moveKill[0] + moveKill[1] + moveKill[3] + moveKill[4];//change input
                 }
-                if (moveKill[0].matches("^[o]*$") & moveKill[1].matches("^[-]*$") & moveKill[2].matches("^[o]*$") & moveKill[3].matches("^[-]*$")& moveKill[4].matches("^[o]*$")) {//casteling queenside input
+                if (moveKill[0].matches("^[o]*$") & moveKill[1].matches("^[-]*$") & moveKill[2].matches("^[o]*$") & moveKill[3].matches("^[-]*$")& moveKill[4].matches("^[o]*$")) {//castling queenside input
                     stringCheck = true;
+                    castlingQueen = true;
                 }
                 if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")& moveKill[4].matches("^[1-8]*$")) {//move when 2 figures are on same x or y line input
                     stringCheck = true;
@@ -145,6 +156,7 @@ public class Game {
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[2] + moveKill[3];
+                    enPassant = true;
                     //change input that parseInput can make an "en passant"
                 }
             }
@@ -154,6 +166,10 @@ public class Game {
         System.out.println("");
         checkedMove[0] = input;
         checkedMove[1] = capture;
+        checkedMove[2] = castlingKing;
+        checkedMove[3] = castlingQueen;
+        checkedMove[4] = enPassant;
+        checkedMove[5] = promotion;
         return checkedMove;
     }
 
@@ -166,8 +182,12 @@ public class Game {
         String input = (String)checkedInput[0];
         boolean capture = (Boolean)checkedInput[1];
         int length = input.length();
-        Object[] parsedInput = new Object[6];
+        Object[] parsedInput = new Object[10];
         parsedInput[5] = capture;
+        parsedInput[6] = checkedInput[2];//castelinKing
+        parsedInput[7] = checkedInput[3];//castlingQueen
+        parsedInput[8] = checkedInput[4];//enpassant
+
 
         ArrayList<Character> mapping = new ArrayList<Character>();
         for (char c = 'a'; c <= 'h'; ++c){
@@ -183,27 +203,32 @@ public class Game {
 
         if (length == 2){
             parsedInput[0] = Pawn.class;
-            parsedInput[3] = Character.digit(input.charAt(1),10);
+            parsedInput[3] = 8-Character.digit(input.charAt(1),10);
             parsedInput[4] = mapping.indexOf(input.charAt(0));
         }
         else if(length == 3){
             parsedInput[0] = figureCatalog.get(input.charAt(0));
-            parsedInput[3] = Character.digit(input.charAt(2),10);
+            parsedInput[3] = 8-Character.digit(input.charAt(2),10);
             parsedInput[4] = mapping.indexOf(input.charAt(1));
         }
         else if(length == 4){
             parsedInput[0] = figureCatalog.get(input.charAt(0));
             parsedInput[2] = mapping.indexOf(input.charAt(1));
-            parsedInput[3] = Character.digit(input.charAt(3),10);
+            parsedInput[3] = 8-Character.digit(input.charAt(3),10);
             parsedInput[4] = mapping.indexOf(input.charAt(2));
         }
         else if(length == 5){
             parsedInput[0] = figureCatalog.get(input.charAt(0));
-            parsedInput[1] = Character.digit(input.charAt(2), 10);
+            parsedInput[1] = 8-Character.digit(input.charAt(2), 10);
             parsedInput[2] = mapping.indexOf(input.charAt(1));
-            parsedInput[3] = Character.digit(input.charAt(4),10);
+            parsedInput[3] = 8-Character.digit(input.charAt(4),10);
             parsedInput[4] = mapping.indexOf(input.charAt(3));
         }
+        Object[] promotion;
+        promotion = (Object[])checkedInput[5];
+        Class figureClass = figureCatalog.get(promotion[1]);
+        promotion[1] =  figureCatalog.get(promotion[1].getClass().getName().charAt(0));
+        parsedInput[9] = promotion;//promotion
         return parsedInput;
     }
 
