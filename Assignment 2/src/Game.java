@@ -76,8 +76,11 @@ public class Game {
             moveKill = input.split("");
             int inputLength = input.length();
             if (inputLength == 2){//to move Pawns to a new field "e5")
-                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[1-8]*$")){ //check for pawn move
+                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[2-7]*$")){ //check for pawn move, can't e 1 or 8 since this is automatically promotion
                     stringCheck = true;
+                }
+                if (moveKill[0].matches("^[a-h]*$") & (moveKill[1].matches("^[1]*$") || moveKill[8].matches("^[8]*$"))) {
+                    System.out.println("Please state what you want to promote to in algebraic notation");
                 }
             }
             else if (inputLength == 3){  //to move a figure "Be5"
@@ -110,7 +113,7 @@ public class Game {
                 if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")) {//move figure if there are 2 possibilities
                     stringCheck = true;
                 }
-                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[1-8]*$") & moveKill[2].matches("^[=]*$") & moveKill[3].matches("^[RBNQK]*$")) {//check for promotion input
+                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[1-8]*$") & moveKill[2].matches("^[=]*$") & moveKill[3].matches("^[RBNQ]*$")) {//check for promotion input
                     stringCheck = true;
                 }
             }
@@ -145,7 +148,7 @@ public class Game {
                     //change input that parseInput can make an "en passant"
                 }
             }
-            else{System.out.println("Invalid Input");//prints if stringCheck is wrong, to let user know that input is wrong
+            if(!stringCheck){System.out.println("Invalid Input");//prints if stringCheck is wrong, to let user know that input is wrong
             }
         }
         System.out.println("");
