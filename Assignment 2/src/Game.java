@@ -160,7 +160,7 @@ public class Game {
                     //change input that parseInput can make an "en passant"
                 }
             }
-            if(!stringCheck){System.out.println("Invalid Input");//prints if stringCheck is wrong, to let user know that input is wrong
+            if(!stringCheck){System.out.println("Invalid Input, please use the correct algebraic notation");//prints if stringCheck is wrong, to let user know that input is wrong
             }
         }
         System.out.println("");
@@ -176,17 +176,17 @@ public class Game {
     /**
      * @param checkedInput array Object[(String) input, (Boolean) capture] of already checked player input and information if player intends to do a capture move
      *                     parseInput parses the given input into the coordinates of a) the intended piece to move and b) the wished destination
-     * @return array Object[(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move, (bool) capture]
+     * @return array Object[(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move, (bool) capture, (bool) castlingKing, (bool) castlingQueen, (bool) enPassant, (Object[2]) promotion ]
      */
     private Object[] parseInput(Object[] checkedInput){
         String input = (String)checkedInput[0];
         boolean capture = (Boolean)checkedInput[1];
         int length = input.length();
-        Object[] parsedInput = new Object[10];
+        Object[] parsedInput = new Object[11];
         parsedInput[5] = capture;
-        parsedInput[6] = checkedInput[2];//castelinKing
+        parsedInput[6] = checkedInput[2];//castlinKing
         parsedInput[7] = checkedInput[3];//castlingQueen
-        parsedInput[8] = checkedInput[4];//enpassant
+        parsedInput[8] = checkedInput[4];//enPassant
 
 
         ArrayList<Character> mapping = new ArrayList<Character>();
@@ -226,9 +226,9 @@ public class Game {
         }
         Object[] promotion;
         promotion = (Object[])checkedInput[5];
-        Class figureClass = figureCatalog.get(promotion[1]);
         promotion[1] =  figureCatalog.get(promotion[1].getClass().getName().charAt(0));
         parsedInput[9] = promotion;//promotion
+
         return parsedInput;
     }
 
