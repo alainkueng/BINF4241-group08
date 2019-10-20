@@ -79,7 +79,7 @@ public class Game {
                 if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[2-7]*$")){ //check for pawn move, can't e 1 or 8 since this is automatically promotion
                     stringCheck = true;
                 }
-                if (moveKill[0].matches("^[a-h]*$") & (moveKill[1].matches("^[1]*$") || moveKill[8].matches("^[8]*$"))) {
+                if (moveKill[0].matches("^[a-h]*$") & (moveKill[1].matches("^[1]*$") || moveKill[1].matches("^[8]*$"))) {
                     System.out.println("Please state what you want to promote to in algebraic notation");
                 }
             }
