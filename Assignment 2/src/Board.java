@@ -469,7 +469,7 @@ public class Board {
         return this.board[newX][newY][1] != null;
     }
 }
-}
+
 
 
 
