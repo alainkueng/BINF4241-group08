@@ -320,7 +320,7 @@ public class Board {
      * @param king -
      * @return true if king cant move to a safe place, else false
      */
-    public boolean checkMate(int x, int y, King king) {
+    public boolean checkMate(int x, int y, King king) {//what if someone move in the way
         boolean checkMate = false;
         if (check(x, y, king)) {
             if (x + 1 < 8 && y + 1 < 8) {
@@ -425,6 +425,7 @@ public class Board {
     }
     public boolean move(Object[] moveInput){//0:object, 1: xCurrent, 2:yCurrent, 3:xNew, 4:yNew, 5: capture, 6:castlingKing, 7:castlingQueen, 8:enPassant, 9:promotion
         //this method is not done
+        //will move be checkmate, if made.
         boolean validMove = true;
         if((boolean)moveInput[6]){//check and do castleKing
             validMove = castleKingSide((Player.colors)moveInput[10]);
@@ -442,6 +443,7 @@ public class Board {
         }
         else{validMove = normalMove((Figure)moveInput[0], (int)moveInput[1], (int)moveInput[2], (int)moveInput[3], (int)moveInput[4]);
         //if there is normal move, isPathFree() also, not capture
+        //check if its a Knight because ispathfree not needed
 
         }
         //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
