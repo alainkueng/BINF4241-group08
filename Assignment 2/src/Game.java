@@ -56,9 +56,9 @@ public class Game {
      * @param currentPlayer - for asking whose turn it is
      * @return returns the move input from the player after getting checked
      */
-    private Object[] inputMoveAndCheck(String currentPlayer){
+    private ArrayList<Object> inputMoveAndCheck(String currentPlayer){
         String[] moveKill;
-        Object[] checkedMove = new Object[6];
+        ArrayList<Object> checkedMove = new ArrayList<Object>();
         Scanner player = new Scanner(System.in);
         boolean stringCheck = false; //boolean to check if input is correct
         String input = null;
@@ -66,9 +66,9 @@ public class Game {
         boolean castlingKing = false;
         boolean castlingQueen = false;
         boolean enPassant = false;
-        Object[] promotion = new Object[2];
-        promotion[0] = false;
-        promotion[1] = "";
+
+        boolean promotion = false;
+        String promotionFig = "";
         while (!stringCheck){
             System.out.printf("Player %s enter your move: ", currentPlayer);
             input = player.nextLine();
@@ -115,8 +115,8 @@ public class Game {
                 }
                 if (moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[1-8]*$") && moveKill[2].matches("^[=]*$") && moveKill[3].matches("^[RBNQ]*$")) {//check for promotion input
                     stringCheck = true;
-                    promotion[0] = true;
-                    promotion[1] = moveKill[3].charAt(0);
+                    promotion = true;
+                    promotionFig = ((String.valueOf(moveKill[3].charAt(0))));//[1] = moveKill[3].charAt(0);
                     input = moveKill[0] + moveKill[1];
                 }
             }
@@ -157,12 +157,14 @@ public class Game {
             }
         }
         System.out.println("");
-        checkedMove[0] = input;
-        checkedMove[1] = capture;
-        checkedMove[2] = castlingKing;
-        checkedMove[3] = castlingQueen;
-        checkedMove[4] = enPassant;
-        checkedMove[5] = promotion;
+        checkedMove.add(0,input);
+        checkedMove.add(1, capture);
+        checkedMove.add(2,castlingKing);//[2] = castlingKing;
+        checkedMove.add(3,castlingQueen);//[3] = castlingQueen;
+        checkedMove.add(4,enPassant);//[4] = enPassant;
+        checkedMove.add(5,promotion);//[5] = promotion;
+        checkedMove.add(6,promotionFig);
+
         return checkedMove;
     }
 
@@ -171,15 +173,16 @@ public class Game {
      *                     parseInput parses the given input into the coordinates of a) the intended piece to move and b) the wished destination
      * @return array Object[(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move, (bool) capture, (bool) castlingKing, (bool) castlingQueen, (bool) enPassant, (Object[2]) promotion, (Color) CurrentPlayerColor  ]
      */
-    private Object[] parseInput(Object[] checkedInput){
-        String input = (String)checkedInput[0];
-        boolean capture = (Boolean)checkedInput[1];
+    private ArrayList<Object> parseInput(ArrayList<Object> checkedInput){
+        String input = (String) checkedInput.get(0);
+        boolean capture = (Boolean)checkedInput.get(1);
         int length = input.length();
-        Object[] parsedInput = new Object[11];
-        parsedInput[5] = capture;
-        parsedInput[6] = checkedInput[2];//castlingKing
-        parsedInput[7] = checkedInput[3];//castlingQueen
-        parsedInput[8] = checkedInput[4];//enPassant
+        ArrayList<Object> parsedInput = new ArrayList<Object>(11);
+        for (int i = 0; i < 11;i++){
+            parsedInput.add(i,null);
+        }
+
+
 
 
         ArrayList<Character> mapping = new ArrayList<Character>();
@@ -199,56 +202,59 @@ public class Game {
         colorCatalog.put(Player.colors.BLACK, Figure.Colors.BLACK);
 
         if (length == 2){
-            parsedInput[0] = Pawn.class;
-            parsedInput[3] = 8-Character.digit(input.charAt(1),10);
-            parsedInput[4] = mapping.indexOf(input.charAt(0));
-            ArrayList<Integer> current = gameBoard.getFigure(-1, (Integer)parsedInput[3], (Integer)parsedInput[4], colorCatalog.get(currentPlayer.getColor()), Pawn.class);
+            parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
+            parsedInput.add(3,8-Character.digit(input.charAt(1),10));
+            parsedInput.add(4,mapping.indexOf(input.charAt(0)));//[4] = mapping.indexOf(input.charAt(0));
+            ArrayList<Integer> current = gameBoard.getFigure(-1, (Integer)parsedInput.get(3), (Integer)parsedInput.get(4), colorCatalog.get(currentPlayer.getColor()), Pawn.class);
             if(current.size() == 2){
-                parsedInput[1] = current.get(0);
-                parsedInput[2] = current.get(1);
+                parsedInput.add(1,current.get(0));
+                parsedInput.add(2,current.get(1));
             }
             else{
-                parsedInput[0] = false;
+                parsedInput.add(0,false);
             }
         }
         else if(length == 3){
-            parsedInput[0] = figureCatalog.get(input.charAt(0));
-            parsedInput[3] = 8-Character.digit(input.charAt(2),10);
-            parsedInput[4] = mapping.indexOf(input.charAt(1));
-            ArrayList<Integer> current = gameBoard.getFigure(-1,(Integer)parsedInput[3], (Integer)parsedInput[4], colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput[0]);
+            parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
+            parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
+            parsedInput.add(4,mapping.indexOf((input.charAt(1))));//[4] = mapping.indexOf(input.charAt(1));
+            ArrayList<Integer> current = gameBoard.getFigure(-1,(Integer)parsedInput.get(3), (Integer)parsedInput.get(4), colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput.get(0));
             if(current.size() == 2){
-                parsedInput[1] = current.get(0);
-                parsedInput[2] = current.get(1);
+                parsedInput.add(1,current.get(0));//[1] = current.get(0);
+                parsedInput.add(2,current.get(1));//[2] = current.get(1);
             }
             else{
-                parsedInput[0] = false;
+                parsedInput.add(0,false);
             }
         }
         else if(length == 4){
-            parsedInput[0] = figureCatalog.get(input.charAt(0));
-            parsedInput[2] = mapping.indexOf(input.charAt(1));
-            parsedInput[3] = 8-Character.digit(input.charAt(3),10);
-            parsedInput[4] = mapping.indexOf(input.charAt(2));
-            ArrayList<Integer> current = gameBoard.getFigure((Integer)parsedInput[2],(Integer)parsedInput[3], (Integer)parsedInput[4], colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput[0]);
+            parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
+            parsedInput.add(2,mapping.indexOf(input.charAt(1)));//[2] = mapping.indexOf(input.charAt(1));
+            parsedInput.add(3, 8-Character.digit(input.charAt(3),10));//[3] = 8-Character.digit(input.charAt(3),10);
+            parsedInput.add(4,mapping.indexOf(input.charAt(2)));//[4] = mapping.indexOf(input.charAt(2));
+            ArrayList<Integer> current = gameBoard.getFigure((Integer)parsedInput.get(2),(Integer)parsedInput.get(3), (Integer)parsedInput.get(4), colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput.get(0));
             if(current.size() == 2){
-                parsedInput[1] = current.get(0);
+                parsedInput.add(1,current.get(0));//[1] = current.get(0);
             }
             else{
-                parsedInput[0] = false;
+                parsedInput.add(0,false);//[0] = false;
             }
         }
         else if(length == 5){
-            parsedInput[0] = figureCatalog.get(input.charAt(0));
-            parsedInput[1] = 8-Character.digit(input.charAt(2), 10);
-            parsedInput[2] = mapping.indexOf(input.charAt(1));
-            parsedInput[3] = 8-Character.digit(input.charAt(4),10);
-            parsedInput[4] = mapping.indexOf(input.charAt(3));
+            parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
+            parsedInput.add(1,8-Character.digit(input.charAt(2), 10));//[1] = 8-Character.digit(input.charAt(2), 10);
+            parsedInput.add(2,mapping.indexOf(input.charAt(1)));//[2] = mapping.indexOf(input.charAt(1));
+            parsedInput.add(3,8-Character.digit(input.charAt(4),10));//[3] = 8-Character.digit(input.charAt(4),10);
+            parsedInput.add(4,mapping.indexOf(input.charAt(3)));//[4] = mapping.indexOf(input.charAt(3));
         }
-        Object[] promotion;
-        promotion = (Object[])checkedInput[5];
-        promotion[1] =  figureCatalog.get(promotion[1].getClass().getName().charAt(0));
-        parsedInput[9] = promotion;//promotion
-        parsedInput[10] = currentPlayer.getColor();
+//        String fig = String.valueOf(figureCatalog.get(checkedInput.get(5).getClass().getName().charAt(0)));
+        parsedInput.add(9,checkedInput.get(5));//[9] = checkedInput.get(5);
+        parsedInput.add(11,currentPlayer.getColor());//[10] = currentPlayer.getColor();
+        parsedInput.add(10,(figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
+        parsedInput.add(5,capture);
+        parsedInput.add(6,checkedInput.get(2));//[6] = checkedInput[2];//castlingKing
+        parsedInput.add(7,checkedInput.get(3));//[7] = checkedInput[3];//castlingQueen
+        parsedInput.add(8,checkedInput.get(4));//[8] = checkedInput[4];//enPassant
 
         return parsedInput;
     }
