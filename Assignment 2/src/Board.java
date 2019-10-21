@@ -426,34 +426,37 @@ public class Board {
     public boolean move(Object[] moveInput){//0:object, 1: xCurrent, 2:yCurrent, 3:xNew, 4:yNew, 5: capture, 6:castlingKing, 7:castlingQueen, 8:enPassant, 9:promotion, 10: player.color
         //this method is not done
         //will move be checkmate, if made.
+        if (moveInput[0].equals(false)){
+            return false;
+        }
         boolean validMove = true;
-        if((boolean)moveInput[6]){//check and do castleKing
+        if((Boolean)moveInput[6]){//check and do castleKing
             validMove = castleKingSide((Player.colors)moveInput[10]);
         }
-        else if((boolean)moveInput[7]){//check and do castleQueen
+        else if((Boolean)moveInput[7]){//check and do castleQueen
             validMove = castleQueenSide((Player.colors)moveInput[10]);
         }
-        else if((boolean)moveInput[8]) {//check and do enpassant
-            validMove = passant((Pawn)moveInput[0], (int)moveInput[1], (int)moveInput[2], (int)moveInput[3], (int)moveInput[4]);
+        else if((Boolean)moveInput[8]) {//check and do enpassant
+            validMove = passant((Pawn)moveInput[0], (Integer)moveInput[1], (Integer)moveInput[2], (Integer)moveInput[3], (Integer)moveInput[4]);
         }
-        else if((boolean)moveInput[9]){//check and do promotion
-            validMove = promote((Pawn)moveInput[0], (int)moveInput[1], (int)moveInput[2], (Object)moveInput[9]);
+        else if((Boolean)moveInput[9]){//check and do promotion
+            validMove = promote((Pawn)moveInput[0], (Integer)moveInput[1], (Integer)moveInput[2], (Integer)moveInput[3], (Integer)moveInput[4], (Object)moveInput[9], (Player.colors)moveInput[10]);
         }
-        else if((boolean)moveInput[5]){
-            validMove = captureMove((Figure)moveInput[0], (int)moveInput[1], (int)moveInput[2], (int)moveInput[3], (int)moveInput[4], (Player.colors)moveInput[10]);
+        else if((Boolean)moveInput[5]){
+            validMove = captureMove((Figure)moveInput[0], (Integer)moveInput[1], (Integer)moveInput[2], (Integer)moveInput[3], (Integer)moveInput[4], (Player.colors)moveInput[10]);
         }
-        else{validMove = normalMove((Figure)moveInput[0], (int)moveInput[1], (int)moveInput[2], (int)moveInput[3], (int)moveInput[4]);
+        else{validMove = normalMove((Figure)moveInput[0], (Integer)moveInput[1], (Integer)moveInput[2], (Integer)moveInput[3], (Integer)moveInput[4]);
 
         }
         //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
         //implement checkmate (why do i need to input king and where?), when moveOn from game is invalid this gets returned anyway?
 
-        if(!(boolean)moveInput[6] & !(boolean)moveInput[7] & !(boolean)moveInput[8] & !(boolean)moveInput[9]){//change attribute lastmove object newx, newy when there is no special move
+        if(!(Boolean)moveInput[6] && !(Boolean)moveInput[7] && !(Boolean)moveInput[8] && !(Boolean)moveInput[9]){//change attribute lastmove object newx, newy when there is no special move
             lastMove[0] = moveInput[0];//Object this should only change if there was no castling etc.
             lastMove[1] = moveInput[3];//x
             lastMove[2] = moveInput[4];//y
         }
-        if((boolean)moveInput[6] || (boolean)moveInput[7] || (boolean)moveInput[8] || (boolean)moveInput[9]){//when there is a castling, promotion or enPassant set lastmove to 0
+        if((Boolean)moveInput[6] || (Boolean)moveInput[7] || (Boolean)moveInput[8] || (Boolean)moveInput[9]){//when there is a castling, promotion or enPassant set lastmove to 0
             lastMove[0] = null;
             lastMove[1] = null;
             lastMove[2] = null;
@@ -473,8 +476,14 @@ public class Board {
 
     private boolean normalMove(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew){// here add outputs that say whats wrong, like there is someone on that field and you didnt say capture
         boolean checkMove = true;
-        if (!isPathFree(xCurrent, yCurrent, xNew, yNew)){//if its a knight this doesnt hold, needs to be changed
-            checkMove = false;}
+        if(!newObject.isValidMove((yCurrent,xCurrent,yNew, xNew)){
+            checkMove = false;
+        }
+        if(!(newObject instanceof Knight)){//when its not a knight do this
+            if(!isPathFree(xCurrent, yCurrent, xNew, yNew)) {// if the path is not free do this
+                checkMove = false;
+            }
+        }
         if(!isOccupied(xNew, yNew)){
             checkMove = false;
         }
@@ -484,19 +493,25 @@ public class Board {
         }
         return checkMove;
     }
-    private boolean captureMove(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentcolor){
+
+    private boolean captureMove(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor){
         boolean moveCheck = true;
+        if(!newObject.isValidMove(yCurrent, xCurrent, yNew, xNew)){
+            moveCheck = false;
+        }
         Figure figure = (Figure)this.board[xNew][yNew][1];
         if (figure != null) {
-            if (!isOccupied(xNew, yNew) || !(figure.getColor().name() == currentcolor.name())) {
+            if (!isOccupied(xNew, yNew) || !(figure.getColor().name() == currentColor.name())) {
                 moveCheck = false;
             }
         }
         if(figure == null){
             moveCheck = false;
         }
-        if(!isPathFree(xCurrent, yCurrent, xNew, yNew)) {// if its a knight this doesnt hold, needs to be changed
+        if(!(newObject instanceof Knight)){//when its not a knight do this
+            if(!isPathFree(xCurrent, yCurrent, xNew, yNew)) {// if the path is not free do this
             moveCheck = false;
+            }
         }
         if(moveCheck){//here add the add to dumbsterlist in Player
             this.board[xNew][yNew][1] = newObject;

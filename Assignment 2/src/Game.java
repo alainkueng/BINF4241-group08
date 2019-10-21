@@ -75,24 +75,24 @@ public class Game {
             moveKill = input.split("");
             int inputLength = input.length();
             if (inputLength == 2){//to move Pawns to a new field "e5")
-                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[2-7]*$")){ //check for pawn move, can't e 1 or 8 since this is automatically promotion
+                if (moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[2-7]*$")){ //check for pawn move, can't e 1 or 8 since this is automatically promotion
                     stringCheck = true;
                 }
-                if (moveKill[0].matches("^[a-h]*$") & (moveKill[1].matches("^[1]*$") || moveKill[1].matches("^[8]*$"))) {
+                if (moveKill[0].matches("^[a-h]*$") && (moveKill[1].matches("^[1]*$") || moveKill[1].matches("^[8]*$"))) {
                     System.out.println("Please state what you want to promote to in algebraic notation");
                 }
             }
             else if (inputLength == 3){  //to move a figure "Be5"
                                     //castling on king side "o-o"
                                     //asking for a draw "(=)"
-                if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[1-8]*$")){//normal move figure
+                if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[1-8]*$")){//normal move figure
                     stringCheck = true;
                 }
-                if (moveKill[0].matches("^[o]*$") & moveKill[1].matches("^[-]*$") & moveKill[2].matches("^[o]*$") & moveKill[2].matches("^[-]*$")){//castling check
+                if (moveKill[0].matches("^[o]*$") && moveKill[1].matches("^[-]*$") && moveKill[2].matches("^[o]*$") && moveKill[2].matches("^[-]*$")){//castling check
                     stringCheck = true;
                     castlingKing = true;
                 }
-                if (moveKill[0].matches("^[(]*$") & moveKill[1].matches("^[=]*$") & moveKill[2].matches("^[)]*$")){//ask for drawcheck
+                if (moveKill[0].matches("^[(]*$") && moveKill[1].matches("^[=]*$") && moveKill[2].matches("^[)]*$")){//ask for drawcheck
                     stringCheck = true;//Change to return for draw
                 }
             }
@@ -100,20 +100,20 @@ public class Game {
                                         //kill with a pawn since you always give a line which indicates which pawn to take "exd5".
                                         //To move a figure if there are 2 possibilities "Bdb8"
                                         //pawn promotion indicated  "e8=Q"
-                if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[x]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")) {//to kill with a figure check()
+                if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[x]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$")) {//to kill with a figure check()
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[2] + moveKill[3]; //input with no x
                 }
-                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[x]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")) {//pawn kills someone check()
+                if (moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[x]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$")) {//pawn kills someone check()
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[2] + moveKill[3]; //input with no x
                 }
-                if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")) {//move figure if there are 2 possibilities
+                if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$")) {//move figure if there are 2 possibilities
                     stringCheck = true;
                 }
-                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[1-8]*$") & moveKill[2].matches("^[=]*$") & moveKill[3].matches("^[RBNQ]*$")) {//check for promotion input
+                if (moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[1-8]*$") && moveKill[2].matches("^[=]*$") && moveKill[3].matches("^[RBNQ]*$")) {//check for promotion input
                     stringCheck = true;
                     promotion[0] = true;
                     promotion[1] = moveKill[3].charAt(0);
@@ -124,28 +124,28 @@ public class Game {
             else if (inputLength == 5) { //to kill if 2 figures could kill the same enemy figure "Bdxb8"
                                     //Castling on Queens' side "o-o-o"
                                     //to move with a figure, both x and y since they could reach the same place e.g Queen "Qh4e1"
-                if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[x]*$") & moveKill[3].matches("^[a-h]*$") & moveKill[4].matches("^[1-8]*$")) {//check for 2 figures input
+                if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[x]*$") && moveKill[3].matches("^[a-h]*$") && moveKill[4].matches("^[1-8]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[1] + moveKill[3] + moveKill[4];//change input
                 }
-                if (moveKill[0].matches("^[o]*$") & moveKill[1].matches("^[-]*$") & moveKill[2].matches("^[o]*$") & moveKill[3].matches("^[-]*$")& moveKill[4].matches("^[o]*$")) {//castling queenside input
+                if (moveKill[0].matches("^[o]*$") && moveKill[1].matches("^[-]*$") && moveKill[2].matches("^[o]*$") && moveKill[3].matches("^[-]*$") && moveKill[4].matches("^[o]*$")) {//castling queenside input
                     stringCheck = true;
                     castlingQueen = true;
                 }
-                if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$")& moveKill[4].matches("^[1-8]*$")) {//move when 2 figures are on same x or y line input
+                if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$") && moveKill[4].matches("^[1-8]*$")) {//move when 2 figures are on same x or y line input
                     stringCheck = true;
                 }
             }
             else if (inputLength == 6) { //to kill with a figure, both x and y since they are both are on the same line e.g Queen "Qh4xe1"
-                if (moveKill[0].matches("^[RBNQK]*$") & moveKill[1].matches("^[a-h]*$") & moveKill[2].matches("^[1-8]*$") & moveKill[3].matches("^[x]*$") & moveKill[4].matches("^[a-h]*$") & moveKill[5].matches("^[1-8]*$")) {//check for 2 figures input
+                if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[1-8]*$") && moveKill[3].matches("^[x]*$") && moveKill[4].matches("^[a-h]*$") && moveKill[5].matches("^[1-8]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[1] + moveKill[2] + moveKill[4] + moveKill[5];//change input
                 }
             }
             else if (inputLength == 8){ //make a en passant move "exd6e.p."
-                if (moveKill[0].matches("^[a-h]*$") & moveKill[1].matches("^[x]*$") & moveKill[2].matches("^[a-h]*$") & moveKill[3].matches("^[1-8]*$") & moveKill[4].matches("^[e]*$") & moveKill[5].matches("^[.]*$") & moveKill[6].matches("^[p]*$") & moveKill[7].matches("^[.]*$")) {//check for 2 figures input
+                if (moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[x]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$") && moveKill[4].matches("^[e]*$") && moveKill[5].matches("^[.]*$") && moveKill[6].matches("^[p]*$") && moveKill[7].matches("^[.]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
                     input = moveKill[0] + moveKill[2] + moveKill[3];
