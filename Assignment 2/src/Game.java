@@ -201,11 +201,11 @@ public class Game {
         colorCatalog.put(Player.colors.WHITE, Figure.Colors.WHITE);
         colorCatalog.put(Player.colors.BLACK, Figure.Colors.BLACK);
 
-        if (length == 2){
+        if (length == 2){ //input = e4
             parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
-            parsedInput.add(3,8-Character.digit(input.charAt(1),10));
-            parsedInput.add(4,mapping.indexOf(input.charAt(0)));//[4] = mapping.indexOf(input.charAt(0));
-            ArrayList<Integer> current = gameBoard.getFigure(-1, (Integer)parsedInput.get(3), (Integer)parsedInput.get(4), colorCatalog.get(currentPlayer.getColor()), Pawn.class);
+            int x = 8-Character.digit(input.charAt(1),10);
+            int y = mapping.indexOf(input.charAt(0));
+            ArrayList<Integer> current = gameBoard.getFigure(-1, y, x, colorCatalog.get(currentPlayer.getColor()), Pawn.class);
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));
                 parsedInput.add(2,current.get(1));
@@ -213,12 +213,14 @@ public class Game {
             else{
                 parsedInput.add(0,false);
             }
+            parsedInput.add(3,8-Character.digit(input.charAt(1),10));
+            parsedInput.add(4,mapping.indexOf(input.charAt(0)));//[4] = mapping.indexOf(input.charAt(0));
         }
         else if(length == 3){
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
-            parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
-            parsedInput.add(4,mapping.indexOf((input.charAt(1))));//[4] = mapping.indexOf(input.charAt(1));
-            ArrayList<Integer> current = gameBoard.getFigure(-1,(Integer)parsedInput.get(3), (Integer)parsedInput.get(4), colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput.get(0));
+            int x = 8-Character.digit(input.charAt(2),10);
+            int y = mapping.indexOf(input.charAt(0));
+            ArrayList<Integer> current = gameBoard.getFigure(-1,y, x, colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput.get(0));
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));//[1] = current.get(0);
                 parsedInput.add(2,current.get(1));//[2] = current.get(1);
@@ -226,19 +228,23 @@ public class Game {
             else{
                 parsedInput.add(0,false);
             }
+            parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
+            parsedInput.add(4,mapping.indexOf((input.charAt(1))));//[4] = mapping.indexOf(input.charAt(1));
         }
         else if(length == 4){
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
-            parsedInput.add(2,mapping.indexOf(input.charAt(1)));//[2] = mapping.indexOf(input.charAt(1));
-            parsedInput.add(3, 8-Character.digit(input.charAt(3),10));//[3] = 8-Character.digit(input.charAt(3),10);
-            parsedInput.add(4,mapping.indexOf(input.charAt(2)));//[4] = mapping.indexOf(input.charAt(2));
-            ArrayList<Integer> current = gameBoard.getFigure((Integer)parsedInput.get(2),(Integer)parsedInput.get(3), (Integer)parsedInput.get(4), colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput.get(0));
+            int x = 8-Character.digit(input.charAt(3),10);
+            int y = mapping.indexOf(input.charAt(2));
+            ArrayList<Integer> current = gameBoard.getFigure((Integer)parsedInput.get(2),y, x, colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput.get(0));
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));//[1] = current.get(0);
             }
             else{
                 parsedInput.add(0,false);//[0] = false;
             }
+            parsedInput.add(2,mapping.indexOf(input.charAt(1)));//[2] = mapping.indexOf(input.charAt(1));
+            parsedInput.add(3, 8-Character.digit(input.charAt(3),10));//[3] = 8-Character.digit(input.charAt(3),10);
+            parsedInput.add(4,mapping.indexOf(input.charAt(2)));//[4] = mapping.indexOf(input.charAt(2));
         }
         else if(length == 5){
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
