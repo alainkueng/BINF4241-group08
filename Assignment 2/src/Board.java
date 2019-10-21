@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Board {
 
     public Object[][][] board;
@@ -11,7 +13,7 @@ public class Board {
     }
 
     /**
-     * Initalizes a chessboard 8x8 with the known white and black chequering.
+     * Initializes a chessboard 8x8 with the known white and black chequering.
      */
     private void initBoard() {
         for (int i = 0; i < 8; i++) {
@@ -495,6 +497,36 @@ public class Board {
         return checkMove;
     }
 
+    public ArrayList<Integer> getFigure(int givenColumn, int yCoordinate, int xCoordinate, Figure.Colors color, Class figureType){
+        ArrayList<Integer> foundFigures = new ArrayList<>();
+        int j = 0;
+        int k = 8;
+        for(int m = 0; m <= 8; m++){
+            if(givenColumn != -1){
+                j = givenColumn;
+                k = givenColumn;
+            }
+            for(int n = j; n <= k; n++){
+                Figure currentFigure = (Figure)board[m][n][1];
+                if(currentFigure != null
+                        && currentFigure.getClass() == figureType
+                        && currentFigure.getColor() == color){
+                    if(currentFigure.isValidMove(m, n, yCoordinate, xCoordinate)){
+                        if(foundFigures.size() <= 2){
+                            foundFigures.add(m);
+                            foundFigures.add(n);
+                        }
+                        else{
+                            foundFigures.add(m);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return foundFigures;
+    }
+
     private boolean captureMove(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor){
         boolean moveCheck = true;
         if(!newObject.isValidMove(yCurrent, xCurrent, yNew, xNew)){
@@ -514,7 +546,7 @@ public class Board {
             moveCheck = false;
             }
         }
-        if(moveCheck){//here add the add to dumbsterlist in Player
+        if(moveCheck){//here add the add to dumpster list in Player
             this.board[xNew][yNew][1] = newObject;
             this.board[xCurrent][yCurrent][1] = null;
         }

@@ -177,7 +177,7 @@ public class Game {
         int length = input.length();
         Object[] parsedInput = new Object[11];
         parsedInput[5] = capture;
-        parsedInput[6] = checkedInput[2];//castlinKing
+        parsedInput[6] = checkedInput[2];//castlingKing
         parsedInput[7] = checkedInput[3];//castlingQueen
         parsedInput[8] = checkedInput[4];//enPassant
 
@@ -194,21 +194,48 @@ public class Game {
         figureCatalog.put('Q', Queen.class);
         figureCatalog.put('K', King.class);
 
+        Map <Player.colors, Figure.Colors> colorCatalog = new HashMap<Player.colors, Figure.Colors>();
+        colorCatalog.put(Player.colors.WHITE, Figure.Colors.WHITE);
+        colorCatalog.put(Player.colors.BLACK, Figure.Colors.BLACK);
+
         if (length == 2){
             parsedInput[0] = Pawn.class;
             parsedInput[3] = 8-Character.digit(input.charAt(1),10);
             parsedInput[4] = mapping.indexOf(input.charAt(0));
+            ArrayList<Integer> current = gameBoard.getFigure(-1, (Integer)parsedInput[3], (Integer)parsedInput[4], colorCatalog.get(currentPlayer.getColor()), Pawn.class);
+            if(current.size() == 2){
+                parsedInput[1] = current.get(0);
+                parsedInput[2] = current.get(1);
+            }
+            else{
+                parsedInput[0] = false;
+            }
         }
         else if(length == 3){
             parsedInput[0] = figureCatalog.get(input.charAt(0));
             parsedInput[3] = 8-Character.digit(input.charAt(2),10);
             parsedInput[4] = mapping.indexOf(input.charAt(1));
+            ArrayList<Integer> current = gameBoard.getFigure(-1,(Integer)parsedInput[3], (Integer)parsedInput[4], colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput[0]);
+            if(current.size() == 2){
+                parsedInput[1] = current.get(0);
+                parsedInput[2] = current.get(1);
+            }
+            else{
+                parsedInput[0] = false;
+            }
         }
         else if(length == 4){
             parsedInput[0] = figureCatalog.get(input.charAt(0));
             parsedInput[2] = mapping.indexOf(input.charAt(1));
             parsedInput[3] = 8-Character.digit(input.charAt(3),10);
             parsedInput[4] = mapping.indexOf(input.charAt(2));
+            ArrayList<Integer> current = gameBoard.getFigure((Integer)parsedInput[2],(Integer)parsedInput[3], (Integer)parsedInput[4], colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput[0]);
+            if(current.size() == 2){
+                parsedInput[1] = current.get(0);
+            }
+            else{
+                parsedInput[0] = false;
+            }
         }
         else if(length == 5){
             parsedInput[0] = figureCatalog.get(input.charAt(0));
