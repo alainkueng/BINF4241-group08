@@ -489,7 +489,7 @@ public class Board {
         else if (((Boolean)(moveInput.get(6)) && !(Boolean)moveInput.get(7) && !(Boolean)moveInput.get(8) && !(Boolean)moveInput.get(9) && !(Boolean)moveInput.get(5))) {//case if normal move
             validMove = normalMove((Figure)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4));
 
-        } else {}
+        }
         //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
         //implement checkmate (why do i need to input king and where?), when moveOn from game is invalid this gets returned anyway?
 
