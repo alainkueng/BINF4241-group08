@@ -20,7 +20,7 @@ public class Game {
         while(!winner){
             boolean moveOn = false; //checks if input is valid or it will ask again
             while(!moveOn) {
-                moveOn = gameBoard.move(parseInput(inputMoveAndCheck(currentPlayer.getName()))); //  gets input move and checks it and gives back an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,](bool) capture, (bool) castlingKing, (bool) castlingQueen, (bool) enPassant, (Object[2]) promotion ]
+                moveOn = gameBoard.move(parseInput(inputMoveAndCheck(currentPlayer.getName()))); //  returns a boolean, gets input move and checks it and gives back an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,](bool) capture, (bool) castlingKing, (bool) castlingQueen, (bool) enPassant, (Object[2]) promotion ]
             }
             printBoard(gameBoard.getBoard());
             this.currentPlayer = playersTurn(currentPlayer);

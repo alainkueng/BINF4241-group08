@@ -423,7 +423,7 @@ public class Board {
         return freePath;
 
     }
-    public boolean move(Object[] moveInput){
+    public boolean move(Object[] moveInput){//0:object, 1: xCurrent, 2:yCurrent, 3:xNew, 4:yNew, 5: capture, 6:castlingKing, 7:castlingQueen, 8:enPassant, 9:promotion
         //this method is not done
         boolean validMove = true;
         if((boolean)moveInput[6]){//check and do castleKing
@@ -438,9 +438,10 @@ public class Board {
         else if((boolean)moveInput[9]){//check and do promotion
             validMove = promote((Pawn)moveInput[0], (int)moveInput[1], (int)moveInput[2], (Object)moveInput[9]);
         }
-        else if((boolean)moveInput[5]){//if there is a capture not a normal move, also validMove check
+        else if((boolean)moveInput[5]){//if there is a capture not a normal move, isPathFree(), capture also validMove check
         }
-        else{//if there is normal move, also check validMove
+        else{validMove = normalMove((Figure)moveInput[0], (int)moveInput[1], (int)moveInput[2], (int)moveInput[3], (int)moveInput[4]);
+        //if there is normal move, isPathFree() also, not capture
 
         }
         //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
@@ -467,6 +468,20 @@ public class Board {
      */
     public boolean isOccupied( int newX, int newY){
         return this.board[newX][newY][1] != null;
+    }
+
+    private boolean normalMove(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew){// here add outputs that say whats wrong, like there is someone on that field and you didnt say capture
+        boolean checkMove = true;
+        if (!isPathFree(xCurrent, yCurrent, xNew, yNew)){
+            checkMove = false;}
+        if(!isOccupied(xNew, yNew)){
+            checkMove = false;
+        }
+        if (checkMove){
+            this.board[xNew][yNew][1] = newObject;//add to new position
+            this.board[xCurrent][yCurrent][1] = null;//delete Object from current
+        }
+        return checkMove;
     }
 }
 
