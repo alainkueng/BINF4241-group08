@@ -482,7 +482,7 @@ public class Board {
         else if((Boolean)moveInput.get(7)){//check and do castleQueen
             validMove = castleQueenSide((Player.colors)moveInput.get(11));
         }
-        else if((Boolean)moveInput.get(8)) {//check and do enpassant //this needs color too //change to class
+        else if((Boolean)moveInput.get(8)) {//check and do enpassant //change (1) to class input not figure since its only a class given
             validMove = passant((Pawn)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11));
         }
         else if((Boolean)moveInput.get(9)){//check and do promotion //this needs color too //change to class
