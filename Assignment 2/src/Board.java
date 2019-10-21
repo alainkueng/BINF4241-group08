@@ -90,7 +90,8 @@ public class Board {
      *                      and then we can call this method here to check if the pawn has to be promoted.
      *                      If the pawn has to be promoted the method also does this automatically.
      */
-    public void promote(Pawn pawnToPromote, int xCurrent, int yCurrent, int xMove, int yMove, Object[] promoteInfo, Player.colors color) {
+    public boolean promote(Pawn pawnToPromote, int xCurrent, int yCurrent, int xMove, int yMove, Object[] promoteInfo, Player.colors color) {
+        boolean promoteSuccess = false;
         Figure fig = null;
         if(promoteInfo[1].getClass() == Rook.class){
             if(color.name() == Figure.Colors.WHITE.name()){
@@ -122,11 +123,14 @@ public class Board {
         if (pawnToPromote.getColor() == Figure.Colors.BLACK && pawnToPromote.isValidMove(yCurrent,xCurrent,yMove,xMove) && !isOccupied(xMove,yMove) && fig != null) {
             board[yMove][xMove][1] = fig;
             board[yCurrent][xCurrent][1] = null;
+            promoteSuccess = true;
         }
         else if (pawnToPromote.getColor() == Figure.Colors.WHITE && pawnToPromote.isValidMove(yCurrent,xCurrent,yMove,xMove) && !isOccupied(xMove,yMove) && fig != null) {
             board[yMove][xMove][1] = fig;
             board[yCurrent][xCurrent][1] = null;
+            promoteSuccess = true;
         }
+        return promoteSuccess;
     }
 
     /**
