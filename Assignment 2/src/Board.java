@@ -442,10 +442,11 @@ public class Board {
         else if((Boolean)moveInput[9]){//check and do promotion
             validMove = promote((Pawn)moveInput[0], (Integer)moveInput[1], (Integer)moveInput[2], (Integer)moveInput[3], (Integer)moveInput[4], (Object)moveInput[9], (Player.colors)moveInput[10]);
         }
-        else if((Boolean)moveInput[5]){
+        else if((Boolean)moveInput[5]){//case if capture move
             validMove = captureMove((Figure)moveInput[0], (Integer)moveInput[1], (Integer)moveInput[2], (Integer)moveInput[3], (Integer)moveInput[4], (Player.colors)moveInput[10]);
         }
-        else{validMove = normalMove((Figure)moveInput[0], (Integer)moveInput[1], (Integer)moveInput[2], (Integer)moveInput[3], (Integer)moveInput[4]);
+        else if ((!(Boolean)moveInput[6] && !(Boolean)moveInput[7] && !(Boolean)moveInput[8] && !(Boolean)moveInput[9] && !(Boolean)moveInput[5])) {//case if normal move
+            validMove = normalMove((Figure)moveInput[0], (Integer)moveInput[1], (Integer)moveInput[2], (Integer)moveInput[3], (Integer)moveInput[4]);
 
         }
         //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
