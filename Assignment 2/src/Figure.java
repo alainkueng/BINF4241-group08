@@ -10,7 +10,7 @@ public interface Figure {
      * @param xMove - y coordinate where figure has to be moved
      * @return boolean to check if move of the figure is even valid
      */
-    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove);
+    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove, Player.colors color);
     public Colors getColor();
 }
 

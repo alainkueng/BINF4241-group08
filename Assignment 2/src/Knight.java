@@ -7,7 +7,7 @@ public class Knight implements Figure {
     }
 
     //check documentation of Interface
-    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove){
+    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove,Player.colors color){
         boolean valid = false;
         //move down-left or down-right
         if(xMove == xCurrent - 1 && yMove == yCurrent + 2 || xMove == xCurrent + 1 && yMove == yCurrent + 2){

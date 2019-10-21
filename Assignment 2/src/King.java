@@ -9,7 +9,7 @@ public class King implements Figure {
     }
 
     //check documentation of Interface
-    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove){
+    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove, Player.colors color){
         boolean valid;
         //move down or down
         if(xCurrent == xMove && yMove == yCurrent + 1 || xCurrent == xMove && yMove == yCurrent - 1)

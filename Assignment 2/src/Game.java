@@ -66,7 +66,6 @@ public class Game {
         boolean castlingKing = false;
         boolean castlingQueen = false;
         boolean enPassant = false;
-
         boolean promotion = false;
         String promotionFig = "";
         while (!stringCheck){
@@ -205,7 +204,7 @@ public class Game {
             parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
             int x = 8-Character.digit(input.charAt(1),10);
             int y = mapping.indexOf(input.charAt(0));
-            ArrayList<Integer> current = gameBoard.getFigure(-1, y, x, colorCatalog.get(currentPlayer.getColor()), Pawn.class);
+            ArrayList<Integer> current = gameBoard.getFigure(-1, x, y, currentPlayer.getColor(), Pawn.class);
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));
                 parsedInput.add(2,current.get(1));
@@ -220,7 +219,7 @@ public class Game {
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
             int x = 8-Character.digit(input.charAt(2),10);
             int y = mapping.indexOf(input.charAt(0));
-            ArrayList<Integer> current = gameBoard.getFigure(-1,y, x, colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput.get(0));
+            ArrayList<Integer> current = gameBoard.getFigure(-1,x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));//[1] = current.get(0);
                 parsedInput.add(2,current.get(1));//[2] = current.get(1);
@@ -235,7 +234,7 @@ public class Game {
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
             int x = 8-Character.digit(input.charAt(3),10);
             int y = mapping.indexOf(input.charAt(2));
-            ArrayList<Integer> current = gameBoard.getFigure((Integer)parsedInput.get(2),y, x, colorCatalog.get(currentPlayer.getColor()), (Class)parsedInput.get(0));
+            ArrayList<Integer> current = gameBoard.getFigure((Integer)parsedInput.get(2),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));//[1] = current.get(0);
             }

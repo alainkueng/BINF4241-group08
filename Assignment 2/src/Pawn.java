@@ -10,22 +10,33 @@ public class Pawn implements Figure {
     }
 
     //check documentation of Interface
-    public boolean isValidMove(int yCurrent, int xCurrent,int yMove, int xMove) {
+    public boolean isValidMove(int xCurrent, int yCurrent,int xMove, int yMove, Player.colors color) {
         boolean valid = false;
-        //check if its the first move and player wants to move forward
-        if (yCurrent == 1 && yMove == 3 && xCurrent == xMove || yCurrent == 6 && yMove == 4 && xCurrent == xMove) {
-            valid = true;
+        //check if its the first move and player wants to move f
+        // orward
+        String check = color.toString();
+        if (check == "WHITE"){
+            if (xCurrent == 6 && xMove == 4 && yCurrent == yMove) {//start could jump 2
+                valid = true;
+            }
+            else if (xCurrent-1 == xMove && yCurrent == yMove){//Pawn wants to move forward
+                valid = true;
+            }
+            else if (xCurrent-1 == xMove && (yCurrent -1 == yMove || xCurrent+1 ==yMove)){//eat diagonal
+                valid = true;
+            }
+        }
+        if (check == "BLACK"){
+            if(xCurrent == 1 && xMove == 3 && yCurrent == yMove){//start could jump 2
+                valid = true;
+               }
+            else if(yCurrent + 1 == xMove && yCurrent == yMove){ //Pawn wants to move forward
+                valid = true;
+            }
+            else if (yCurrent+1 == xMove && (yCurrent -1 == yMove || yCurrent+1 ==yMove)){//eat diagonal
+                valid = true;
+           }
 
-        }
-        // pawn is not in initial position and wants to move forward}
-        else if (yCurrent == 1 && yMove == yCurrent + 1 && xCurrent == xMove || yCurrent == 6 && yMove == yCurrent - 1 && xCurrent == xMove) {
-            valid = true;
-        }
-        // player wants to move diagonal to eat opponent
-        else if (yMove == yCurrent + 1 && xMove == xCurrent - 1 || yMove == yCurrent + 1 && xMove == xCurrent + 1 || yMove == yCurrent - 1 && xMove == xCurrent - 1 || yMove == yCurrent - 1 && xMove == xCurrent + 1) {
-            valid = true;
-        } else {
-            valid = false;
         }
         return valid;
     }
