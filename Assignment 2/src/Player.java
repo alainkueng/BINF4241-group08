@@ -33,4 +33,5 @@ import java.util.ArrayList;
     public colors getColor(){
         return this.color;
     }
+
 }

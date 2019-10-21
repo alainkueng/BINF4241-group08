@@ -423,7 +423,7 @@ public class Board {
         return freePath;
 
     }
-    public boolean move(Object[] moveInput){//0:object, 1: xCurrent, 2:yCurrent, 3:xNew, 4:yNew, 5: capture, 6:castlingKing, 7:castlingQueen, 8:enPassant, 9:promotion
+    public boolean move(Object[] moveInput){//0:object, 1: xCurrent, 2:yCurrent, 3:xNew, 4:yNew, 5: capture, 6:castlingKing, 7:castlingQueen, 8:enPassant, 9:promotion, 10: player.color
         //this method is not done
         //will move be checkmate, if made.
         boolean validMove = true;
@@ -439,11 +439,10 @@ public class Board {
         else if((boolean)moveInput[9]){//check and do promotion
             validMove = promote((Pawn)moveInput[0], (int)moveInput[1], (int)moveInput[2], (Object)moveInput[9]);
         }
-        else if((boolean)moveInput[5]){//if there is a capture not a normal move, isPathFree(), capture also validMove check
+        else if((boolean)moveInput[5]){
+            validMove = captureMove((Figure)moveInput[0], (int)moveInput[1], (int)moveInput[2], (int)moveInput[3], (int)moveInput[4], (Player.colors)moveInput[10]);
         }
         else{validMove = normalMove((Figure)moveInput[0], (int)moveInput[1], (int)moveInput[2], (int)moveInput[3], (int)moveInput[4]);
-        //if there is normal move, isPathFree() also, not capture
-        //check if its a Knight because ispathfree not needed
 
         }
         //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
@@ -474,7 +473,7 @@ public class Board {
 
     private boolean normalMove(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew){// here add outputs that say whats wrong, like there is someone on that field and you didnt say capture
         boolean checkMove = true;
-        if (!isPathFree(xCurrent, yCurrent, xNew, yNew)){
+        if (!isPathFree(xCurrent, yCurrent, xNew, yNew)){//if its a knight this doesnt hold, needs to be changed
             checkMove = false;}
         if(!isOccupied(xNew, yNew)){
             checkMove = false;
@@ -484,6 +483,26 @@ public class Board {
             this.board[xCurrent][yCurrent][1] = null;//delete Object from current
         }
         return checkMove;
+    }
+    private boolean captureMove(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentcolor){
+        boolean moveCheck = true;
+        Figure figure = (Figure)this.board[xNew][yNew][1];
+        if (figure != null) {
+            if (!isOccupied(xNew, yNew) || !(figure.getColor().name() == currentcolor.name())) {
+                moveCheck = false;
+            }
+        }
+        if(figure == null){
+            moveCheck = false;
+        }
+        if(!isPathFree(xCurrent, yCurrent, xNew, yNew)) {// if its a knight this doesnt hold, needs to be changed
+            moveCheck = false;
+        }
+        if(moveCheck){//here add the add to dumbsterlist in Player
+            this.board[xNew][yNew][1] = newObject;
+            this.board[xCurrent][yCurrent][1] = null;
+        }
+        return moveCheck;
     }
 }
 
