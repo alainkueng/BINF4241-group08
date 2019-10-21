@@ -544,8 +544,8 @@ public class Board {
     public ArrayList<Integer> getFigure(int givenColumn, int yCoordinate, int xCoordinate, Figure.Colors color, Class figureType){
         ArrayList<Integer> foundFigures = new ArrayList<Integer>();
         int j = 0;
-        int k = 8;
-        for(int m = 0; m <= 8; m++){
+        int k = 7;
+        for(int m = 0; m < 8; m++){
             if(givenColumn != -1){
                 j = givenColumn;
                 k = givenColumn;

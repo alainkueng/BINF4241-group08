@@ -178,7 +178,7 @@ public class Game {
         boolean capture = (Boolean)checkedInput.get(1);
         int length = input.length();
         ArrayList<Object> parsedInput = new ArrayList<Object>(11);
-        for (int i = 0; i < 11;i++){
+        for (int i = 0; i < 10;i++){
             parsedInput.add(i,null);
         }
 
@@ -248,13 +248,13 @@ public class Game {
             parsedInput.add(4,mapping.indexOf(input.charAt(3)));//[4] = mapping.indexOf(input.charAt(3));
         }
 //        String fig = String.valueOf(figureCatalog.get(checkedInput.get(5).getClass().getName().charAt(0)));
-        parsedInput.add(9,checkedInput.get(5));//[9] = checkedInput.get(5);
-        parsedInput.add(11,currentPlayer.getColor());//[10] = currentPlayer.getColor();
-        parsedInput.add(10,(figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
         parsedInput.add(5,capture);
         parsedInput.add(6,checkedInput.get(2));//[6] = checkedInput[2];//castlingKing
         parsedInput.add(7,checkedInput.get(3));//[7] = checkedInput[3];//castlingQueen
         parsedInput.add(8,checkedInput.get(4));//[8] = checkedInput[4];//enPassant
+        parsedInput.add(9,checkedInput.get(5));//[9] = checkedInput.get(5);
+        parsedInput.add(10,(figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
+        parsedInput.add(11,currentPlayer.getColor());//[10] = currentPlayer.getColor();
 
         return parsedInput;
     }
