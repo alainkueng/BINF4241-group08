@@ -90,10 +90,11 @@ public class Board {
      *                      and then we can call this method here to check if the pawn has to be promoted.
      *                      If the pawn has to be promoted the method also does this automatically.
      */
-    public boolean promote(Pawn pawnToPromote, int xCurrent, int yCurrent, int xMove, int yMove, Object[] promoteInfo, Player.colors color) {
+
+    public boolean promote(Pawn pawnToPromote, int xCurrent, int yCurrent, int xMove, int yMove, Class promoteInfo, Player.colors color) {
         boolean promoteSuccess = false;
         Figure fig = null;
-        if(promoteInfo[1].getClass() == Rook.class){
+        if(promoteInfo == Rook.class){
             if(color.name() == Figure.Colors.WHITE.name()){
                 Rook rookW = new Rook(Figure.Colors.WHITE);
                 fig = rookW;
@@ -102,7 +103,7 @@ public class Board {
                 fig = rookB;
             }
         }
-        else if(promoteInfo[1].getClass() == Knight.class){
+        else if(promoteInfo == Knight.class){
             if(color.name() == Figure.Colors.WHITE.name()){
                 Knight knightW = new Knight(Figure.Colors.WHITE);
                 fig = knightW;
@@ -111,7 +112,7 @@ public class Board {
                 fig = knightB;
             }
         }
-        else if(promoteInfo[1].getClass() == Queen.class){
+        else if(promoteInfo == Queen.class){
             if(color.name() == Figure.Colors.WHITE.name()){
                 Queen queenW = new Queen(Figure.Colors.WHITE);
                 fig = queenW;
@@ -132,6 +133,7 @@ public class Board {
         }
         return promoteSuccess;
     }
+
 
     /**
      * INPUT = 0-0 for Kings' castle and 0-0-0 for queens' castle -->
@@ -484,8 +486,7 @@ public class Board {
             validMove = passant((Pawn)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2]);
         }
         else if((Boolean)moveInput.get(9)){//check and do promotion
-//            Object[] obj = () moveInput[9];
-//            validMove = promote((Pawn)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Object[]) moveInput.get(9), (Player.colors)moveInput.get(11));
+              validMove = promote((Pawn)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));
         }
         else if((Boolean) moveInput.get(5)){//case if capture move
             validMove = captureMove((Figure)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11));
@@ -497,16 +498,16 @@ public class Board {
         //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
         //implement checkmate (why do i need to input king and where?), when moveOn from game is invalid this gets returned anyway?
 
-//        if(!(Boolean)moveInput.get(6) && !(Boolean)moveInput.get(7) && !(Boolean)moveInput.get(8) && !(Boolean)moveInput.get(9)){//change attribute lastmove object newx, newy when there is no special move
-//            lastMove[0] = moveInput.get(0);//Object this should only change if there was no castling etc.
-//            lastMove[1] = moveInput.get(3);//x
-//            lastMove[2] = moveInput.get(4);//y
-//        }
-//        if((Boolean)moveInput.get(6) || (Boolean)moveInput.get(7) || (Boolean)moveInput.get(8) || (Boolean)moveInput.get(9)){//when there is a castling, promotion or enPassant set lastmove to 0
-//            lastMove[0] = null;
-//            lastMove[1] = null;
-//            lastMove[2] = null;
-//        }
+        if(!(Boolean)moveInput.get(6) && !(Boolean)moveInput.get(7) && !(Boolean)moveInput.get(8) && !(Boolean)moveInput.get(9)){//change attribute lastmove object newx, newy when there is no special move
+            lastMove[0] = moveInput.get(0);//Object this should only change if there was no castling etc.
+            lastMove[1] = moveInput.get(3);//x
+            lastMove[2] = moveInput.get(4);//y
+        }
+        if((Boolean)moveInput.get(6) || (Boolean)moveInput.get(7) || (Boolean)moveInput.get(8) || (Boolean)moveInput.get(9)){//when there is a castling, promotion or enPassant set lastmove to 0
+            lastMove[0] = null;
+            lastMove[1] = null;
+            lastMove[2] = null;
+       }
         return validMove;
     }
 
