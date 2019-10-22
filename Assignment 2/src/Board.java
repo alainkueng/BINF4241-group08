@@ -595,7 +595,7 @@ public class Board {
                         }
                     }
                     else{
-                        boolean capture = captureMove(currentFigure, m, n, xCoordinate, yCoordinate, color);
+                        boolean capture = isValidPawnCapture(currentFigure, m, n, xCoordinate, yCoordinate, color);
                         if(capture && foundFigures.size() < 2){
                             foundFigures.add(m);
                             foundFigures.add(n);
@@ -643,6 +643,22 @@ public class Board {
         if(moveCheck){//here add the add to dumpster list in Player
             this.board[xNew][yNew][1] = newObject;
             this.board[xCurrent][yCurrent][1] = null;
+        }
+        return moveCheck;
+    }
+    private boolean isValidPawnCapture(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor) {
+        boolean moveCheck = true;
+        if (!newObject.isValidMove(yCurrent, xCurrent, yNew, xNew, currentColor)) {
+            moveCheck = false;
+        }
+        Figure figure = (Figure) this.board[xNew][yNew][1];
+        if (figure != null) {
+            if (!isOccupied(xNew, yNew) || !(figure.getColor().name() == currentColor.name())) {
+                moveCheck = false;
+            }
+        }
+        if (figure == null) {
+            moveCheck = false;
         }
         return moveCheck;
     }
