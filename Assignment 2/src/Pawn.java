@@ -29,7 +29,7 @@ public class Pawn implements Figure {
             if(xCurrent == 1 && xMove == 3 && yCurrent == yMove){//start could jump 2
                 valid = true;
                }
-            else if(yCurrent + 1 == xMove && yCurrent == yMove){ //Pawn wants to move forward
+            else if(xCurrent + 1 == xMove && yCurrent == yMove){ //Pawn wants to move forward
                 valid = true;
             }
             else if (yCurrent+1 == xMove && (yCurrent -1 == yMove || yCurrent+1 ==yMove)){//eat diagonal

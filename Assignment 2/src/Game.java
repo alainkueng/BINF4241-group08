@@ -215,6 +215,9 @@ public class Game {
         }
         else if(length == 3){
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
+            if(parsedInput.get(0) == null){
+                parsedInput.add(0, Pawn.class);
+            }
             int x = 8-Character.digit(input.charAt(2),10);
             int y = mapping.indexOf(input.charAt(0));
             current = gameBoard.getFigure(-1,x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
