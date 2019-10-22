@@ -275,7 +275,7 @@ public class Board {
      * @return true if passant was done succesfully
      */
     @SuppressWarnings("Duplicates") //pawn, xC,yC ,xM,yM
-    public boolean passant(Pawn pawnPassant, int xPawn,  int yPawn, int xPawnMove, int yPawnMove,int xLastMove, int yLastMove, Player.colors color) {
+    public boolean passant(Pawn pawnPassant, int xPawn, int yPawn, int xPawnMove, int yPawnMove, int xLastMove, int yLastMove, Player.colors color) {
         boolean passant;
         if (!pawnPassant.getMovedTwo() && lastMove[0].getClass() == Pawn.class) {
             //if white pawn, yPawn must be 5 and check if yPawn and yLastMoved are the same || if black pawn : yPawn must be 2
@@ -346,7 +346,7 @@ public class Board {
                 if (board[row][col][1] != null) {
                     if (board[row][col][1] != null) {
                         Figure currentFig = (Figure) board[row][col][1];
-                        if (figure.getColor() != figure.getColor())
+                        if (figure.getColor() != currentFig.getColor())
                             check = currentFig.isValidMove(col, row, y, x, color);
                         if (check)
                             break;
@@ -355,6 +355,21 @@ public class Board {
             }
         }
         return check;
+    }
+    public boolean checkNextToKing(int x, int y, King king, Player.colors color){
+        boolean checkMate = false;
+        check(x, y, king, color);
+        if (x + 1 < 8 && y + 1 < 8) {
+            if (check(x + 1, y, king, color) && board[y][x + 1][1] != null || check(x - 1, y, king, color) && board[y][x - 1][1] != null
+                    || check(x, y + 1, king, color) && board[y + 1][x][1] != null || check(x, y - 1, king, color) && board[y - 1][x][1] != null
+                    || check(x + 1, y + 1, king, color) && board[y + 1][x + 1][1] != null
+                    || check(x + 1, y - 1, king, color) && board[y - 1][x + 1][1] != null
+                    || check(x - 1, y + 1, king, color) && board[y + 1][x - 1][1] != null
+                    || check(x - 1, y - 1, king, color) && board[y + 1][x - 1][1] != null) {
+                checkMate = true;
+            }
+        }
+        return checkMate;
     }
 
     /**
@@ -366,24 +381,51 @@ public class Board {
      * @param king -
      * @return true if king cant move to a safe place, else false
      */
+    @SuppressWarnings("Duplicates")
     public boolean checkMate(int x, int y, King king, Player.colors color) {//what if someone move in the way
+
+        boolean check = false;
+        boolean notBlocked = false;
         boolean checkMate = false;
-        if (check(x, y, king, color)) {
-            if (x + 1 < 8 && y + 1 < 8) {
-                if (check(x + 1, y, king, color) && board[y][x + 1][1] != null || check(x - 1, y, king, color) && board[y][x - 1][1] != null
-                        || check(x, y + 1, king, color) && board[y + 1][x][1] != null || check(x, y - 1, king, color) && board[y - 1][x][1] != null
-                        || check(x + 1, y + 1, king, color) && board[y + 1][x + 1][1] != null
-                        || check(x + 1, y - 1, king, color) && board[y - 1][x + 1][1] != null
-                        || check(x - 1, y + 1, king, color) && board[y + 1][x - 1][1] != null
-                        || check(x - 1, y - 1, king, color) && board[y + 1][x - 1][1] != null) {
-                    checkMate = true;
+        //iterate through whole board
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                //for every figure or the opposition check if they can land on (x,y)
+                if (board[row][col][1] != null) {
+                    if (board[row][col][1] != null) {
+                        Figure currentFig = (Figure) board[row][col][1];
+                        if (king.getColor() != currentFig.getColor())
+                            check = currentFig.isValidMove(col, row, x, y, color) && isPathFree(col, row, x, y);
+                        if (check) {
+                            boolean canBlock = false;
+                            for (int i = 0; i < 8; i++) {
+                                for (int j = 0; j < 8; j++) {
+                                    //for every figure of the same color check if they can land on (x,y)
+                                    if (board[i][j][1] != null) {
+                                        if (board[i][j][1] != null) {
+                                            Figure sameColorFig = (Figure) board[row][col][1];
+                                            if (king.getColor() == sameColorFig.getColor())
+                                                for (int z = col; z < x; z++)
+                                                    notBlocked = isPathFreeModified(row,col,x,y,sameColorFig,color);
+//                                            check = currentFig.isValidMove(col, row, y, x, color);
+                                        }
+                                    }
+                                }
+                            }
+                            if(notBlocked && checkNextToKing(x,y,king,color))
+                                checkMate = false;
+                            else
+                                checkMate = true;
+                        }
+
+                    }
                 }
             }
         }
         return checkMate;
     }
 
-
+    @SuppressWarnings("Duplicates")
     public boolean isPathFree(int xCurrent, int yCurrent, int xMove, int yMove) {
         boolean freePath = true;
         //straight down
@@ -420,7 +462,7 @@ public class Board {
         else if (yCurrent < yMove && xCurrent == xMove) {
             yCurrent++;
             for (int i = yCurrent; i < yMove; i++) {
-                if (board[xCurrent][i][1] == null) {
+                if (board[xCurrent][i][1] != null) {
                     freePath = false;
                     break;
                 }
@@ -432,7 +474,7 @@ public class Board {
             j--;
             xCurrent++;
             for (int i = xCurrent; i < xMove; i++) {
-                if (board[i][j][1] == null) {
+                if (board[i][j][1] != null) {
                     freePath = false;
                     break;
                 }
@@ -448,7 +490,7 @@ public class Board {
             j--;
             xCurrent--;
             for (int i = xCurrent; i > xMove; i--) {
-                if (board[i][j][1] == null) {
+                if (board[i][j][1] != null) {
                     freePath = false;
                     break;
                 }
@@ -464,7 +506,7 @@ public class Board {
             j++;
             xCurrent++;
             for (int i = xCurrent; i < xMove; i++) {
-                if (board[i][j][1] == null) {
+                if (board[i][j][1] != null) {
                     freePath = false;
                     break;
                 }
@@ -480,7 +522,7 @@ public class Board {
             j++;
             xCurrent--;
             for (int i = xCurrent; i > xMove; i--) {
-                if (board[i][j][1] == null) {
+                if (board[i][j][1] != null) {
                     freePath = false;
                     break;
                 }
@@ -647,6 +689,7 @@ public class Board {
         }
         return moveCheck;
     }
+    @SuppressWarnings("Duplicates")
     private boolean isValidPawnCapture(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor) {
         boolean moveCheck = true;
         if (!newObject.isValidMove(yCurrent, xCurrent, yNew, xNew, currentColor)) {
@@ -662,6 +705,116 @@ public class Board {
             moveCheck = false;
         }
         return moveCheck;
+    }
+    @SuppressWarnings("Duplicates")
+    public boolean isPathFreeModified(int xCurrent, int yCurrent, int xMove, int yMove, Figure figureToBlock, Player.colors color) {
+        boolean canBlock = true;
+        //straight down
+        if (yCurrent == yMove && xCurrent < xMove) {
+            xCurrent++;
+            for (int i = xCurrent; i < xMove; i++) {
+                if (board[i][yCurrent][1] == null && figureToBlock.isValidMove(yCurrent,i,yMove,xMove,color)) {
+                    canBlock = false;
+                    break;
+                }
+            }
+        }
+        //straight up
+        else if (yCurrent == yMove && xCurrent > xMove) {
+            xCurrent--;
+            for (int i = xCurrent; i > xMove; i--) {
+                if (board[i][yCurrent][1] == null && figureToBlock.isValidMove(yCurrent,i,yMove,xMove,color)) {
+                    canBlock = false;
+                    break;
+                }
+            }
+        }
+        //left
+        else if (yCurrent > yMove && xCurrent == xMove) {
+            yCurrent--;
+            for (int i = yCurrent; i > yMove; i--) {
+                if (board[xCurrent][i][1] == null && figureToBlock.isValidMove(i,xCurrent,yMove,xMove,color)) {
+                    canBlock = true;
+                    break;
+                }
+            }
+        }
+        //right
+        else if (yCurrent < yMove && xCurrent == xMove) {
+            yCurrent++;
+            for (int i = yCurrent; i < yMove; i++) {
+                if (board[xCurrent][i][1] == null && figureToBlock.isValidMove(i,xCurrent,yMove,xMove,color)) {
+                    canBlock = true;
+                    break;
+                }
+            }
+        }
+        //left down
+        else if (yMove < yCurrent && xMove > xCurrent) {
+            int j = yCurrent;
+            j--;
+            xCurrent++;
+            for (int i = xCurrent; i < xMove; i++) {
+                if (board[i][j][1] == null && figureToBlock.isValidMove(j,i,yMove,xMove,color)) {
+                    canBlock = true;
+                    break;
+                }
+                j++;
+                if(j == yMove){
+                    break;
+                }
+            }
+        }
+        //left up
+        else if (yMove < yCurrent && xMove < xCurrent) {
+            int j = yCurrent;
+            j--;
+            xCurrent--;
+            for (int i = xCurrent; i > xMove; i--) {
+                if (board[i][j][1] == null && figureToBlock.isValidMove(j,i,yMove,xMove,color)) {
+                    canBlock = true;
+                    break;
+                }
+                j--;
+                if(j == yMove){
+                    break;
+                }
+            }
+        }
+        //right down
+        else if (yMove > yCurrent && xMove > xCurrent) {
+            int j = yCurrent;
+            j++;
+            xCurrent++;
+            for (int i = xCurrent; i < xMove; i++) {
+                if (board[i][j][1] == null && figureToBlock.isValidMove(j,i,yMove,xMove,color)) {
+                    canBlock = true;
+                    break;
+                }
+                j++;
+                if(j == yMove){
+                    break;
+                }
+            }
+        }
+        //right up
+        else if (yMove > yCurrent && xMove < xCurrent) {
+            int j = yCurrent;
+            j++;
+            xCurrent--;
+            for (int i = xCurrent; i > xMove; i--) {
+                if (board[i][j][1] == null && figureToBlock.isValidMove(j,i,yMove,xMove,color)) {
+                    canBlock = true;
+                    break;
+                }
+                j++;
+                if(j == yMove){
+                    break;
+                }
+            }
+        }
+        return canBlock;
+
     }
 }
 
