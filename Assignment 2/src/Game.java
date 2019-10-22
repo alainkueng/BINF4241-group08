@@ -237,6 +237,10 @@ public class Game {
         else if(length == 4){
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
             int x = 8-Character.digit(input.charAt(3),10);
+                                                                            //to kill with a figure if there is only one possibility "Bxd5"
+                                                                            //kill with a pawn since you always give a line which indicates which pawn to take "exd5".
+                                                                            //To move a figure if there are 2 possibilities "Bdb8"
+                                                                            //pawn promotion indicated  "e8=Q"
             int y = mapping.indexOf(input.charAt(2));
             current = gameBoard.getFigure((Integer)parsedInput.get(2),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
             if(current.size() == 2){

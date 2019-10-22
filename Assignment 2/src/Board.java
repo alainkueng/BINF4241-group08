@@ -635,7 +635,7 @@ public class Board {
                 if(currentFigure != null
                         && currentFigure.getClass() == figureType
                         && currentFigure.getColor().toString() == color.toString()
-                        && isPathFree(m,n,xCoordinate,yCoordinate)){
+                        && (isPathFree(m,n,xCoordinate,yCoordinate) || currentFigure.getClass() == Knight.class)){
                     if (currentFigure.getClass() != Pawn.class){
                         if(currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)){
                             if(foundFigures.size() < 2){
