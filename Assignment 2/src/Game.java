@@ -213,7 +213,7 @@ public class Game {
             parsedInput.add(3,8-Character.digit(input.charAt(1),10));
             parsedInput.add(4,mapping.indexOf(input.charAt(0)));//[4] = mapping.indexOf(input.charAt(0));
         }
-        else if(length == 3){
+        else if(length == 3){//"Be5"
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
             int y = -1;
             if(parsedInput.get(0) == null){
@@ -234,22 +234,26 @@ public class Game {
             parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
             parsedInput.add(4,mapping.indexOf((input.charAt(1))));//[4] = mapping.indexOf(input.charAt(1));
         }
-        else if(length == 4){
-            parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
-            int x = 8-Character.digit(input.charAt(3),10);
-                                                                            //to kill with a figure if there is only one possibility "Bxd5"
-                                                                            //kill with a pawn since you always give a line which indicates which pawn to take "exd5".
-                                                                            //To move a figure if there are 2 possibilities "Bdb8"
-                                                                            //pawn promotion indicated  "e8=Q"
-            int y = mapping.indexOf(input.charAt(2));
-            current = gameBoard.getFigure((Integer)parsedInput.get(2),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
-            if(current.size() == 2){
-                parsedInput.add(1,current.get(0));//[1] = current.get(0);
+        else if(length == 4){//"Bdb8"
+            //To move a figure if there are 2 possibilities "Bdb8", problem wenn er sagt er hat dort einen obwohl eigentlich nicht
+            //pawn promotion indicated  "e8=Q" Noch sagen daser da nicht mitgeben kann
+            parsedInput.add(0,figureCatalog.get(input.charAt(0)));//
+            Object[][][] checkBoard = gameBoard.getBoard();
+            for (int i = 0; i<=7; i++) {
+                int parsed = mapping.indexOf(input.charAt(1));
+                if (checkBoard[i][parsed][1] != null) {
+                    if (checkBoard[i][parsed][1].getClass() == parsedInput.get(0)) {
+                        parsedInput.add(0,figureCatalog.get(input.charAt(0)));
+                        parsedInput.add(1, i);
+                        parsedInput.add(2, mapping.indexOf(input.charAt(1)));
+                    }
+                }
+            }//nur wenn null
+            if (parsedInput.get(1) == null){
+                parsedInput.add(0, false);
+                parsedInput.add(1, 0);//fillers
+                parsedInput.add(2, 0);//fillers
             }
-            else{
-                parsedInput.add(0,false);//[0] = false;
-            }
-            parsedInput.add(2,mapping.indexOf(input.charAt(1)));//[2] = mapping.indexOf(input.charAt(1));
             parsedInput.add(3, 8-Character.digit(input.charAt(3),10));//[3] = 8-Character.digit(input.charAt(3),10);
             parsedInput.add(4,mapping.indexOf(input.charAt(2)));//[4] = mapping.indexOf(input.charAt(2));
         }
@@ -272,10 +276,11 @@ public class Game {
         if (current.size() == 0){
             System.out.println("This move is not possible, please retry another.\n");
         }
-        if(parsedInput.get(0).getClass() == Boolean.class && !(boolean)parsedInput.get(0)){
-            System.out.println("This move is ambiguous, please clarify.");
-        }
 
+        if(parsedInput.get(0).getClass() == Boolean.class && !(boolean)parsedInput.get(0)){
+            System.out.println("This move is ambiguous, please clarify.");}
+            else{System.out.println("This move is ambiguous, please clarify.");
+            }
         return parsedInput;
     }
 
