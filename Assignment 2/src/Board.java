@@ -78,7 +78,7 @@ public class Board {
     }
 
     /**
-     * @param pawnToPromote - the pawn that has reached the promotion area
+     * @param pawn          - class pawn
      * @param xCurrent      - current x coordinate of the pawn
      * @param yCurrent      - current y coordinate of the pawn
      * @param xMove         - x coordinate where pawn is to be moved
@@ -275,10 +275,9 @@ public class Board {
      * Captured pawn must be in adjacent square and just have moved two squares
      * TODO: add eaten piece to the player garbage list
      *
-     *
+     * @param pawn          - pawn Class
      * @param yLastMove   - y coordinate of last move of opponent
      * @param xLastMove   - x coordinate of last move of opponent
-     * @param pawnPassant - pawn that wants to do passant
      * @param xPawn       - x coordinate of this pawn
      * @param yPawn       - y coordinate of this pawn
      * @param xPawnMove   - x coordinate where pawn wants to move
