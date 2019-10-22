@@ -91,8 +91,9 @@ public class Board {
      *                      If the pawn has to be promoted the method also does this automatically.
      */
 
-    public boolean promote(Figure pawnToPromote, int xCurrent, int yCurrent, int xMove, int yMove, Class promoteInfo, Player.colors color) {
+    public boolean promote(Class pawn, int xCurrent, int yCurrent, int xMove, int yMove, Class promoteInfo, Player.colors color) {
         boolean promoteSuccess = false;
+        Pawn pawnToPromote = (Pawn) board[xCurrent][yCurrent][1];
         Figure fig = null;
         if(promoteInfo == Rook.class){
             if(color.name() == Figure.Colors.WHITE.name()){
@@ -102,6 +103,16 @@ public class Board {
                 Rook rookB = new Rook(Figure.Colors.BLACK);
                 fig = rookB;
             }
+        }
+        else if(promoteInfo == Bishop.class){
+            if(color.name() == Figure.Colors.WHITE.name()){
+                Bishop bishopW = new Bishop(Figure.Colors.WHITE);
+                fig = bishopW;
+            } else {
+                Bishop bishopB = new Bishop(Figure.Colors.BLACK);
+                fig = bishopB;
+            }
+
         }
         else if(promoteInfo == Knight.class){
             if(color.name() == Figure.Colors.WHITE.name()){
@@ -275,8 +286,9 @@ public class Board {
      * @return true if passant was done succesfully
      */
     @SuppressWarnings("Duplicates") //pawn, xC,yC ,xM,yM
-    public boolean passant(Pawn pawnPassant, int xPawn, int yPawn, int xPawnMove, int yPawnMove, int xLastMove, int yLastMove, Player.colors color) {
+    public boolean passant(Class pawn, int xPawn, int yPawn, int xPawnMove, int yPawnMove, int xLastMove, int yLastMove, Player.colors color) {
         boolean passant;
+        Pawn pawnPassant = (Pawn) board[xPawn][yPawn][1];
         if (!pawnPassant.getMovedTwo() && lastMove[0].getClass() == Pawn.class) {
             //if white pawn, yPawn must be 5 and check if yPawn and yLastMoved are the same || if black pawn : yPawn must be 2
             if (pawnPassant.getColor().equals(Figure.Colors.WHITE) && yPawn == 5 && yLastMove == yPawn) {
@@ -549,10 +561,10 @@ public class Board {
             validMove = castleQueenSide((Player.colors)moveInput.get(11));
         }
         else if((Boolean)moveInput.get(8)) {//check and do enpassant //change (1) to class input not figure since its only a class given
-            validMove = passant((Pawn)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11));
+            validMove = passant((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11));
         }
         else if((Boolean)moveInput.get(9)){//check and do promotion //this needs color too //change to class
-              validMove = promote((Figure)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));
+              validMove = promote((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));
         }
         else if((Boolean) moveInput.get(5)){//case if capture move //this needs color too
             validMove = captureMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11));
