@@ -12,8 +12,7 @@ public class Pawn implements Figure {
     //check documentation of Interface
     public boolean isValidMove(int xCurrent, int yCurrent,int xMove, int yMove, Player.colors color) {
         boolean valid = false;
-        //check if its the first move and player wants to move f
-        // orward
+        //check if its the first move and player wants to move forward
         String check = color.toString();
         if (check == "WHITE"){
             if (xCurrent == 6 && xMove == 4 && yCurrent == yMove) {//start could jump 2

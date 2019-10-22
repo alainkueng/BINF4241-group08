@@ -177,12 +177,10 @@ public class Game {
         boolean capture = (Boolean)checkedInput.get(1);
         int length = input.length();
         ArrayList<Object> parsedInput = new ArrayList<Object>(11);
+        ArrayList<Integer> current = new ArrayList<>();
         for (int i = 0; i < 10;i++){
             parsedInput.add(i,null);
         }
-
-
-
 
         ArrayList<Character> mapping = new ArrayList<Character>();
         for (char c = 'a'; c <= 'h'; ++c){
@@ -204,7 +202,7 @@ public class Game {
             parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
             int x = 8-Character.digit(input.charAt(1),10);
             int y = mapping.indexOf(input.charAt(0));
-            ArrayList<Integer> current = gameBoard.getFigure(-1, x, y, currentPlayer.getColor(), Pawn.class);
+            current = gameBoard.getFigure(-1, x, y, currentPlayer.getColor(), Pawn.class);
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));
                 parsedInput.add(2,current.get(1));
@@ -219,7 +217,7 @@ public class Game {
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
             int x = 8-Character.digit(input.charAt(2),10);
             int y = mapping.indexOf(input.charAt(0));
-            ArrayList<Integer> current = gameBoard.getFigure(-1,x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
+            current = gameBoard.getFigure(-1,x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));//[1] = current.get(0);
                 parsedInput.add(2,current.get(1));//[2] = current.get(1);
@@ -234,7 +232,7 @@ public class Game {
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
             int x = 8-Character.digit(input.charAt(3),10);
             int y = mapping.indexOf(input.charAt(2));
-            ArrayList<Integer> current = gameBoard.getFigure((Integer)parsedInput.get(2),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
+            current = gameBoard.getFigure((Integer)parsedInput.get(2),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));//[1] = current.get(0);
             }
@@ -260,6 +258,13 @@ public class Game {
         parsedInput.add(9,checkedInput.get(5));//[9] = checkedInput.get(5);
         parsedInput.add(10,(figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
         parsedInput.add(11,currentPlayer.getColor());//[10] = currentPlayer.getColor();
+
+        if (current.size() == 0){
+            System.out.println("This move is not possible, please retry another.\n");
+        }
+        if(parsedInput.get(0).getClass() == Boolean.class && !(boolean)parsedInput.get(0)){
+            System.out.println("This move is ambiguous, please clarify.");
+        }
 
         return parsedInput;
     }

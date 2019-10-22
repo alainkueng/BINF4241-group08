@@ -385,85 +385,109 @@ public class Board {
 
 
     public boolean isPathFree(int xCurrent, int yCurrent, int xMove, int yMove) {
-        boolean freePath = false;
-        //straight up
-        if (xCurrent == xMove && yCurrent < yMove) {
-            for (int i = yCurrent; i < yMove; i++) {
-                if (board[i][xCurrent][1] == null) {
-                    freePath = true;
+        boolean freePath = true;
+        //straight down
+        if (yCurrent == yMove && xCurrent < xMove) {
+            xCurrent++;
+            for (int i = xCurrent; i < xMove; i++) {
+                if (board[i][yCurrent][1] != null) {
+                    freePath = false;
                     break;
                 }
             }
         }
-        //straight down
-        else if (xCurrent == xMove && yCurrent > yMove) {
-            for (int i = yCurrent; i > yMove; i--) {
-                if (board[i][xCurrent][1] == null) {
-                    freePath = true;
+        //straight up
+        else if (yCurrent == yMove && xCurrent > xMove) {
+            xCurrent--;
+            for (int i = xCurrent; i > xMove; i--) {
+                if (board[i][yCurrent][1] != null) {
+                    freePath = false;
                     break;
                 }
             }
         }
         //left
-        else if (xCurrent > xMove && yCurrent == yMove) {
-            for (int i = xCurrent; i > xMove; i--) {
-                if (board[yCurrent][i][1] == null) {
-                    freePath = true;
+        else if (yCurrent > yMove && xCurrent == xMove) {
+            yCurrent--;
+            for (int i = yCurrent; i > yMove; i--) {
+                if (board[xCurrent][i][1] != null) {
+                    freePath = false;
                     break;
                 }
             }
         }
         //right
-        else if (xCurrent < xMove && yCurrent == yMove) {
+        else if (yCurrent < yMove && xCurrent == xMove) {
+            yCurrent++;
+            for (int i = yCurrent; i < yMove; i++) {
+                if (board[xCurrent][i][1] == null) {
+                    freePath = false;
+                    break;
+                }
+            }
+        }
+        //left down
+        else if (yMove < yCurrent && xMove > xCurrent) {
+            int j = yCurrent;
+            j--;
+            xCurrent++;
             for (int i = xCurrent; i < xMove; i++) {
-                if (board[yCurrent][i][1] == null) {
-                    freePath = true;
+                if (board[i][j][1] == null) {
+                    freePath = false;
+                    break;
+                }
+                j++;
+                if(j == yMove){
                     break;
                 }
             }
         }
         //left up
-        else if (xMove < xCurrent && yMove > yCurrent) {
-            int j = xCurrent;
-            for (int i = yCurrent; i < yMove; i++) {
+        else if (yMove < yCurrent && xMove < xCurrent) {
+            int j = yCurrent;
+            j--;
+            xCurrent--;
+            for (int i = xCurrent; i > xMove; i--) {
                 if (board[i][j][1] == null) {
-                    freePath = true;
-                    break;
-                }
-                j++;
-            }
-        }
-        //left down
-        else if (xMove < xCurrent && yMove < yCurrent) {
-            int j = xCurrent;
-            for (int i = yCurrent; i > yMove; i--) {
-                if (board[i][j][1] == null) {
-                    freePath = true;
+                    freePath = false;
                     break;
                 }
                 j--;
-            }
-        }
-        //right up
-        else if (xMove > xCurrent && yMove > yCurrent) {
-            int j = xCurrent;
-            for (int i = yCurrent; i < yMove; i++) {
-                if (board[i][j][1] == null) {
-                    freePath = true;
+                if(j == yMove){
                     break;
                 }
-                j++;
             }
         }
         //right down
-        else if (xMove > xCurrent && yMove < yCurrent) {
-            int j = xCurrent;
-            for (int i = yCurrent; i > yMove; i--) {
+        else if (yMove > yCurrent && xMove > xCurrent) {
+            int j = yCurrent;
+            j++;
+            xCurrent++;
+            for (int i = xCurrent; i < xMove; i++) {
                 if (board[i][j][1] == null) {
-                    freePath = true;
+                    freePath = false;
                     break;
                 }
-                j--;
+                j++;
+                if(j == yMove){
+                    break;
+                }
+            }
+        }
+        //right up
+        else if (yMove > yCurrent && xMove < xCurrent) {
+            int j = yCurrent;
+            j++;
+            xCurrent--;
+            for (int i = xCurrent; i > xMove; i--) {
+                if (board[i][j][1] == null) {
+                    freePath = false;
+                    break;
+                }
+                j++;
+                if(j == yMove){
+                    break;
+                }
             }
         }
         return freePath;
@@ -529,12 +553,12 @@ public class Board {
         if(!(((Figure)this.board[xCurrent][yCurrent][1]).isValidMove(xCurrent,yCurrent,xNew, yNew, color))){
             checkMove = false;
         }
-        //if(!(newObject == Knight.class)){//when its not a knight do this
-            //if(isPathFree(xCurrent, yCurrent, xNew, yNew) == false) {// if the path is not free do this
-               //checkMove = false;
-            //}
-        //}
-        if(isOccupied(xNew, yNew) != false){
+        if(!(newObject == Knight.class)){//when its not a knight do this
+            if(!isPathFree(xCurrent, yCurrent, xNew, yNew)) {// if the path is not free do this
+               checkMove = false;
+            }
+        }
+        if(isOccupied(xNew, yNew)){
             checkMove = false;
         }
         if (checkMove){
@@ -558,14 +582,37 @@ public class Board {
                 if(currentFigure != null
                         && currentFigure.getClass() == figureType
                         && currentFigure.getColor().toString() == color.toString()){
-                    if(currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)){
-                        if(foundFigures.size() <= 2){
+                    if (currentFigure.getClass() != Pawn.class){
+                        if(currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)){
+                            if(foundFigures.size() < 2){
+                                foundFigures.add(m);
+                                foundFigures.add(n);
+                            }
+                            else{
+                                foundFigures.add(m);
+                                break;
+                            }
+                        }
+                    }
+                    else{
+                        boolean capture = captureMove(currentFigure, m, n, xCoordinate, yCoordinate, color);
+                        if(capture && foundFigures.size() < 2){
                             foundFigures.add(m);
                             foundFigures.add(n);
                         }
-                        else{
+                        else if(foundFigures.size() == 2 && capture){
                             foundFigures.add(m);
                             break;
+                        }
+                        else if(currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)){
+                            if(foundFigures.size() < 2){
+                                foundFigures.add(m);
+                                foundFigures.add(n);
+                            }
+                            else if(capture){
+                                foundFigures.add(m);
+                                break;
+                            }
                         }
                     }
                 }
