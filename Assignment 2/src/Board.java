@@ -628,7 +628,7 @@ public class Board {
         }
         Figure figure = (Figure)this.board[xNew][yNew][1];
         if (figure != null) {
-            if (!isOccupied(xNew, yNew) || !(figure.getColor().name() == currentColor.name())) {
+            if (!isOccupied(xNew, yNew) || figure.getColor().name() == currentColor.name()) {
                 moveCheck = false;
             }
         }
@@ -641,7 +641,8 @@ public class Board {
             }
         }
         if(moveCheck){//here add the add to dumpster list in Player
-            this.board[xNew][yNew][1] = newObject;
+            Figure fig = (Figure)this.board[xCurrent][yCurrent][1];
+            this.board[xNew][yNew][1] = fig;
             this.board[xCurrent][yCurrent][1] = null;
         }
         return moveCheck;
