@@ -21,7 +21,7 @@ public class Pawn implements Figure {
             else if (xCurrent-1 == xMove && yCurrent == yMove){//Pawn wants to move forward
                 valid = true;
             }
-            else if (xCurrent-1 == xMove && (yCurrent -1 == yMove || xCurrent+1 ==yMove)){//eat diagonal
+            else if (xCurrent-1 == xMove && (yCurrent -1 == yMove || yCurrent+1 ==yMove)){//eat diagonal
                 valid = true;
             }
         }
@@ -32,7 +32,7 @@ public class Pawn implements Figure {
             else if(xCurrent + 1 == xMove && yCurrent == yMove){ //Pawn wants to move forward
                 valid = true;
             }
-            else if (yCurrent+1 == xMove && (yCurrent -1 == yMove || yCurrent+1 ==yMove)){//eat diagonal
+            else if (xCurrent+1 == xMove && (yCurrent -1 == yMove || yCurrent+1 ==yMove)){//eat diagonal
                 valid = true;
            }
 
