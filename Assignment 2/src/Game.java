@@ -280,8 +280,12 @@ public class Game {
      *                  Prints the chessboard with the current location of every piece
      */
     private void printBoard(Object[][][] gameBoard){
+        char[] chars = {'a','b','c','d','h'};
+        int[] numeration = {8,7,6,5,4,3,2,1};
         char type;
         for (int i = 0; i < 8; i++){
+            System.out.printf(" %d ",numeration[i]);
+
             for (int j = 0; j < 8; j++){
                 if(gameBoard[i][j][1] != null){
                 Figure figure = (Figure)gameBoard[i][j][1];
@@ -297,10 +301,14 @@ public class Game {
                 else{
                     System.out.print("[  ]");
                 }
+
             }
             System.out.println();
         }
+        System.out.print("     a   b   c   d   e   f   g   h\n");
         System.out.println();
+
+
     }
 
     /**
