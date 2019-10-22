@@ -623,7 +623,8 @@ public class Board {
                 Figure currentFigure = (Figure)board[m][n][1];
                 if(currentFigure != null
                         && currentFigure.getClass() == figureType
-                        && currentFigure.getColor().toString() == color.toString()){
+                        && currentFigure.getColor().toString() == color.toString()
+                        && isPathFree(m,n,xCoordinate,yCoordinate)){
                     if (currentFigure.getClass() != Pawn.class){
                         if(currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)){
                             if(foundFigures.size() < 2){
