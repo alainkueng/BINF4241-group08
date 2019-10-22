@@ -1,15 +1,36 @@
-public class Knight implements Figure
-{
+public class Knight implements Figure {
 
-    Colors color;
+
+    private Colors color;
     public Knight(Colors color){
         this.color = color;
     }
 
+    //check documentation of Interface
+    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
+        boolean valid = false;
+        //move down-left or down-right
+        if(xMove == xCurrent - 1 && yMove == yCurrent + 2 || xMove == xCurrent + 1 && yMove == yCurrent + 2){
+            valid = true;
+        }
+        //move up-right or up-left
+        else if(xMove == xCurrent - 1 && yMove == yCurrent - 2 || xMove == xCurrent + 1 && yMove == yCurrent - 2){
+            valid = true;
+        }
+        //move left-up or left-down
+        else if (xMove == xCurrent - 2 && yMove == yCurrent - 1 || xMove == xCurrent - 2 && yMove == yCurrent + 1){
+            valid = true;
+        }
+        //move right-up or right-down
+        else if (xMove == xCurrent + 2 && yMove == yCurrent - 1 || xMove == xCurrent + 2 && yMove == yCurrent + 1){
+            valid = true;
+        }
+        else{ valid = false;}
+        return valid;
+    }
 
     @Override
-    public boolean isValidMove(Board gameboard,int x_current, int y_current, int x_move, int y_move, Player player){
-        return true;
+    public Colors getColor() {
+        return this.color;
     }
-    public void move(){}
 }
