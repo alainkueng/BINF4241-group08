@@ -117,7 +117,6 @@ public class Game {
                     stringCheck = true;
                     promotion = true;
                     promotionFig = ((String.valueOf(moveKill[3].charAt(0))));//[1] = moveKill[3].charAt(0);
-                    input = moveKill[0] + moveKill[1];
                 }
             }
 
@@ -214,26 +213,36 @@ public class Game {
             parsedInput.add(3,8-Character.digit(input.charAt(1),10));
             parsedInput.add(4,mapping.indexOf(input.charAt(0)));//[4] = mapping.indexOf(input.charAt(0));
         }
-        else if(length == 3){//"Be5"
-            parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
-            int y = -1;
-            if(parsedInput.get(0) == null){
-                parsedInput.add(0, Pawn.class);
-                y = mapping.indexOf(input.charAt(0));
+        else if(length == 3){//"Be5", "o-o"
+            String[] matchCheck = input.split("");
+            if(!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$"))){ // if not o-o
+                parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
+                int y = -1;
+                if(parsedInput.get(0) == null){
+                    parsedInput.add(0, Pawn.class);
+                    y = mapping.indexOf(input.charAt(0));
+                }
+                int x = 8-Character.digit(input.charAt(2),10);
+                if (parsedInput.get(0) != Pawn.class){
+                    y = mapping.indexOf(input.charAt(1));}
+                    current = gameBoard.getFigure(-1,x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
+                if(current.size() == 2){
+                    parsedInput.add(1,current.get(0));//[1] = current.get(0);
+                    parsedInput.add(2,current.get(1));//[2] = current.get(1);
+                }
+                else{
+                    parsedInput.add(0,false);
+                }
+                parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
+                parsedInput.add(4,mapping.indexOf((input.charAt(1))));
+                }
+            else{parsedInput.add(0, true);
+                parsedInput.add(1,0);//filler
+                parsedInput.add(2,0);//filler
+                parsedInput.add(3, 0);//filler
+                parsedInput.add(4, 0);//filler
+
             }
-            int x = 8-Character.digit(input.charAt(2),10);
-            if (parsedInput.get(0) != Pawn.class){
-                y = mapping.indexOf(input.charAt(1));}
-            current = gameBoard.getFigure(-1,x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
-            if(current.size() == 2){
-                parsedInput.add(1,current.get(0));//[1] = current.get(0);
-                parsedInput.add(2,current.get(1));//[2] = current.get(1);
-            }
-            else{
-                parsedInput.add(0,false);
-            }
-            parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
-            parsedInput.add(4,mapping.indexOf((input.charAt(1))));//[4] = mapping.indexOf(input.charAt(1));
         }
         else if(length == 4){//"Bdb8"
              //"e8=Q"
@@ -274,21 +283,32 @@ public class Game {
                 parsedInput.add(4,mapping.indexOf(input.charAt(0)));//[4] = mapping.indexOf(input.charAt(0));}
             }
         }
-        else if(length == 5){
-            parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
-            parsedInput.add(1,8-Character.digit(input.charAt(2), 10));//[1] = 8-Character.digit(input.charAt(2), 10);
-            parsedInput.add(2,mapping.indexOf(input.charAt(1)));//[2] = mapping.indexOf(input.charAt(1));
-            parsedInput.add(3,8-Character.digit(input.charAt(4),10));//[3] = 8-Character.digit(input.charAt(4),10);
-            parsedInput.add(4,mapping.indexOf(input.charAt(3)));//[4] = mapping.indexOf(input.charAt(3));
+        else if(length == 5) {
+            String[] matchCheck = input.split("");
+            if (!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$") && matchCheck[3].matches("^[-]*$") && matchCheck[4].matches("^[o]*$"))) {
+                parsedInput.add(0, figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
+                parsedInput.add(1, 8 - Character.digit(input.charAt(2), 10));//[1] = 8-Character.digit(input.charAt(2), 10);
+                parsedInput.add(2, mapping.indexOf(input.charAt(1)));//[2] = mapping.indexOf(input.charAt(1));
+                parsedInput.add(3, 8 - Character.digit(input.charAt(4), 10));//[3] = 8-Character.digit(input.charAt(4),10);
+                parsedInput.add(4, mapping.indexOf(input.charAt(3)));//[4] = mapping.indexOf(input.charAt(3));
+            }
+            else{
+                parsedInput.add(0, 0);//filler
+                parsedInput.add(1, 0);//filler
+                parsedInput.add(2, 0);//filler
+                parsedInput.add(3, 0);//filler
+                parsedInput.add(4, 0);//filler
+            }
         }
 //        String fig = String.valueOf(figureCatalog.get(checkedInput.get(5).getClass().getName().charAt(0)));
-        parsedInput.add(5,capture);
-        parsedInput.add(6,checkedInput.get(2));//[6] = checkedInput[2];//castlingKing
-        parsedInput.add(7,checkedInput.get(3));//[7] = checkedInput[3];//castlingQueen
-        parsedInput.add(8,checkedInput.get(4));//[8] = checkedInput[4];//enPassant
-        parsedInput.add(9,checkedInput.get(5));//[9] = checkedInput.get(5);
-        parsedInput.add(10,(figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
-        parsedInput.add(11,currentPlayer.getColor());//[10] = currentPlayer.getColor();
+        parsedInput.add(5, capture);
+        parsedInput.add(6, checkedInput.get(2));//[6] = checkedInput[2];//castlingKing
+        parsedInput.add(7, checkedInput.get(3));//[7] = checkedInput[3];//castlingQueen
+        parsedInput.add(8, checkedInput.get(4));//[8] = checkedInput[4];//enPassant
+        parsedInput.add(9, checkedInput.get(5));//[9] = checkedInput.get(5);
+        parsedInput.add(10, (figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
+        parsedInput.add(11, currentPlayer.getColor());//[10] = currentPlayer.getColor();
+
 
         if(current.size() > 2){
             System.out.println("There are at least two Objects of the same Type that could do this move.\n");
