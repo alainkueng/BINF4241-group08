@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/** @noinspection Duplicates*/
 public class Game {
     private Board gameBoard;
     private Player white;
@@ -87,7 +88,7 @@ public class Game {
                 if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[1-8]*$")){//normal move figure
                     stringCheck = true;
                 }
-                if (moveKill[0].matches("^[o]*$") && moveKill[1].matches("^[-]*$") && moveKill[2].matches("^[o]*$") && moveKill[2].matches("^[-]*$")){//castling check
+                if (moveKill[0].matches("^[o]*$") && moveKill[1].matches("^[-]*$") && moveKill[2].matches("^[o]*$")){//castling check
                     stringCheck = true;
                     castlingKing = true;
                 }
@@ -235,8 +236,9 @@ public class Game {
             parsedInput.add(4,mapping.indexOf((input.charAt(1))));//[4] = mapping.indexOf(input.charAt(1));
         }
         else if(length == 4){//"Bdb8"
-            //To move a figure if there are 2 possibilities "Bdb8", problem wenn er sagt er hat dort einen obwohl eigentlich nicht
-            //pawn promotion indicated  "e8=Q" Noch sagen daser da nicht mitgeben kann
+             //"e8=Q"
+            String[] matchCheck = input.split("");
+            if(!(matchCheck[0].matches("^[a-h]*$") && matchCheck[1].matches("^[1-8]*$") && matchCheck[2].matches("^[=]*$") && matchCheck[3].matches("^[RBNQ]*$"))){
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//
             Object[][][] checkBoard = gameBoard.getBoard();
             for (int i = 0; i<=7; i++) {
@@ -256,6 +258,21 @@ public class Game {
             }
             parsedInput.add(3, 8-Character.digit(input.charAt(3),10));//[3] = 8-Character.digit(input.charAt(3),10);
             parsedInput.add(4,mapping.indexOf(input.charAt(2)));//[4] = mapping.indexOf(input.charAt(2));
+                 }
+            else{parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
+                int x = 8-Character.digit(input.charAt(1),10);
+                int y = mapping.indexOf(input.charAt(0));
+                current = gameBoard.getFigure(-1, x, y, currentPlayer.getColor(), Pawn.class);
+                if(current.size() == 2){
+                    parsedInput.add(1,current.get(0));
+                    parsedInput.add(2,current.get(1));
+                }
+                else{
+                    parsedInput.add(0,false);
+                }
+                parsedInput.add(3,8-Character.digit(input.charAt(1),10));
+                parsedInput.add(4,mapping.indexOf(input.charAt(0)));//[4] = mapping.indexOf(input.charAt(0));}
+            }
         }
         else if(length == 5){
             parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
@@ -273,14 +290,11 @@ public class Game {
         parsedInput.add(10,(figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
         parsedInput.add(11,currentPlayer.getColor());//[10] = currentPlayer.getColor();
 
-        if (current.size() == 0){
-            System.out.println("This move is not possible, please retry another.\n");
+        if(current.size() > 2){
+            System.out.println("There are at least two Objects of the same Type that could do this move.\n");
         }
-
         if(parsedInput.get(0).getClass() == Boolean.class && !(boolean)parsedInput.get(0)){
             System.out.println("This move is ambiguous, please clarify.");}
-            else{System.out.println("This move is ambiguous, please clarify.");
-            }
         return parsedInput;
     }
 
