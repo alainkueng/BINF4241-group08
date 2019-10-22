@@ -8,7 +8,7 @@ public class Queen implements Figure {
 
     //check documentation of Interface
     @SuppressWarnings("Duplicates")
-    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove, Player.colors color) {
+    public boolean isValidMove(int xCurrent, int yCurrent,int xMove, int yMove, Player.colors color) {
         boolean valid = false;
 
         //move all diagonal ways
