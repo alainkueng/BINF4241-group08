@@ -132,7 +132,7 @@ public class Game {
                     stringCheck = true;
                     castlingQueen = true;
                 }
-                if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$") && moveKill[4].matches("^[1-8]*$")) {//move when 2 figures are on same x or y line input
+                if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[1-8]*$") && moveKill[3].matches("^[a-h]*$") && moveKill[4].matches("^[1-8]*$")) {//move when 2 figures are on same x or y line input
                     stringCheck = true;
                 }
             }
