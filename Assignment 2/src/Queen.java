@@ -7,14 +7,15 @@ public class Queen implements Figure {
     }
 
     //check documentation of Interface
-    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove) {
+    @SuppressWarnings("Duplicates")
+    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove, Player.colors color) {
         boolean valid = false;
 
         //move all diagonal ways
         if(Math.abs(xMove - xCurrent) == Math.abs(yMove - yCurrent)){
             valid = true;
         }
-        //move down or down
+        //move down or up
         else if(xCurrent == xMove && yCurrent < yMove || xCurrent == xMove && yCurrent > yMove){
             valid = true;
         }

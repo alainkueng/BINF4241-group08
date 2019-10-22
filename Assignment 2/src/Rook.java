@@ -9,16 +9,18 @@ public class Rook implements Figure {
     }
 
     //check documentation of Interface
-    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
-        boolean valid = false;
+    @SuppressWarnings("Duplicates")
+    public boolean isValidMove(int yCurrent, int xCurrent, int yMove, int xMove, Player.colors color){
+        boolean valid;
         //move up or down
         if(xCurrent == xMove && yCurrent > yMove || xCurrent == xMove && yCurrent < yMove){
             valid = true;
         }
-        //move left
+        //move left or right
         else if(xCurrent > xMove && yCurrent == yMove || xCurrent < xMove && yCurrent == yMove){
             valid = true;
         }
+        else {valid = false;}
         return valid;
     }
 
