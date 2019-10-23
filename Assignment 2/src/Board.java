@@ -546,7 +546,7 @@ public class Board {
         return freePath;
 
     }
-    public boolean move(ArrayList<Object> moveInput){//0:object, 1: xCurrent, 2:yCurrent, 3:xNew, 4:yNew, 5: capture, 6:castlingKing, 7:castlingQueen, 8:enPassant, 9:promotion, 10: PromotionFig,11: player.color
+    public boolean move(ArrayList<Object> moveInput){//0:object, 1: xCurrent, 2:yCurrent, 3:xNew, 4:yNew, 5: capture, 6:castlingKing, 7:castlingQueen, 8:enPassant, 9:promotion, 10: PromotionFig,11: player.color, 12: currentPlayer
         //this method is not done
         //will move be checkmate, if made.
         if (moveInput.get(0).equals(false)){

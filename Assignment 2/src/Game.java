@@ -178,7 +178,7 @@ public class Game {
         int length = input.length();
         ArrayList<Object> parsedInput = new ArrayList<Object>(11);
         ArrayList<Integer> current = new ArrayList<>();
-        for (int i = 0; i < 10;i++){
+        for (int i = 0; i < 11;i++){
             parsedInput.add(i,null);
         }
 
@@ -308,6 +308,7 @@ public class Game {
         parsedInput.add(9, checkedInput.get(5));//[9] = checkedInput.get(5);
         parsedInput.add(10, (figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
         parsedInput.add(11, currentPlayer.getColor());//[10] = currentPlayer.getColor();
+        parsedInput.add(12, this.currentPlayer);
 
 
         if(current.size() > 2){
