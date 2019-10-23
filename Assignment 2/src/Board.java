@@ -757,7 +757,7 @@ public class Board {
     @SuppressWarnings("Duplicates")
     private boolean isValidPawnCapture(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor) {
         boolean moveCheck = true;
-        if (!newObject.isValidMove(yCurrent, xCurrent, yNew, xNew, currentColor)) {
+        if (!newObject.isValidMove(xCurrent, yCurrent, xNew, yNew, currentColor)) {
             moveCheck = false;
         }
         Figure figure = (Figure) this.board[xNew][yNew][1];
