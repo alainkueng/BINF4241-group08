@@ -51,8 +51,8 @@ public class Board {
         board[rowNumber][0][1] = new Rook(color);
         board[rowNumber][1][1] = new Knight(color);
         board[rowNumber][2][1] = new Bishop(color);
-        board[rowNumber][3][1] = new King(color);
-        board[rowNumber][4][1] = new Queen(color);
+        board[rowNumber][3][1] = new Queen(color);
+        board[rowNumber][4][1] = new King(color);
         board[rowNumber][5][1] = new Bishop(color);
         board[rowNumber][6][1] = new Knight(color);
         board[rowNumber][7][1] = new Rook(color);
@@ -161,98 +161,81 @@ public class Board {
     public boolean castleKingSide(Player.colors color) {
         boolean castled = false;
         //black king
-        if (board[7][4][1] != null) {
-            King kingToCastle = (King) board[7][4][1];
-            if (check(4, 7, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.BLACK) && kingToCastle.getColor().equals(Figure.Colors.BLACK)) {
-                if (kingToCastle.getColor() == Figure.Colors.BLACK && board[0][7][1] != null && board[0][7][1].getClass() == Rook.class) {
-                    Rook rook = (Rook) board[7][7][1];
-                    if (rook.getColor() == Figure.Colors.BLACK && !rook.getHasMoved()) {
-                        //prove that path is empty and king does not go through check
-                        for (int i = 5; i < 7; i++) {
-                            if (board[7][i][1] == null && !check(i, 7, kingToCastle, color))
-                                castled = true;
-                            else
-                                castled = false;
-                            break;
-                        }
-                        if (castled) {
-                            board[7][6][1] = kingToCastle;
-                            board[7][4][1] = null;
+        if(color.toString() == Figure.Colors.BLACK.toString()) {
+            if (board[0][4][1].getClass() == King.class) {
+                King kingToCastle = (King) board[0][4][1];
+                if (check(0, 4, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.BLACK) && kingToCastle.getColor().equals(Figure.Colors.BLACK)) {
+                    if (kingToCastle.getColor() == Figure.Colors.BLACK && board[0][7][1] != null && board[0][7][1].getClass() == Rook.class) {
+                        Rook rook = (Rook) board[0][7][1];
+                        if (rook.getColor() == Figure.Colors.BLACK && !rook.getHasMoved()) {
+                            //prove that path is empty and king does not go through check
+                            for (int i = 5; i < 7; i++) {
+                                if (board[0][i][1] == null && !check(0, i, kingToCastle, color))
+                                    castled = true;
+                                else
+                                    castled = false;
+                                break;
+                            }
+                            if (castled) {
+                                board[0][6][1] = kingToCastle;
+                                board[0][4][1] = null;
 
-                            board[7][5][1] = rook;
-                            board[7][7][1] = null;
-                            //move king to row 7, column 6
-                            //move rook to row 7, column 5
-                        }
-                    }
-                }
-            }
-            //white king
-        } else if (board[0][4][1] != null) {
-            King kingToCastle = (King) board[0][4][1];
-            if (!check(4, 0, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.WHITE) && kingToCastle.getColor().equals(Figure.Colors.WHITE)) {
-                if (kingToCastle.getColor() == Figure.Colors.BLACK && board[0][7][1] != null && board[0][7][1].getClass() == Rook.class) {
-                    Rook rook = (Rook) board[0][7][1];
-                    if (rook.getColor() == Figure.Colors.WHITE && !rook.getHasMoved()) {
-                        //prove that path is empty and king does not go through check
-                        for (int i = 3; i > 0; i--) {
-                            if (board[0][i][1] == null && !check(i, 0, kingToCastle, color))
-                                continue;
-                            else
-                                castled = true;
-                            break;
-                        }
-                        if (!castled) {
-                            board[0][6][1] = kingToCastle;
-                            board[0][4][1] = null;
-
-                            board[0][5][1] = rook;
-                            board[0][7][1] = null;
-                            //move king to row 0, column 6
-                            //move rook to row 0, column 5
+                                board[0][5][1] = rook;
+                                board[0][7][1] = null;
+                                //move king to row 7, column 6
+                                //move rook to row 7, column 5
+                            }
                         }
                     }
                 }
             }
         }
+            //white king
+       if (color.toString() == Figure.Colors.WHITE.toString()) {
+           if (board[7][4][1].getClass() == King.class) {
+               King kingToCastle = (King) board[7][4][1];
+               if (!check(7, 4, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.WHITE) && kingToCastle.getColor().equals(Figure.Colors.WHITE)) {
+                   if (kingToCastle.getColor() == Figure.Colors.WHITE && board[7][7][1] != null && board[7][7][1].getClass() == Rook.class) {
+                       Rook rook = (Rook) board[7][7][1];
+                       if (rook.getColor() == Figure.Colors.WHITE && !rook.getHasMoved()) {
+                           //prove that path is empty and king does not go through check
+                           for (int i = 5; i < 7; i++) {
+                               if (board[7][i][1] == null && !check(7, i, kingToCastle, color))
+                                   castled = true;
+                               else
+                                   castled = false;
+                               break;
+                           }
+                           if (castled) {
+                               board[7][6][1] = kingToCastle;
+                               board[7][4][1] = null;
+
+                               board[7][5][1] = rook;
+                               board[7][7][1] = null;
+                               //move king to row 0, column 6
+                               //move rook to row 0, column 5
+                           }
+                       }
+                   }
+               }
+           }
+       }
         return castled;
     }
+
+
 
     public boolean castleQueenSide(Player.colors color) {
         boolean castled = false;
         //black king
-        if (board[7][4][1] != null) {
-            King kingToCastle = (King) board[7][4][1];
-            if (check(4, 7, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.BLACK) && kingToCastle.getColor().equals(Figure.Colors.BLACK)) {
-                Rook rook = (Rook) board[7][7][1];
-                if (rook.getColor() == Figure.Colors.BLACK && board[7][0][1] != null && board[7][0][1].getClass() == Rook.class) {
-                    //prove that path is empty and king does not go through check
-                    for (int i = 5; i < 7; i++) {
-                        if (board[0][i][1] == null && check(i, 0, kingToCastle, color))
-                            castled = true;
-                        else
-                            castled = false;
-                        break;
-                    }
-                    if (castled) {
-                        board[7][2][1] = kingToCastle;
-                        board[7][4][1] = null;
-
-                        board[7][3][1] = rook;
-                        board[7][0][1] = null;
-                    }
-                }
-            }
-        }
-        //white king
-        else if (board[0][4][1] != null) {
+        if (board[0][4][1].getClass() == King.class) {
             King kingToCastle = (King) board[0][4][1];
-            if (!check(4, 0, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.WHITE) && kingToCastle.getColor().equals(Figure.Colors.WHITE)) {
+            if (check(0, 4, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.BLACK) && kingToCastle.getColor().equals(Figure.Colors.BLACK)) {
                 Rook rook = (Rook) board[0][0][1];
-                if (rook.getColor() == Figure.Colors.WHITE && !rook.getHasMoved()) {
+                if (rook.getColor() == Figure.Colors.BLACK && board[0][0][1] != null && board[0][0][1].getClass() == Rook.class) {
                     //prove that path is empty and king does not go through check
                     for (int i = 3; i > 0; i--) {
-                        if (board[0][i][1] == null && check(7, i, kingToCastle, color))
+                        if (board[0][i][1] == null && check(0, i, kingToCastle, color))
                             castled = true;
                         else
                             castled = false;
@@ -264,6 +247,30 @@ public class Board {
 
                         board[0][3][1] = rook;
                         board[0][0][1] = null;
+                    }
+                }
+            }
+        }
+        //white king
+        else if (board[7][4][1].getClass() == King.class) {
+            King kingToCastle = (King) board[7][4][1];
+            if (!check(7, 4, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.WHITE) && kingToCastle.getColor().equals(Figure.Colors.WHITE)) {
+                Rook rook = (Rook) board[7][0][1];
+                if (rook.getColor() == Figure.Colors.WHITE && !rook.getHasMoved()) {
+                    //prove that path is empty and king does not go through check
+                    for (int i = 3; i > 0; i--) {
+                        if (board[7][i][1] == null && check(7, i, kingToCastle, color))
+                            castled = true;
+                        else
+                            castled = false;
+                        break;
+                    }
+                    if (castled) {
+                        board[7][2][1] = kingToCastle;
+                        board[7][4][1] = null;
+
+                        board[7][3][1] = rook;
+                        board[7][0][1] = null;
                     }
                 }
             }

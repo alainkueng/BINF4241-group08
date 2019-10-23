@@ -311,8 +311,8 @@ public class Game {
         parsedInput.add(11, currentPlayer.getColor());//[10] = currentPlayer.getColor();
         parsedInput.add(12, this.currentPlayer);
 
-
-        if(current.size() == 0){
+        String[] matchCheck = input.split("");
+        if(current.size() == 0 && !(length == 5) && (!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$")))){
             System.out.println("This move is invalid please retry.\n");
         }
 
