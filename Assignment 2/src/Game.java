@@ -10,6 +10,7 @@ public class Game {
     private Player black;
     private Player currentPlayer;
     private boolean winner = false;
+    private boolean check = false;
 
     Game(){
         this.gameBoard = new Board();
@@ -367,9 +368,6 @@ public class Game {
     }
     public static void main(String[] args) {
         Game game = new Game();
-    }
-    public Player getPlayerTurn(){
-        return this.currentPlayer;
     }
 }
 

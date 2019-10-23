@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+/** @noinspection ALL*/
 public class Board {
 
     public Object[][][] board;
@@ -415,7 +416,7 @@ public class Board {
                                     if (board[i][j][1] != null) {
                                         if (board[i][j][1] != null) {
                                             Figure sameColorFig = (Figure) board[row][col][1];
-                                            if (king.getColor() == sameColorFig.getColor())
+                                            if (king.getColor() == sameColorFig.getColor() && king.getClass() != sameColorFig.getClass())
                                                 for (int z = col; z < x; z++)
                                                     notBlocked = isPathFreeModified(row,col,x,y,sameColorFig,color);
 //                                            check = currentFig.isValidMove(col, row, y, x, color);
@@ -549,9 +550,16 @@ public class Board {
     public boolean move(ArrayList<Object> moveInput){//0:object, 1: xCurrent, 2:yCurrent, 3:xNew, 4:yNew, 5: capture, 6:castlingKing, 7:castlingQueen, 8:enPassant, 9:promotion, 10: PromotionFig,11: player.color, 12: currentPlayer
         //this method is not done
         //will move be checkmate, if made.
+
         if (moveInput.get(0).equals(false)){
             return false;
         }
+
+        Player currentPlayer = (Player)moveInput.get(12);
+        int[] enemyKingCoordinates = findKing(currentPlayer.getColorReversed());
+        int enemyKingX = enemyKingCoordinates[0];
+        int enemyKingY = enemyKingCoordinates[1];
+
         boolean validMove = true;
         if((Boolean)moveInput.get(6)){//check and do castleKing
             validMove = castleKingSide((Player.colors)moveInput.get(11));
@@ -566,11 +574,15 @@ public class Board {
               validMove = promote((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));
         }
         else if((Boolean) moveInput.get(5)){//case if capture move //this needs color too
-            validMove = captureMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11));
+            validMove = captureMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11), currentPlayer);
         }
         else if ((!(Boolean)(moveInput.get(6)) && !(Boolean)moveInput.get(7) && !(Boolean)moveInput.get(8) && !(Boolean)moveInput.get(9) && !(Boolean)moveInput.get(5))) {//case if normal move //this needs color too
             validMove = normalMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11));
         }
+        if(check(enemyKingX,enemyKingY,(Figure) this.board[enemyKingX][enemyKingY][1], currentPlayer.getColorReversed())){
+            System.out.printf("%d King is in check\n", currentPlayer.getColorReversed());
+        }
+
 
         //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
         //implement checkmate (why do i need to input king and where?), when moveOn from game is invalid this gets returned anyway?
@@ -603,6 +615,10 @@ public class Board {
 
     private boolean normalMove(Class newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors color){// here add outputs that say whats wrong, like there is someone on that field and you didnt say capture
         boolean checkMove = true;
+        int[] kingCoordinates = findKing(color);
+        int kingX = kingCoordinates[0];
+        int kingY = kingCoordinates[1];
+
         if(!(((Figure)this.board[xCurrent][yCurrent][1]).isValidMove(xCurrent,yCurrent,xNew, yNew, color))){
             checkMove = false;
         }
@@ -615,8 +631,15 @@ public class Board {
             checkMove = false;
         }
         if (checkMove){
+            Figure fig = (Figure) this.board[xCurrent][yCurrent][1];
             this.board[xNew][yNew][1] = this.board[xCurrent][yCurrent][1];//add to new position
             this.board[xCurrent][yCurrent][1] = null;//delete Object from current
+            if(check(kingX,kingY,(King) board[kingX][kingY][1],color)){
+                this.board[xNew][yNew][1] = null;
+                this.board[xCurrent][yCurrent][1] = fig;
+                checkMove = false;
+
+            }
         }
         return checkMove;
     }
@@ -679,8 +702,11 @@ public class Board {
         return foundFigures;
     }
 
-    private boolean captureMove(Class newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor){
+    private boolean captureMove(Class newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor, Player currentPlayer){
         boolean moveCheck = true;
+        int[] kingsCoordinates = findKing(currentColor);
+        int kingX = kingsCoordinates[0];
+        int kingY = kingsCoordinates[1];
         if(!(((Figure)this.board[xCurrent][yCurrent][1]).isValidMove(xCurrent,yCurrent,xNew, yNew, currentColor))){
             moveCheck = false;
         }
@@ -698,11 +724,26 @@ public class Board {
             moveCheck = false;
             }
         }
+
         if(moveCheck){//here add the add to dumpster list in Player
             Figure fig = (Figure)this.board[xCurrent][yCurrent][1];
+            Figure eaten = (Figure)this.board[xNew][yCurrent][1];
             this.board[xNew][yNew][1] = fig;
             this.board[xCurrent][yCurrent][1] = null;
+            boolean eat = true;
+            //check if current player move would check mate himself
+            if(check(kingX,kingY, (King)board[kingX][kingY][1],currentColor)){
+                moveCheck = false;
+                eat = false;
+                //revert capture
+                board[xNew][yNew][1] = eaten;
+                board[xCurrent][yCurrent][1] = fig;
+            }
+            if(eat){
+                currentPlayer.setEatenPieces(eaten);//add to eatenpieces
+            }
         }
+
         return moveCheck;
     }
     @SuppressWarnings("Duplicates")
@@ -832,8 +873,20 @@ public class Board {
         return canBlock;
 
     }
+    public int[] findKing(Player.colors color){
+        int[] kingCoordinates = new int[2];
+        for(int x = 0; x < 8; x++){
+            for(int y = 0; y < 8; y++){
+                if(board[x][y][1] != null && board[x][y][1].getClass() == King.class){
+                    King king = (King) board[x][y][1];
+                    if(king.getColor().toString() == color.toString()) {
+                        kingCoordinates[0] = x;
+                        kingCoordinates[1] = y;
+                        break;
+                    }
+                }
+            }
+        }
+        return kingCoordinates;
+    }
 }
-
-
-
-
