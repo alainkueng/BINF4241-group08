@@ -370,7 +370,7 @@ public class Board {
                     if (board[row][col][1] != null) {
                         Figure currentFig = (Figure) board[row][col][1];
                         if (figure.getColor() != currentFig.getColor())
-                            check = currentFig.isValidMove(col, row, y, x, color) && isPathFree(col,row,x,y);
+                            check = currentFig.isValidMove(row, col, x, y, color) && isPathFree(row,col,x,y);
                         if (check)
                             break;
                     }
@@ -453,7 +453,6 @@ public class Board {
 
         Figure fig = (Figure) board[xCurrent][yCurrent][1];
         if(fig == null){
-            System.out.println("Null pointer, path is free");
             return freePath = false;
         }
         else if(fig.getClass() == Knight.class){
@@ -671,11 +670,21 @@ public class Board {
             Figure fig = (Figure) this.board[xCurrent][yCurrent][1];
             this.board[xNew][yNew][1] = this.board[xCurrent][yCurrent][1];//add to new position
             this.board[xCurrent][yCurrent][1] = null;//delete Object from current
-            if(check(kingX,kingY,(King) board[kingX][kingY][1],color)){
-                this.board[xNew][yNew][1] = null;
-                this.board[xCurrent][yCurrent][1] = fig;
-                checkMove = false;
+            if(newObject == King.class) {
+                if (check(xNew, yNew, (King) board[xNew][yNew][1], color)) {
+                    this.board[xNew][yNew][1] = null;
+                    this.board[xCurrent][yCurrent][1] = fig;
+                    checkMove = false;
+                    System.out.println("Invalid move with your King, your King would be in check");
+                }
+            } else {
+                if(check(kingX,kingY,(King) board[kingX][kingY][1],color)){
+                    this.board[xNew][yNew][1] = null;
+                    this.board[xCurrent][yCurrent][1] = fig;
+                    checkMove = false;
+                    System.out.println("Invalid move, your King would be in check");
 
+                }
             }
         }
         return checkMove;
@@ -762,27 +771,40 @@ public class Board {
             }
         }
 
-        if(moveCheck){//here add the add to dumpster list in Player
-            Figure fig = (Figure)this.board[xCurrent][yCurrent][1];
-            Figure eaten = (Figure)this.board[xNew][yCurrent][1];
+        if(moveCheck) {//here add the add to dumpster list in Player
+            Figure fig = (Figure) this.board[xCurrent][yCurrent][1];
+            Figure eaten = (Figure) this.board[xNew][yCurrent][1];
             this.board[xNew][yNew][1] = fig;
             this.board[xCurrent][yCurrent][1] = null;
             boolean eat = true;
             //check if current player move would check mate himself
-            if(check(kingX,kingY, (King)board[kingX][kingY][1],currentColor)){
-                moveCheck = false;
-                eat = false;
-                //revert capture
-                board[xNew][yNew][1] = eaten;
-                board[xCurrent][yCurrent][1] = fig;
-            }
-            if(eat){
-                currentPlayer.setEatenPieces(eaten);//add to eatenpieces
-            }
-        }
+            if (newObject == King.class) {
+                if (check(xNew, yNew, (King) board[xNew][yNew][1], currentColor)) {
+                    moveCheck = false;
+                    eat = false;
+                    //revert capture
+                    board[xNew][yNew][1] = eaten;
+                    board[xCurrent][yCurrent][1] = fig;
+                    System.out.println("Cant eat this figure with your King without sacrificing him\nPlease input a new move");
+                }
+            } else {
+                    if (check(kingX, kingY, (King) board[kingX][kingY][1], currentColor)) {
+                        moveCheck = false;
+                        eat = false;
+                        //revert capture
+                        board[xNew][yNew][1] = eaten;
+                        board[xCurrent][yCurrent][1] = fig;
+                        System.out.println("Cant eat this figure without sacrificing your king\nPlease input a new move");
+                    }
 
+                }
+                if (eat) {
+                    currentPlayer.setEatenPieces(eaten);//add to eatenpieces
+                }
+            }
         return moveCheck;
     }
+
     @SuppressWarnings("Duplicates")
     private boolean isValidPawnCapture(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor) {
         boolean moveCheck = true;
