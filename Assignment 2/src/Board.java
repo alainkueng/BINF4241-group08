@@ -300,45 +300,46 @@ public class Board {
     public boolean passant(Class pawn, int xPawn, int yPawn, int xPawnMove, int yPawnMove, int xLastMove, int yLastMove, Player.colors color) {
         boolean passant;
         Pawn pawnPassant = (Pawn) board[xPawn][yPawn][1];
-        if (!pawnPassant.getMovedTwo() && lastMove[0].getClass() == Pawn.class) {
+        String lastClass = lastMove[0].toString();
+        if (!(pawnPassant.getMovedTwo()) && lastClass.equals(pawn.toString())) {
             //if white pawn, yPawn must be 5 and check if yPawn and yLastMoved are the same || if black pawn : yPawn must be 2
-            if (pawnPassant.getColor().equals(Figure.Colors.WHITE) && yPawn == 5 && yLastMove == yPawn) {
+            if (pawnPassant.getColor().equals(Figure.Colors.WHITE) && xPawn == 3 && xLastMove == xPawn) {
                 //pawn wants to move diagonal to the rigth, figure to eat has to be to the right
-                if (pawnPassant.isValidMove(yPawn, xPawn, yPawnMove, xPawnMove, color) && xPawnMove == xPawn + 1 && xLastMove == xPawn + 1) {
-                    board[yPawnMove][xPawnMove][1] = pawnPassant;
+                if (pawnPassant.isValidMove(xPawn, yPawn, xPawnMove, yPawnMove, color) && yPawnMove == yPawn + 1 && yLastMove == yPawn + 1) {
+                    board[xPawnMove][yPawnMove][1] = pawnPassant;
                     //delete pawn at past location
                     board[yPawn][xPawn][1] = null;
                     //delete piece that the pawn ate
-                    board[yLastMove][xLastMove][1] = null;
+                    board[xLastMove][yLastMove][1] = null;
                     passant = true;
                     //pawn wants to move diagonal to the left, figure to eat has to be to the left
-                } else if (pawnPassant.isValidMove(yPawn, xPawn, yPawnMove, xPawnMove, color) && xPawnMove == xPawn - 1 && xLastMove == xPawn - 1) {
-                    board[yPawnMove][xPawnMove][1] = pawnPassant;
+                } else if (pawnPassant.isValidMove(xPawn, yPawn, xPawnMove, yPawnMove, color) && yPawnMove == yPawn - 1 && yLastMove == yPawn - 1) {
+                    board[xPawnMove][yPawnMove][1] = pawnPassant;
                     //delete pawn at past location
-                    board[yPawn][xPawn][1] = null;
+                    board[xPawn][yPawn][1] = null;
                     //delete piece that the pawn ate
-                    board[yLastMove][xLastMove][1] = null;
+                    board[xLastMove][yLastMove][1] = null;
                     passant = true;
                 } else {
                     passant = false;
                 }
                 //same for black pawn
-            } else if (pawnPassant.getColor().equals(Figure.Colors.BLACK) && yPawn == 2 && yLastMove == yPawn) {
-                if (pawnPassant.isValidMove(yPawn, xPawn, yPawnMove, xPawnMove, color) && xPawnMove == xPawn + 1 && xLastMove == xPawn + 1) {
-                    board[yPawnMove][xPawnMove][1] = pawnPassant;
+            } else if (pawnPassant.getColor().equals(Figure.Colors.BLACK) && xPawn == 4 && xLastMove == xPawn) {
+                if (pawnPassant.isValidMove(xPawn, yPawn, xPawnMove, yPawnMove, color) && yPawnMove == yPawn + 1 && yLastMove == yPawn + 1) {
+                    board[xPawnMove][yPawnMove][1] = pawnPassant;
                     //delete pawn at past location
-                    board[yPawn][xPawn][1] = null;
+                    board[xPawn][yPawn][1] = null;
                     //delete piece that the pawn ate
-                    board[yLastMove][xLastMove][1] = null;
+                    board[xLastMove][yLastMove][1] = null;
                     passant = true;
 
                     //pawn wants to move diagonal to the left, figure to eat has to be to the left
-                } else if (pawnPassant.isValidMove(yPawn, xPawn, yPawnMove, xPawnMove, color) && xPawnMove == xPawn - 1 && xLastMove == xPawn - 1) {
-                    board[yPawnMove][xPawnMove][1] = pawnPassant;
+                } else if (pawnPassant.isValidMove(xPawn, yPawn, xPawnMove, yPawnMove, color) && yPawnMove == yPawn - 1 && yLastMove == yPawn - 1) {
+                    board[xPawnMove][yPawnMove][1] = pawnPassant;
                     //delete pawn at past location
-                    board[yPawn][xPawn][1] = null;
+                    board[xPawn][yPawn][1] = null;
                     //delete piece that the pawn ate
-                    board[yLastMove][xLastMove][1] = null;
+                    board[xLastMove][yLastMove][1] = null;
                     passant = true;
                 } else {
                     passant = false;
@@ -690,7 +691,7 @@ public class Board {
         return checkMove;
     }
 
-    public ArrayList<Integer> getFigure(int givenColumn, int xCoordinate, int yCoordinate, Player.colors color, Class figureType){
+    public ArrayList<Integer> getFigure(int givenColumn, int xCoordinate, int yCoordinate, Player.colors color, Class figureType, boolean passant){
         ArrayList<Integer> foundFigures = new ArrayList<Integer>();
         int j = 0;
         int k = 7;
@@ -720,11 +721,12 @@ public class Board {
                             }
                         }
                     } else {
-                        boolean capture = isValidPawnCapture(currentFigure, m, n, xCoordinate, yCoordinate, color);
+                        boolean capture = isValidPawnCapture(currentFigure, m, n, xCoordinate, yCoordinate, color, passant);
                         boolean diagonal = (m - xCoordinate == 1 || m - xCoordinate == -1) && (n - yCoordinate == 1 || n - yCoordinate == -1);
                         if (!capture && diagonal) {
                             continue;
-                        } else if (foundFigures.size() < 2 && capture && diagonal) {
+                        }
+                        else if (foundFigures.size() < 2 && capture && diagonal) {
                             foundFigures.add(m);
                             foundFigures.add(n);
                         } else if (foundFigures.size() == 2 && capture && diagonal) {
@@ -806,7 +808,7 @@ public class Board {
     }
 
     @SuppressWarnings("Duplicates")
-    private boolean isValidPawnCapture(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor) {
+    private boolean isValidPawnCapture(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor, boolean passant) {
         boolean moveCheck = true;
         if (!newObject.isValidMove(xCurrent, yCurrent, xNew, yNew, currentColor)) {
             moveCheck = false;
@@ -817,7 +819,9 @@ public class Board {
                 moveCheck = false;
             }
         }
-        if (figure == null) {
+        if (figure == null && passant) {
+            moveCheck = true;
+        } else {
             moveCheck = false;
         }
         return moveCheck;

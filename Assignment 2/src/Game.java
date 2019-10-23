@@ -86,7 +86,11 @@ public class Game {
             else if (inputLength == 3){  //to move a figure "Be5"
                                     //castling on king side "o-o"
                                     //asking for a draw "(=)"
+                                    //en passant
                 if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[1-8]*$")){//normal move figure
+                    stringCheck = true;
+                }
+                if(moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[1-8]*$")){//passant, do i have to set passant = true here?
                     stringCheck = true;
                 }
                 if (moveKill[0].matches("^[o]*$") && moveKill[1].matches("^[-]*$") && moveKill[2].matches("^[o]*$")){//castling check
@@ -203,7 +207,7 @@ public class Game {
             parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
             int x = 8-Character.digit(input.charAt(1),10);
             int y = mapping.indexOf(input.charAt(0));
-            current = gameBoard.getFigure(-1, x, y, currentPlayer.getColor(), Pawn.class);
+            current = gameBoard.getFigure(-1, x, y, currentPlayer.getColor(), Pawn.class,(Boolean)checkedInput.get(4));
             if(current.size() == 2){
                 parsedInput.add(1,current.get(0));
                 parsedInput.add(2,current.get(1));
@@ -216,7 +220,7 @@ public class Game {
         }
         else if(length == 3){//"Be5", "o-o"
             String[] matchCheck = input.split("");
-            if(!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$"))){ // if not o-o
+            if(!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$")) ){ // if not o-o
                 parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
                 int y = -1;
                 if(parsedInput.get(0) == null){
@@ -225,19 +229,21 @@ public class Game {
                 }
                 int x = 8-Character.digit(input.charAt(2),10);
                 if (parsedInput.get(0) != Pawn.class){
-                    y = mapping.indexOf(input.charAt(1));}
-                    current = gameBoard.getFigure(mapping.indexOf(input.charAt(0)),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
+                    y = mapping.indexOf(input.charAt(1));
+                }
+                    current = gameBoard.getFigure(mapping.indexOf(input.charAt(0)),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0),(Boolean) checkedInput.get(4));
                 if(current.size() == 2){
                     parsedInput.add(1,current.get(0));//[1] = current.get(0);
                     parsedInput.add(2,current.get(1));//[2] = current.get(1);
                 }
                 else{
-                    parsedInput.add(0,false);
+//                    parsedInput.add(0,false);
                 }
                 parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
                 parsedInput.add(4,mapping.indexOf((input.charAt(1))));
                 }
-            else{parsedInput.add(0, true);
+            else {
+                parsedInput.add(0, true);
                 parsedInput.add(1,0);//filler
                 parsedInput.add(2,0);//filler
                 parsedInput.add(3, 0);//filler
@@ -272,7 +278,7 @@ public class Game {
             else{parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
                 int x = 8-Character.digit(input.charAt(1),10);
                 int y = mapping.indexOf(input.charAt(0));
-                current = gameBoard.getFigure(-1, x, y, currentPlayer.getColor(), Pawn.class);
+                current = gameBoard.getFigure(-1, x, y, currentPlayer.getColor(), Pawn.class, (Boolean) checkedInput.get(4));
                 if(current.size() == 2){
                     parsedInput.add(1,current.get(0));
                     parsedInput.add(2,current.get(1));
@@ -301,6 +307,7 @@ public class Game {
                 parsedInput.add(4, 0);//filler
             }
         }
+
 //        String fig = String.valueOf(figureCatalog.get(checkedInput.get(5).getClass().getName().charAt(0)));
         parsedInput.add(5, capture);
         parsedInput.add(6, checkedInput.get(2));//[6] = checkedInput[2];//castlingKing
@@ -318,7 +325,10 @@ public class Game {
         parsedInput.add(12, this.currentPlayer);
 
         String[] matchCheck = input.split("");
-        if(current.size() == 0 && !(length == 5) && (!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$")))){
+        if(current.size() == 0 && (length != 5 ) && !(Boolean)checkedInput.get(4) &&(!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$")))){
+            if(length == 3)
+                return parsedInput;
+            else
             System.out.println("This move is invalid please retry.\n");
         }
 
