@@ -368,5 +368,8 @@ public class Game {
     public static void main(String[] args) {
         Game game = new Game();
     }
+    public Player getPlayerTurn(){
+        return this.currentPlayer;
+    }
 }
 
