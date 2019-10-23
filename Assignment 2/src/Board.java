@@ -574,7 +574,7 @@ public class Board {
               validMove = promote((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));
         }
         else if((Boolean) moveInput.get(5)){//case if capture move //this needs color too
-            validMove = captureMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11));
+            validMove = captureMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11), currentPlayer);
         }
         else if ((!(Boolean)(moveInput.get(6)) && !(Boolean)moveInput.get(7) && !(Boolean)moveInput.get(8) && !(Boolean)moveInput.get(9) && !(Boolean)moveInput.get(5))) {//case if normal move //this needs color too
             validMove = normalMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11));
@@ -698,7 +698,7 @@ public class Board {
         return foundFigures;
     }
 
-    private boolean captureMove(Class newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor){
+    private boolean captureMove(Class newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor, Player currentPlayer){
         boolean moveCheck = true;
         int[] kingsCoordinates = findKing(currentColor);
         int kingX = kingsCoordinates[0];
@@ -726,12 +726,17 @@ public class Board {
             Figure eaten = (Figure)this.board[xNew][yCurrent][1];
             this.board[xNew][yNew][1] = fig;
             this.board[xCurrent][yCurrent][1] = null;
+            boolean eat = true;
             //check if current player move would check mate himself
             if(check(kingX,kingY, (King)board[kingX][kingY][1],currentColor)){
                 moveCheck = false;
+                eat = false;
                 //revert capture
                 board[xNew][yNew][1] = eaten;
                 board[xCurrent][yCurrent][1] = fig;
+            }
+            if(eat){
+                currentPlayer.setEatenPieces(eaten);//add to eatenpieces
             }
         }
 
