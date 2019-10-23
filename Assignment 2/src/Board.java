@@ -51,8 +51,8 @@ public class Board {
         board[rowNumber][0][1] = new Rook(color);
         board[rowNumber][1][1] = new Knight(color);
         board[rowNumber][2][1] = new Bishop(color);
-        board[rowNumber][3][1] = new Queen(color);
-        board[rowNumber][4][1] = new King(color);
+        board[rowNumber][3][1] = new King(color);
+        board[rowNumber][4][1] = new Queen(color);
         board[rowNumber][5][1] = new Bishop(color);
         board[rowNumber][6][1] = new Knight(color);
         board[rowNumber][7][1] = new Rook(color);
