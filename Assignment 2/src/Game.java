@@ -117,7 +117,7 @@ public class Game {
                 if (moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[1-8]*$") && moveKill[2].matches("^[=]*$") && moveKill[3].matches("^[RBNQ]*$")) {//check for promotion input
                     stringCheck = true;
                     promotion = true;
-                    promotionFig = ((String.valueOf(moveKill[3].charAt(0))));//[1] = moveKill[3].charAt(0);
+                    promotionFig = (((moveKill[3])));//[1] = moveKill[3].charAt(0);
                 }
             }
 
@@ -307,7 +307,13 @@ public class Game {
         parsedInput.add(7, checkedInput.get(3));//[7] = checkedInput[3];//castlingQueen
         parsedInput.add(8, checkedInput.get(4));//[8] = checkedInput[4];//enPassant
         parsedInput.add(9, checkedInput.get(5));//[9] = checkedInput.get(5);
-        parsedInput.add(10, (figureCatalog.get(checkedInput.get(6).getClass().getName().charAt(0))));
+        if(checkedInput.get(6) == ""){
+            parsedInput.add(10, figureCatalog.get((checkedInput.get(6))));
+
+        }else{
+            parsedInput.add(10, figureCatalog.get(((String)checkedInput.get(6)).charAt(0)));
+
+        }
         parsedInput.add(11, currentPlayer.getColor());//[10] = currentPlayer.getColor();
         parsedInput.add(12, this.currentPlayer);
 
