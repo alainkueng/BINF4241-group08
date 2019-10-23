@@ -177,7 +177,7 @@ public class Game {
         boolean capture = (Boolean)checkedInput.get(1);
         int length = input.length();
         ArrayList<Object> parsedInput = new ArrayList<Object>(11);
-        ArrayList<Integer> current = new ArrayList<>();
+        ArrayList<Integer> current = new ArrayList<Integer>();
         for (int i = 0; i < 11;i++){
             parsedInput.add(i,null);
         }
@@ -314,8 +314,7 @@ public class Game {
         if(current.size() > 2){
             System.out.println("There are at least two Objects of the same Type that could do this move.\n");
         }
-        if(parsedInput.get(0).getClass() == Boolean.class && !(boolean)parsedInput.get(0)){
-            System.out.println("This move is ambiguous, please clarify.");}
+
         return parsedInput;
     }
 

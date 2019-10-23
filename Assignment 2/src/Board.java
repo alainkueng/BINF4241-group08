@@ -625,46 +625,50 @@ public class Board {
         ArrayList<Integer> foundFigures = new ArrayList<Integer>();
         int j = 0;
         int k = 7;
-        for(int m = 0; m < 8; m++){
-            if(givenColumn != -1){
+        for(int m = 0; m < 8; m++) {
+            if (givenColumn != -1) {
                 j = givenColumn;
                 k = givenColumn;
             }
-            for(int n = j; n <= k; n++){
-                Figure currentFigure = (Figure)board[m][n][1];
-                if(currentFigure != null
+            for (int n = j; n <= k; n++) {
+                if (foundFigures.size() == 3) {
+                    break;
+                }
+                Figure currentFigure = (Figure) board[m][n][1];
+                if (currentFigure != null
                         && currentFigure.getClass() == figureType
                         && currentFigure.getColor().toString() == color.toString()
-                        && (isPathFree(m,n,xCoordinate,yCoordinate) || currentFigure.getClass() == Knight.class)){
-                    if (currentFigure.getClass() != Pawn.class){
-                        if(currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)){
-                            if(foundFigures.size() < 2){
+                        && (isPathFree(m, n, xCoordinate, yCoordinate) || currentFigure.getClass() == Knight.class)) {
+                    if (currentFigure.getClass() != Pawn.class) {
+                        if (currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)) {
+                            if (foundFigures.size() < 2) {
                                 foundFigures.add(m);
                                 foundFigures.add(n);
-                            }
-                            else{
+                            } else {
                                 foundFigures.add(m);
+                                System.out.format("There is at least another %s which could do the same move, please clarify\n", currentFigure.getClass().toString());
                                 break;
                             }
                         }
-                    }
-                    else{
+                    } else {
                         boolean capture = isValidPawnCapture(currentFigure, m, n, xCoordinate, yCoordinate, color);
-                        if(capture && foundFigures.size() < 2){
+                        boolean diagonal = (m - xCoordinate == 1 || m - xCoordinate == -1) && (n - yCoordinate == 1 || n - yCoordinate == -1);
+                        if (!capture && diagonal) {
+                            continue;
+                        } else if (foundFigures.size() < 2 && capture && diagonal) {
                             foundFigures.add(m);
                             foundFigures.add(n);
-                        }
-                        else if(foundFigures.size() == 2 && capture){
+                        } else if (foundFigures.size() == 2 && capture && diagonal) {
                             foundFigures.add(m);
+                            System.out.format("There is at least another %s which could do the same move, please clarify\n", currentFigure.getClass().toString());
                             break;
-                        }
-                        else if(currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)){
-                            if(foundFigures.size() < 2){
+                        } else if (currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)) {
+                            if (foundFigures.size() < 2) {
                                 foundFigures.add(m);
                                 foundFigures.add(n);
-                            }
-                            else if(capture){
+                            } else if (foundFigures.size() == 2) {
                                 foundFigures.add(m);
+                                System.out.format("There is at least another %s which could do the same move, please clarify\n", currentFigure.getClass().toString());
                                 break;
                             }
                         }
