@@ -221,12 +221,12 @@ public class Game {
                 int y = -1;
                 if(parsedInput.get(0) == null){
                     parsedInput.add(0, Pawn.class);
-                    y = mapping.indexOf(input.charAt(0));
+                    y = mapping.indexOf(input.charAt(1));
                 }
                 int x = 8-Character.digit(input.charAt(2),10);
                 if (parsedInput.get(0) != Pawn.class){
                     y = mapping.indexOf(input.charAt(1));}
-                    current = gameBoard.getFigure(-1,x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
+                    current = gameBoard.getFigure(mapping.indexOf(input.charAt(0)),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0));
                 if(current.size() == 2){
                     parsedInput.add(1,current.get(0));//[1] = current.get(0);
                     parsedInput.add(2,current.get(1));//[2] = current.get(1);

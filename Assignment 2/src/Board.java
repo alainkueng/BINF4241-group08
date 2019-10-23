@@ -437,7 +437,6 @@ public class Board {
         return checkMate;
     }
 
-    @SuppressWarnings("Duplicates")
     public boolean isPathFree(int xCurrent, int yCurrent, int xMove, int yMove) {
         boolean freePath = true;
         //straight down
@@ -498,9 +497,13 @@ public class Board {
         }
         //left up
         else if (yMove < yCurrent && xMove < xCurrent) {
+            if(xCurrent - 1 == xMove && yCurrent - 1 == yMove){
+                freePath = true;
+                return freePath;
+            }
             int j = yCurrent;
-            j--;
             xCurrent--;
+
             for (int i = xCurrent; i > xMove; i--) {
                 if (board[i][j][1] != null) {
                     freePath = false;
@@ -661,7 +664,7 @@ public class Board {
                 if (currentFigure != null
                         && currentFigure.getClass() == figureType
                         && currentFigure.getColor().toString() == color.toString()
-                        && (isPathFree(m, n, xCoordinate, yCoordinate) || currentFigure.getClass() == Knight.class)) {
+                        && (currentFigure.isValidMove(m,n,xCoordinate,yCoordinate,color)&& isPathFree(m, n, xCoordinate, yCoordinate)|| currentFigure.getClass() == Knight.class)) {
                     if (currentFigure.getClass() != Pawn.class) {
                         if (currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)) {
                             if (foundFigures.size() < 2) {
@@ -754,7 +757,7 @@ public class Board {
         }
         Figure figure = (Figure) this.board[xNew][yNew][1];
         if (figure != null) {
-            if (!isOccupied(xNew, yNew) || !(figure.getColor().name() == currentColor.name())) {
+            if (!isOccupied(xNew, yNew) || (figure.getColor().name() == currentColor.name())) {
                 moveCheck = false;
             }
         }
@@ -882,7 +885,7 @@ public class Board {
                     if(king.getColor().toString() == color.toString()) {
                         kingCoordinates[0] = x;
                         kingCoordinates[1] = y;
-                        break;
+                        return kingCoordinates;
                     }
                 }
             }
