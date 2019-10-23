@@ -10,7 +10,7 @@ public class Knight implements Figure {
     public boolean isValidMove(int xCurrent, int yCurrent,int xMove, int yMove, Player.colors color){
         boolean valid = false;
         //move 2down-1left or 2down-1right
-        if(xMove == xCurrent - 2 && yMove == yCurrent + 1 || xMove == xCurrent - 2 && yMove == yCurrent -1){
+        if(xMove == xCurrent + 2 && yMove == yCurrent + 1 || xMove == xCurrent + 2 && yMove == yCurrent -1){
             valid = true;
         }
         //move 2up-1right or 2up-1left

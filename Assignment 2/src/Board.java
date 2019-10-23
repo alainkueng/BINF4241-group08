@@ -439,8 +439,13 @@ public class Board {
 
     public boolean isPathFree(int xCurrent, int yCurrent, int xMove, int yMove) {
         boolean freePath = true;
+
+        Figure fig = (Figure) board[xCurrent][yCurrent][1];
+        if(fig.getClass() == Knight.class){
+            return freePath;
+        }
         //straight down
-        if (yCurrent == yMove && xCurrent < xMove) {
+        else if (yCurrent == yMove && xCurrent < xMove) {
             xCurrent++;
             for (int i = xCurrent; i < xMove; i++) {
                 if (board[i][yCurrent][1] != null) {
