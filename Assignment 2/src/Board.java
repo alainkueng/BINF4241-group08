@@ -308,7 +308,7 @@ public class Board {
                 if (pawnPassant.isValidMove(xPawn, yPawn, xPawnMove, yPawnMove, color) && yPawnMove == yPawn + 1 && yLastMove == yPawn + 1) {
                     board[xPawnMove][yPawnMove][1] = pawnPassant;
                     //delete pawn at past location
-                    board[yPawn][xPawn][1] = null;
+                    board[xPawn][yPawn][1] = null;
                     //delete piece that the pawn ate
                     board[xLastMove][yLastMove][1] = null;
                     passant = true;
