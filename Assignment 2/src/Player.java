@@ -33,5 +33,11 @@ import java.util.ArrayList;
     public colors getColor(){
         return this.color;
     }
-
+    public colors getColorReversed(){
+        if (this.color == colors.WHITE){
+            return colors.BLACK;
+        }
+        else{
+        return colors.WHITE;}
+    }
 }
