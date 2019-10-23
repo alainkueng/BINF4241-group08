@@ -493,6 +493,11 @@ public class Board {
         }
         //left down
         else if (yMove < yCurrent && xMove > xCurrent) {
+            if(xCurrent + 1 == xMove && yCurrent - 1 == yMove){
+                freePath = true;
+                return freePath;
+            }
+
             int j = yCurrent;
             j--;
             xCurrent++;
@@ -515,7 +520,7 @@ public class Board {
             }
             int j = yCurrent;
             xCurrent--;
-
+            j--;
             for (int i = xCurrent; i > xMove; i--) {
                 if (board[i][j][1] != null) {
                     freePath = false;
@@ -529,6 +534,10 @@ public class Board {
         }
         //right down
         else if (yMove > yCurrent && xMove > xCurrent) {
+            if(xCurrent + 1 == xMove && yCurrent + 1 == yMove){
+                freePath = true;
+                return freePath;
+            }
             int j = yCurrent;
             j++;
             xCurrent++;
@@ -545,6 +554,11 @@ public class Board {
         }
         //right up
         else if (yMove > yCurrent && xMove < xCurrent) {
+            if(xCurrent - 1 == xMove && yCurrent + 1 == yMove){
+                freePath = true;
+                return freePath;
+            }
+
             int j = yCurrent;
             j++;
             xCurrent--;
@@ -595,7 +609,7 @@ public class Board {
             validMove = normalMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11));
         }
         if(check(enemyKingX,enemyKingY,(Figure) this.board[enemyKingX][enemyKingY][1], currentPlayer.getColorReversed())){
-            System.out.printf("%d King is in check\n", currentPlayer.getColorReversed());
+            System.out.printf("King is in check\n");
         }
 
 
