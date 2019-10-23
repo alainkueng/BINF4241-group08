@@ -312,8 +312,8 @@ public class Game {
         parsedInput.add(12, this.currentPlayer);
 
 
-        if(current.size() > 2){
-            System.out.println("There are at least two Objects of the same Type that could do this move.\n");
+        if(current.size() == 0){
+            System.out.println("This move is invalid please retry.\n");
         }
 
         return parsedInput;
