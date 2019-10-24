@@ -698,7 +698,7 @@ public class Board {
             ((King)board[xNew][yNew][1]).kingHasMoved();
         }
         if(checkMove && newObject == Rook.class){
-            ((Rook)board[xNew][yNew][1]).kingHasMoved();}
+            ((Rook)board[xNew][yNew][1]).RookHasMoved();}
         return checkMove;
     }
 
@@ -819,7 +819,7 @@ public class Board {
             ((King)board[xCurrent][yCurrent][1]).kingHasMoved();
         }
         if(moveCheck && newObject == Rook.class){
-            ((Rook)board[xCurrent][yCurrent][1]).kingHasMoved();}
+            ((Rook)board[xCurrent][yCurrent][1]).RookHasMoved();}
         return moveCheck;
     }
 

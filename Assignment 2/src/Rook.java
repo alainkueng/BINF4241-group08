@@ -30,7 +30,7 @@ public class Rook implements Figure {
     }
 
     //set moved to true
-    public void kingHasMoved(){
+    public void RookHasMoved(){
         this.moved = true;
     }
 
