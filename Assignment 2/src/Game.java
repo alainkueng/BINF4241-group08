@@ -241,7 +241,7 @@ public class Game {
                     parsedInput.add(2,current.get(1));//[2] = current.get(1);
                 }
                 else{
-//                    parsedInput.add(0,false);
+                    parsedInput.add(0,false);
                 }
                 parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
                 parsedInput.add(4,mapping.indexOf((input.charAt(1))));

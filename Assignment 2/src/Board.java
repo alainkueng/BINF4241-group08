@@ -837,8 +837,6 @@ public class Board {
         }
         if (figure == null && passant) {
             moveCheck = true;
-        } else {
-            moveCheck = false;
         }
         return moveCheck;
     }
