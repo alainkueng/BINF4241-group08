@@ -695,10 +695,10 @@ public class Board {
             }
         }
         if(checkMove && newObject == King.class){
-            ((King)board[xCurrent][yCurrent][1]).kingHasMoved();
+            ((King)board[xNew][yNew][1]).kingHasMoved();
         }
         if(checkMove && newObject == Rook.class){
-            ((Rook)board[xCurrent][yCurrent][1]).kingHasMoved();}
+            ((Rook)board[xNew][yNew][1]).kingHasMoved();}
         return checkMove;
     }
 
