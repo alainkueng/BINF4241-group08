@@ -220,6 +220,7 @@ public class Board {
                }
            }
        }
+
         return castled;
     }
 
@@ -600,9 +601,13 @@ public class Board {
         boolean validMove = true;
         if((Boolean)moveInput.get(6)){//check and do castleKing
             validMove = castleKingSide((Player.colors)moveInput.get(11));
+            if(validMove){int[] i =findKing((Player.colors)moveInput.get(11));
+                ((King)board[i[0]][i[1]][1]).kingHasMoved();}
         }
         else if((Boolean)moveInput.get(7)){//check and do castleQueen
             validMove = castleQueenSide((Player.colors)moveInput.get(11));
+            if(validMove){int[] i =findKing((Player.colors)moveInput.get(11));
+                ((King)board[i[0]][i[1]][1]).kingHasMoved();}
         }
         else if((Boolean)moveInput.get(8)) {//check and do enpassant //change (1) to class input not figure since its only a class given
             validMove = passant((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11));
@@ -688,6 +693,11 @@ public class Board {
                 }
             }
         }
+        if(checkMove && newObject == King.class){
+            ((King)board[xCurrent][yCurrent][1]).kingHasMoved();
+        }
+        if(checkMove && newObject == Rook.class){
+            ((Rook)board[xCurrent][yCurrent][1]).kingHasMoved();}
         return checkMove;
     }
 
@@ -804,6 +814,11 @@ public class Board {
                     currentPlayer.setEatenPieces(eaten);//add to eatenpieces
                 }
             }
+        if(moveCheck && newObject == King.class){
+            ((King)board[xCurrent][yCurrent][1]).kingHasMoved();
+        }
+        if(moveCheck && newObject == Rook.class){
+            ((Rook)board[xCurrent][yCurrent][1]).kingHasMoved();}
         return moveCheck;
     }
 
