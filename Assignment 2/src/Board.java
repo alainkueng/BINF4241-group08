@@ -5,9 +5,11 @@ public class Board {
 
     public Object[][][] board;
     private Object[] lastMove = new Object[3];//fig,x,y
+    private boolean checkmate;
 
     public Board() {
         board = new Object[8][8][2];
+        checkmate = false;
         initBoard();
         initFigure(Figure.Colors.BLACK, 0);
         initFigure(Figure.Colors.WHITE, 7);
@@ -626,7 +628,6 @@ public class Board {
         }
 
 
-        //implement check (why do i need to input king and where?), when moveOn from game is invalid this gets return anyway?
         //implement checkmate (why do i need to input king and where?), when moveOn from game is invalid this gets returned anyway?
 
         if(!(Boolean)moveInput.get(6) && !(Boolean)moveInput.get(7) && !(Boolean)moveInput.get(8) && !(Boolean)moveInput.get(9)){//change attribute lastmove object newx, newy when there is no special move
@@ -951,6 +952,8 @@ public class Board {
         return canBlock;
 
     }
+
+
     public int[] findKing(Player.colors color){
         int[] kingCoordinates = new int[2];
         for(int x = 0; x < 8; x++){
@@ -966,5 +969,8 @@ public class Board {
             }
         }
         return kingCoordinates;
+    }
+    public boolean getCheckmate(){
+        return this.checkmate;
     }
 }

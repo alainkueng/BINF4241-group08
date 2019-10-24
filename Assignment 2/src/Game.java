@@ -10,7 +10,6 @@ public class Game {
     private Player black;
     private Player currentPlayer;
     private boolean winner = false;
-    private boolean check = false;
 
     Game(){
         this.gameBoard = new Board();
@@ -23,10 +22,15 @@ public class Game {
             boolean moveOn = false; //checks if input is valid or it will ask again
             while(!moveOn) {
                 moveOn = gameBoard.move(parseInput(inputMoveAndCheck(currentPlayer.getName()))); //  returns a boolean, gets input move and checks it and gives back an array [(class) Figure Type, (int) row-coordinate current, (int) column-coordinate current, (int) row-c move, (int) col-c move,](bool) capture, (bool) castlingKing, (bool) castlingQueen, (bool) enPassant, (Object[2]) promotion ]
+                if(gameBoard.getCheckmate()){
+                    moveOn = true;
+                    winner = true;
+                }
             }
             printBoard(gameBoard.getBoard());
             this.currentPlayer = playersTurn(currentPlayer);
         }
+        System.out.printf("\n%s wins!", currentPlayer.getName());
     }
 
     /**
