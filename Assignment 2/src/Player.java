@@ -26,6 +26,9 @@ import java.util.ArrayList;
         eatenPieces.add(figure);
         //needs to check if a figure has been eaten or anyone could add a random figure to the dumpster
     }
+    public ArrayList<Figure> getEatenPieces(){
+        return eatenPieces;
+    }
 
      /**
       * @return Color of Player as an enum of colors

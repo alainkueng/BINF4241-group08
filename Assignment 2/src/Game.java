@@ -373,8 +373,20 @@ public class Game {
         }
         System.out.print("     a   b   c   d   e   f   g   h\n");
         System.out.println();
-
-
+        System.out.printf("%s's list of eaten pieces: ", white.getName());
+        for (Figure fig: white.getEatenPieces() ) {
+         System.out.print("[");
+         System.out.printf("%s", fig.getClass().getSimpleName());
+          System.out.print("]");
+        }
+        System.out.println();
+        System.out.printf("%s's list of eaten pieces: ", black.getName());
+        for (Figure fig: black.getEatenPieces() ) {
+            System.out.print("[");
+        System.out.printf("%s", fig.getClass().getSimpleName());
+        System.out.print("]");
+        }
+        System.out.println();
     }
 
     /**

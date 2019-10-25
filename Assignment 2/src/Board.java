@@ -840,7 +840,7 @@ public class Board {
 
         if(moveCheck) {//here add the add to dumpster list in Player
             Figure fig = (Figure) this.board[xCurrent][yCurrent][1];
-            Figure eaten = (Figure) this.board[xNew][yCurrent][1];
+            Figure eaten = (Figure) this.board[xNew][yNew][1];
             this.board[xNew][yNew][1] = fig;
             this.board[xCurrent][yCurrent][1] = null;
             boolean eat = true;
