@@ -745,6 +745,9 @@ public class Board {
             if(playerColor == figureColor){
                 System.out.println("Do you want to capture your own piece? Please try to capture an enemy or if you have less courage: an empty field.");
             }
+            else{
+                System.out.println("This field is already occupied by an enemy piece, please check if you can capture them! If so use the correct notation with an 'x'");
+            }
             checkMove = false;
         }
         if (checkMove){

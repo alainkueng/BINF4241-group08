@@ -10,6 +10,7 @@ public class Game {
     private Player black;
     private Player currentPlayer;
     private boolean winner = false;
+    private boolean isDraw = false;
 
     Game(){
         this.gameBoard = new Board();
@@ -26,12 +27,22 @@ public class Game {
                     moveOn = true;
                     winner = true;
                 }
+                if(isDraw){
+                    break;
+                }
+            }
+            if (isDraw) {
+                break;
             }
             printBoard(gameBoard.getBoard());
             this.currentPlayer = playersTurn(currentPlayer);
         }
-        if(winner)
+        if(winner){
             System.out.printf("\n%s wins!", currentPlayer.getName());
+        }
+        if(isDraw){
+            System.out.println("\nThis time you won't decide who's the chess master... for now! It's a draw!");
+        }
     }
 
     /**
@@ -103,7 +114,8 @@ public class Game {
                     castlingKing = true;
                 }
                 if (moveKill[0].matches("^[(]*$") && moveKill[1].matches("^[=]*$") && moveKill[2].matches("^[)]*$")){//ask for drawcheck
-                    stringCheck = true;//Change to return for draw
+                    stringCheck = true;
+                    offerDraw();
                 }
             }
             else if (inputLength == 4) {     //to kill with a figure if there is only one possibility "Bxd5"
@@ -336,7 +348,7 @@ public class Game {
         parsedInput.add(11, currentPlayer.getColor());//[10] = currentPlayer.getColor();
         parsedInput.add(12, this.currentPlayer);
 
-        if(current.size() == 0){
+        if(current.size() == 0 && !input.equals("(=)")){
                 System.out.println("This move is invalid please retry.\n");
             }
         return parsedInput;
@@ -401,6 +413,29 @@ public class Game {
         }
         return this.white;
     }
+
+    private void offerDraw(){
+        Scanner opponent = new Scanner(System.in);
+        boolean stringCheck = false; //boolean to check if input is correct
+        String response = null;
+        while (!stringCheck){
+            System.out.println("Do you accept the draw offer? Y/N");
+            response = opponent.nextLine();
+            if(response.toLowerCase().equals("n") || response.toLowerCase().equals("y")){
+            stringCheck = true;
+                if(response.matches("^[y]*$")){
+                    this.isDraw = true;
+                }
+                else{
+                    System.out.println("Wow, that's harsh, you just pushed your enemy's confidence - Game on!");
+                }
+            }
+            else{
+                System.out.println("This is not a proper answer, let's try again");
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Game game = new Game();
     }
