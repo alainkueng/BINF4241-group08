@@ -6,10 +6,14 @@ public class Board {
     public Object[][][] board;
     private Object[] lastMove = new Object[3];//fig,x,y
     private boolean checkmate;
+    private boolean whitecastling;
+    private boolean blackcastling;
 
     public Board() {
         board = new Object[8][8][2];
         checkmate = false;
+        whitecastling = false;
+        blackcastling = false;
         initBoard();
         initFigure(Figure.Colors.BLACK, 0);
         initFigure(Figure.Colors.WHITE, 7);
@@ -51,12 +55,12 @@ public class Board {
      */
     private void initFigure(Figure.Colors color, int rowNumber) {
         board[rowNumber][0][1] = new Rook(color);
-        board[rowNumber][1][1] = new Knight(color);
-        board[rowNumber][2][1] = new Bishop(color);
-        board[rowNumber][3][1] = new Queen(color);
+        //board[rowNumber][1][1] = new Knight(color);
+        //board[rowNumber][2][1] = new Bishop(color);
+        //board[rowNumber][3][1] = new Queen(color);
         board[rowNumber][4][1] = new King(color);
-        board[rowNumber][5][1] = new Bishop(color);
-        board[rowNumber][6][1] = new Knight(color);
+        //board[rowNumber][5][1] = new Bishop(color);
+        //board[rowNumber][6][1] = new Knight(color);
         board[rowNumber][7][1] = new Rook(color);
         if (color == Figure.Colors.BLACK) {
             rowNumber = 1;
@@ -602,14 +606,50 @@ public class Board {
 
         boolean validMove = true;
         if((Boolean)moveInput.get(6)){//check and do castleKing
-            validMove = castleKingSide((Player.colors)moveInput.get(11));
-            if(validMove){int[] i =findKing((Player.colors)moveInput.get(11));
-                ((King)board[i[0]][i[1]][1]).kingHasMoved();}
+            if (((Player.colors)moveInput.get(11)).toString()  == "WHITE" && !whitecastling){
+                validMove = castleKingSide((Player.colors)moveInput.get(11));
+                if(validMove){
+                    int[] i =findKing((Player.colors)moveInput.get(11));
+                    ((King)board[i[0]][i[1]][1]).kingHasMoved();
+                    whitecastling = true;
+                }
+            }
+
+
+            else if (((Player.colors)moveInput.get(11)).toString() == "BLACK" && !blackcastling){
+                validMove = castleKingSide((Player.colors)moveInput.get(11));
+                if(validMove){
+                    int[] i =findKing((Player.colors)moveInput.get(11));
+                    ((King)board[i[0]][i[1]][1]).kingHasMoved();
+                    blackcastling = true;
+                }
+            }
+            else if(!(((Player.colors)moveInput.get(11)).toString() == "BLACK" && !blackcastling)||!(((Player.colors)moveInput.get(11)).toString()  == "WHITE" && !whitecastling)){
+                validMove = false;
+            }
         }
+
         else if((Boolean)moveInput.get(7)){//check and do castleQueen
-            validMove = castleQueenSide((Player.colors)moveInput.get(11));
-            if(validMove){int[] i =findKing((Player.colors)moveInput.get(11));
-                ((King)board[i[0]][i[1]][1]).kingHasMoved();}
+            if (((Player.colors)moveInput.get(11)).toString()  == "WHITE" && !whitecastling){
+                validMove = castleQueenSide(((Player.colors)moveInput.get(11)));
+                if(validMove){
+                    int[] i =findKing((Player.colors)moveInput.get(11));
+                    ((King)board[i[0]][i[1]][1]).kingHasMoved();
+                    whitecastling = true;
+
+                }
+            }
+            else if (((Player.colors)moveInput.get(11)).toString() == "BLACK" && !blackcastling){
+                validMove = castleQueenSide((Player.colors)moveInput.get(11));
+                if(validMove){
+                    int[] i =findKing((Player.colors)moveInput.get(11));
+                    ((King)board[i[0]][i[1]][1]).kingHasMoved();
+                    blackcastling = true;
+                }
+            }
+            else if(!(((Player.colors)moveInput.get(11)).toString() == "BLACK" && !blackcastling)||!(((Player.colors)moveInput.get(11)).toString()  == "WHITE" && !whitecastling)){
+                validMove = false;
+            }
         }
         else if((Boolean)moveInput.get(8)) {//check and do enpassant //change (1) to class input not figure since its only a class given
             validMove = passant((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11));
