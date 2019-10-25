@@ -24,7 +24,10 @@ import java.util.ArrayList;
       */
     public void setEatenPieces(Figure figure){
         eatenPieces.add(figure);
-        //needs to check if a figure has been eaten or anyone could add a random figure to the dumbster
+        //needs to check if a figure has been eaten or anyone could add a random figure to the dumpster
+    }
+    public ArrayList<Figure> getEatenPieces(){
+        return eatenPieces;
     }
 
      /**
@@ -32,5 +35,12 @@ import java.util.ArrayList;
       */
     public colors getColor(){
         return this.color;
+    }
+    public colors getColorReversed(){
+        if (this.color == colors.WHITE){
+            return colors.BLACK;
+        }
+        else{
+        return colors.WHITE;}
     }
 }

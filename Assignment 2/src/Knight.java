@@ -7,25 +7,24 @@ public class Knight implements Figure {
     }
 
     //check documentation of Interface
-    public boolean isValidMove(int xCurrent, int yCurrent, int xMove, int yMove){
+    public boolean isValidMove(int xCurrent, int yCurrent,int xMove, int yMove, Player.colors color){
         boolean valid = false;
-        //move down-left or down-right
-        if(xMove == xCurrent - 1 && yMove == yCurrent + 2 || xMove == xCurrent + 1 && yMove == yCurrent + 2){
+        //move 2down-1left or 2down-1right
+        if(xMove == xCurrent + 2 && yMove == yCurrent + 1 || xMove == xCurrent + 2 && yMove == yCurrent -1){
             valid = true;
         }
-        //move up-right or up-left
-        else if(xMove == xCurrent - 1 && yMove == yCurrent - 2 || xMove == xCurrent + 1 && yMove == yCurrent - 2){
+        //move 2up-1right or 2up-1left
+        else if(xMove == xCurrent - 2 && yMove == yCurrent - 1|| xMove == xCurrent - 2 && yMove == yCurrent + 1){
             valid = true;
         }
-        //move left-up or left-down
-        else if (xMove == xCurrent - 2 && yMove == yCurrent - 1 || xMove == xCurrent - 2 && yMove == yCurrent + 1){
+        //move 1up-2left or 1up-2right
+        else if (xMove == xCurrent + 1 && yMove == yCurrent - 2 || xMove == xCurrent + 1 && yMove == yCurrent + 2){
             valid = true;
         }
-        //move right-up or right-down
-        else if (xMove == xCurrent + 2 && yMove == yCurrent - 1 || xMove == xCurrent + 2 && yMove == yCurrent + 1){
+        //move 1down-2left or 1down-2right
+        else if (xMove == xCurrent -1 && yMove == yCurrent - 2 || xMove == xCurrent -1 && yMove == yCurrent + 2){
             valid = true;
         }
-        else{ valid = false;}
         return valid;
     }
 
