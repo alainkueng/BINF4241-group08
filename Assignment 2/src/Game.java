@@ -298,7 +298,6 @@ public class Game {
             }
         }
         else if(length == 5) {
-            String[] matchCheck = input.split("");
             if (!input.equals("o-o-o")) {
                 int x = 8-Character.digit(input.charAt(4),10);
                 int y = mapping.indexOf(input.charAt(3));
