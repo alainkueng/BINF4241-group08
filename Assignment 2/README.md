@@ -1,5 +1,5 @@
 # Chess
-#### Chess is a boardgame, that allows up to 2 players to play simultaneously
+#### Chess is a boardgame
 
 
 ## Rules
