@@ -252,7 +252,6 @@ public class Game {
                 parsedInput.add(2,0);//filler
                 parsedInput.add(3, 0);//filler
                 parsedInput.add(4, 0);//filler
-
             }
         }
         else if(length == 4){//"Bdb8"
@@ -287,8 +286,12 @@ public class Game {
                     parsedInput.add(1,current.get(0));
                     parsedInput.add(2,current.get(1));
                 }
-                else{
-                    parsedInput.add(0,false);
+                else {
+                    parsedInput.add(0, true);
+                    parsedInput.add(1,0);//filler
+                    parsedInput.add(2,0);//filler
+                    parsedInput.add(3, 0);//filler
+                    parsedInput.add(4, 0);//filler
                 }
                 parsedInput.add(3,8-Character.digit(input.charAt(1),10));
                 parsedInput.add(4,mapping.indexOf(input.charAt(0)));//[4] = mapping.indexOf(input.charAt(0));}
@@ -296,19 +299,25 @@ public class Game {
         }
         else if(length == 5) {
             String[] matchCheck = input.split("");
-            if (!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$") && matchCheck[3].matches("^[-]*$") && matchCheck[4].matches("^[o]*$"))) {
+            if (!input.equals("o-o-o")) {
+                int x = 8-Character.digit(input.charAt(4),10);
+                int y = mapping.indexOf(input.charAt(3));
+                int givenColumn = mapping.indexOf(input.charAt(1));
                 parsedInput.add(0, figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
-                parsedInput.add(1, 8 - Character.digit(input.charAt(2), 10));//[1] = 8-Character.digit(input.charAt(2), 10);
-                parsedInput.add(2, mapping.indexOf(input.charAt(1)));//[2] = mapping.indexOf(input.charAt(1));
+                current = gameBoard.getFigure(givenColumn,x,y,currentPlayer.getColor(),(Class)parsedInput.get(0),(Boolean)checkedInput.get(4));
+                if(current.size() == 2){
+                    parsedInput.add(1,current.get(0));//[1] = current.get(0);
+                    parsedInput.add(2,current.get(1));//[2] = current.get(1);
+                }
+                else{
+                    parsedInput.add(0,false);
+                }
                 parsedInput.add(3, 8 - Character.digit(input.charAt(4), 10));//[3] = 8-Character.digit(input.charAt(4),10);
                 parsedInput.add(4, mapping.indexOf(input.charAt(3)));//[4] = mapping.indexOf(input.charAt(3));
             }
             else{
-                parsedInput.add(0, 0);//filler
-                parsedInput.add(1, 0);//filler
-                parsedInput.add(2, 0);//filler
-                parsedInput.add(3, 0);//filler
-                parsedInput.add(4, 0);//filler
+                parsedInput.add(0, 0);
+
             }
         }
 
@@ -323,19 +332,13 @@ public class Game {
 
         }else{
             parsedInput.add(10, figureCatalog.get(((String)checkedInput.get(6)).charAt(0)));
-
         }
         parsedInput.add(11, currentPlayer.getColor());//[10] = currentPlayer.getColor();
         parsedInput.add(12, this.currentPlayer);
 
-        if(current.size() == 1){
-            if((Boolean)parsedInput.get(6) || (Boolean)parsedInput.get(7)){
-            parsedInput.add(0, true);
-            }
-            else{
+        if(current.size() == 0){
                 System.out.println("This move is invalid please retry.\n");
             }
-        }
         return parsedInput;
     }
 
