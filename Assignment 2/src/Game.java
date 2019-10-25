@@ -328,14 +328,14 @@ public class Game {
         parsedInput.add(11, currentPlayer.getColor());//[10] = currentPlayer.getColor();
         parsedInput.add(12, this.currentPlayer);
 
-        String[] matchCheck = input.split("");
-        if(current.size() == 0 && (length != 5 ) && !(Boolean)checkedInput.get(4) &&(!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$")))){
-            if(length == 3)
-                return parsedInput;
-            else
-            System.out.println("This move is invalid please retry.\n");
+        if(current.size() == 1){
+            if((Boolean)parsedInput.get(6) || (Boolean)parsedInput.get(7)){
+            parsedInput.add(0, true);
+            }
+            else{
+                System.out.println("This move is invalid please retry.\n");
+            }
         }
-
         return parsedInput;
     }
 

@@ -671,6 +671,11 @@ public class Board {
             }
         }
         if(isOccupied(xNew, yNew)){
+            String playerColor = color.toString();
+            String figureColor = ((Figure)this.board[xNew][yNew][1]).getColor().toString();
+            if(playerColor == figureColor){
+                System.out.println("Do you want to capture your own piece? Please try to capture an enemy or if you have less courage: an empty field.");
+            }
             checkMove = false;
         }
         if (checkMove){
@@ -718,40 +723,42 @@ public class Board {
                 Figure currentFigure = (Figure) board[m][n][1];
                 if (currentFigure != null
                         && currentFigure.getClass() == figureType
-                        && currentFigure.getColor().toString() == color.toString()
-                        && (currentFigure.isValidMove(m,n,xCoordinate,yCoordinate,color)&& isPathFree(m, n, xCoordinate, yCoordinate)|| currentFigure.getClass() == Knight.class)) {
-                    if (currentFigure.getClass() != Pawn.class) {
-                        if (currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)) {
-                            if (foundFigures.size() < 2) {
-                                foundFigures.add(m);
-                                foundFigures.add(n);
-                            } else {
-                                foundFigures.add(m);
-                                System.out.format("There is at least another %s which could do the same move, please clarify\n", currentFigure.getClass().toString());
-                                break;
+                        && currentFigure.getColor().toString() == color.toString()){
+                    boolean validMove = currentFigure.isValidMove(m,n,xCoordinate,yCoordinate,color);
+                    if(validMove&& isPathFree(m, n, xCoordinate, yCoordinate)|| currentFigure.getClass() == Knight.class) {
+                        if (currentFigure.getClass() != Pawn.class) {
+                            if (validMove) {
+                                if (foundFigures.size() < 2) {
+                                    foundFigures.add(m);
+                                    foundFigures.add(n);
+                                } else {
+                                    foundFigures.add(m);
+                                    System.out.format("There is at least another %s which could do the same move, please clarify\n", currentFigure.getClass().toString());
+                                    break;
+                                }
                             }
                         }
-                    } else {
-                        boolean capture = isValidPawnCapture(currentFigure, m, n, xCoordinate, yCoordinate, color, passant);
-                        boolean diagonal = (m - xCoordinate == 1 || m - xCoordinate == -1) && (n - yCoordinate == 1 || n - yCoordinate == -1);
-                        if (!capture && diagonal) {
-                            continue;
-                        }
-                        else if (foundFigures.size() < 2 && capture && diagonal) {
-                            foundFigures.add(m);
-                            foundFigures.add(n);
-                        } else if (foundFigures.size() == 2 && capture && diagonal) {
-                            foundFigures.add(m);
-                            System.out.format("There is at least another %s which could do the same move, please clarify\n", currentFigure.getClass().toString());
-                            break;
-                        } else if (currentFigure.isValidMove(m, n, xCoordinate, yCoordinate, color)) {
-                            if (foundFigures.size() < 2) {
+                        else {
+                            boolean capture = isValidPawnCapture(m, n, xCoordinate, yCoordinate, color, passant);
+                            boolean diagonal = (m - xCoordinate == 1 || m - xCoordinate == -1) && (n - yCoordinate == 1 || n - yCoordinate == -1);
+                            if (!capture && diagonal) {
+                                continue;
+                            } else if (foundFigures.size() < 2 && capture && diagonal) {
                                 foundFigures.add(m);
                                 foundFigures.add(n);
-                            } else if (foundFigures.size() == 2) {
+                            } else if (foundFigures.size() == 2 && capture && diagonal) {
                                 foundFigures.add(m);
                                 System.out.format("There is at least another %s which could do the same move, please clarify\n", currentFigure.getClass().toString());
                                 break;
+                            } else if (validMove) {
+                                if (foundFigures.size() < 2) {
+                                    foundFigures.add(m);
+                                    foundFigures.add(n);
+                                } else if (foundFigures.size() == 2) {
+                                    foundFigures.add(m);
+                                    System.out.format("There is at least another %s which could do the same move, please clarify\n", currentFigure.getClass().toString());
+                                    break;
+                                }
                             }
                         }
                     }
@@ -771,7 +778,14 @@ public class Board {
         }
         Figure figure = (Figure)this.board[xNew][yNew][1];
         if (figure != null) {
-            if (!isOccupied(xNew, yNew) || figure.getColor().name() == currentColor.name()) {
+            String playerColor = currentColor.name();
+            String figureColor = figure.getColor().name();
+            if(isOccupied(xNew, yNew)) {
+                if (playerColor == figureColor) {
+                    System.out.println("Do you want to capture your own piece? Please try to capture an enemy or if you have less courage: an empty field.");
+                }
+            }
+            if (!isOccupied(xNew, yNew) || figureColor == playerColor) {
                 moveCheck = false;
             }
         }
@@ -798,7 +812,7 @@ public class Board {
                     //revert capture
                     board[xNew][yNew][1] = eaten;
                     board[xCurrent][yCurrent][1] = fig;
-                    System.out.println("Cant eat this figure with your King without sacrificing him\nPlease input a new move");
+                    System.out.println("Can't capture this figure with your King without sacrificing him\nPlease try another move");
                 }
             } else {
                     if (check(kingX, kingY, (King) board[kingX][kingY][1], currentColor)) {
@@ -807,7 +821,7 @@ public class Board {
                         //revert capture
                         board[xNew][yNew][1] = eaten;
                         board[xCurrent][yCurrent][1] = fig;
-                        System.out.println("Cant eat this figure without sacrificing your king\nPlease input a new move");
+                        System.out.println("Can't capture this figure without sacrificing your king\nPlease input another move");
                     }
 
                 }
@@ -824,21 +838,18 @@ public class Board {
     }
 
     @SuppressWarnings("Duplicates")
-    private boolean isValidPawnCapture(Figure newObject, int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor, boolean passant) {
-        boolean moveCheck = true;
-        if (!newObject.isValidMove(xCurrent, yCurrent, xNew, yNew, currentColor)) {
-            moveCheck = false;
-        }
+    private boolean isValidPawnCapture(int xCurrent, int yCurrent, int xNew, int yNew, Player.colors currentColor, boolean passant) {
+        boolean capture = false;
         Figure figure = (Figure) this.board[xNew][yNew][1];
         if (figure != null) {
-            if (!isOccupied(xNew, yNew) || (figure.getColor().name() == currentColor.name())) {
-                moveCheck = false;
+            if (isOccupied(xNew, yNew) && (figure.getColor().name() != currentColor.name())) {
+                capture = true;
             }
         }
-        if (figure == null && passant) {
-            moveCheck = true;
+        else if (passant) {
+            capture = true;
         }
-        return moveCheck;
+        return capture;
     }
     @SuppressWarnings("Duplicates")
     public boolean isPathFreeModified(int xCurrent, int yCurrent, int xMove, int yMove, Figure figureToBlock, Player.colors color) {
