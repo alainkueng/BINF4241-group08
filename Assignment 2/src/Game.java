@@ -30,7 +30,8 @@ public class Game {
             printBoard(gameBoard.getBoard());
             this.currentPlayer = playersTurn(currentPlayer);
         }
-        System.out.printf("\n%s wins!", currentPlayer.getName());
+        if(winner)
+            System.out.printf("\n%s wins!", currentPlayer.getName());
     }
 
     /**

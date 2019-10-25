@@ -58,6 +58,7 @@ public class Board {
         board[rowNumber][5][1] = new Bishop(color);
         board[rowNumber][6][1] = new Knight(color);
         board[rowNumber][7][1] = new Rook(color);
+
         if (color == Figure.Colors.BLACK) {
             rowNumber = 1;
         } else {
@@ -366,6 +367,7 @@ public class Board {
      */
     public boolean check(int x, int y, Figure figure, Player.colors color) {
         boolean check = false;
+        boolean checkMate = false;
         //iterate through whole board
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -376,7 +378,8 @@ public class Board {
                         if (figure.getColor() != currentFig.getColor())
                             check = currentFig.isValidMove(row, col, x, y, color) && isPathFree(row,col,x,y);
                         if (check)
-                            break;
+//                            checkMate = checkMate(x,y,(King) figure,color);
+                            return check;
                     }
                 }
             }
@@ -384,20 +387,34 @@ public class Board {
         return check;
     }
     public boolean checkNextToKing(int x, int y, King king, Player.colors color){
-        boolean checkMate = false;
+        boolean canMove = true;
         check(x, y, king, color);
         if (x + 1 < 8 && y + 1 < 8) {
-            if (check(x + 1, y, king, color) && board[y][x + 1][1] != null || check(x - 1, y, king, color) && board[y][x - 1][1] != null
-                    || check(x, y + 1, king, color) && board[y + 1][x][1] != null || check(x, y - 1, king, color) && board[y - 1][x][1] != null
-                    || check(x + 1, y + 1, king, color) && board[y + 1][x + 1][1] != null
-                    || check(x + 1, y - 1, king, color) && board[y - 1][x + 1][1] != null
-                    || check(x - 1, y + 1, king, color) && board[y + 1][x - 1][1] != null
-                    || check(x - 1, y - 1, king, color) && board[y + 1][x - 1][1] != null) {
-                checkMate = true;
+            if (check(x + 1, y, king, color) && board[x + 1][y][1] != null && king.isValidMove(x,y,x+1,y,color)
+                    || check(x + 1, y + 1, king, color) && board[x + 1][y + 1][1] != null && king.isValidMove(x,y,x+1,y+1,color)
+                    || check(x, y + 1, king, color) && board[x][y + 1][1] != null && king.isValidMove(x,y,x,y+1,color)) {
+                canMove = false;
             }
         }
-        return checkMate;
+        else if(x-1 >= 0 && y-1 > 0) {
+            if(check(x - 1, y, king, color) && board[x - 1][y][1] != null && king.isValidMove(x,y,x-1,y,color)
+                    || check(x, y - 1, king, color) && board[x][y - 1][1] != null && king.isValidMove(x,y,x,y-1,color)
+                    || check(x - 1, y - 1, king, color) && board[x - 1][y + 1][1] != null && king.isValidMove(x,y,x-1,y-1,color)){
+                canMove = false;
+            }
+        }
+        else if(x + 1 < 8 && y + 1 < 8 && x-1 >= 0 && y-1 > 0) {
+            if(check(x + 1, y - 1, king, color) && board[x + 1][y - 1][1] != null && king.isValidMove(x,y,x+1,y-1,color)
+                || check(x - 1, y + 1, king, color) && board[x - 1][y + 1][1] != null && king.isValidMove(x,y,x-1,y+1,color)){
+                canMove = false;
+
+            }
+        }
+        else
+            canMove = true;
+        return canMove;
     }
+
 
     /**
      * Method takes the king at coordinates (x,y) and uses the check Method to see if the king can move to a safe position
@@ -412,7 +429,7 @@ public class Board {
     public boolean checkMate(int x, int y, King king, Player.colors color) {//what if someone move in the way
 
         boolean check = false;
-        boolean notBlocked = false;
+        boolean canBlock = false;
         boolean checkMate = false;
         //iterate through whole board
         for (int row = 0; row < 8; row++) {
@@ -422,33 +439,43 @@ public class Board {
                     if (board[row][col][1] != null) {
                         Figure currentFig = (Figure) board[row][col][1];
                         if (king.getColor() != currentFig.getColor())
-                            check = currentFig.isValidMove(col, row, x, y, color) && isPathFree(col, row, x, y);
+                            check = currentFig.isValidMove(row, col, x, y, color) && isPathFree(row, col, x, y);
+
                         if (check) {
-                            boolean canBlock = false;
                             for (int i = 0; i < 8; i++) {
                                 for (int j = 0; j < 8; j++) {
                                     //for every figure of the same color check if they can land on (x,y)
                                     if (board[i][j][1] != null) {
                                         if (board[i][j][1] != null) {
-                                            Figure sameColorFig = (Figure) board[row][col][1];
-                                            if (king.getColor() == sameColorFig.getColor() && king.getClass() != sameColorFig.getClass())
-                                                for (int z = col; z < x; z++)
-                                                    notBlocked = isPathFreeModified(row,col,x,y,sameColorFig,color);
-//                                            check = currentFig.isValidMove(col, row, y, x, color);
+                                            Figure sameColorFig = (Figure) board[i][j][1];
+                                            if (king.getColor() == sameColorFig.getColor() && king.getClass() != sameColorFig.getClass()) {
+                                                //path from attacking fig to king in check
+                                                for (int r = row; r <= x; r++) {
+                                                    for (int c = col; c <= y; c++) {
+                                                        //se if a figure of the kings color can walk into path
+                                                        canBlock = isPathFreeModified(i, j, r, c, sameColorFig, color);
+                                                        if (canBlock) {
+                                                            System.out.print(" you can move another piece to block the check\n");
+                                                            checkMate = false;
+                                                            return checkMate;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                            if(notBlocked && checkNextToKing(x,y,king,color))
-                                checkMate = false;
-                            else
-                                checkMate = true;
                         }
-
                     }
                 }
             }
-        }
+
+        if(!canBlock && checkNextToKing(x,y,king,color))
+            checkMate = false;
+        else
+            checkMate = true;
         return checkMate;
     }
 
@@ -625,10 +652,12 @@ public class Board {
         }
         if(check(enemyKingX,enemyKingY,(Figure) this.board[enemyKingX][enemyKingY][1], currentPlayer.getColorReversed())){
             System.out.printf("King is in check\n");
+            System.out.println("");
+            if(checkMate(enemyKingX,enemyKingY,(King)board[enemyKingX][enemyKingY][1], currentPlayer.getColorReversed())){
+                System.out.println("Check mate");
+                checkmate = true;
+            }
         }
-
-
-        //implement checkmate (why do i need to input king and where?), when moveOn from game is invalid this gets returned anyway?
 
         if(!(Boolean)moveInput.get(6) && !(Boolean)moveInput.get(7) && !(Boolean)moveInput.get(8) && !(Boolean)moveInput.get(9)){//change attribute lastmove object newx, newy when there is no special move
             lastMove[0] = moveInput.get(0);//Object this should only change if there was no castling etc.
@@ -830,10 +859,10 @@ public class Board {
                 }
             }
         if(moveCheck && newObject == King.class){
-            ((King)board[xCurrent][yCurrent][1]).kingHasMoved();
+            ((King)board[xNew][yNew][1]).kingHasMoved();
         }
         if(moveCheck && newObject == Rook.class){
-            ((Rook)board[xCurrent][yCurrent][1]).RookHasMoved();}
+            ((Rook)board[xNew][yNew][1]).RookHasMoved();}
         return moveCheck;
     }
 
@@ -853,13 +882,13 @@ public class Board {
     }
     @SuppressWarnings("Duplicates")
     public boolean isPathFreeModified(int xCurrent, int yCurrent, int xMove, int yMove, Figure figureToBlock, Player.colors color) {
-        boolean canBlock = true;
+        boolean canBlock = false;
         //straight down
         if (yCurrent == yMove && xCurrent < xMove) {
             xCurrent++;
             for (int i = xCurrent; i < xMove; i++) {
                 if (board[i][yCurrent][1] == null && figureToBlock.isValidMove(yCurrent,i,yMove,xMove,color)) {
-                    canBlock = false;
+                    canBlock = true;
                     break;
                 }
             }
@@ -869,7 +898,7 @@ public class Board {
             xCurrent--;
             for (int i = xCurrent; i > xMove; i--) {
                 if (board[i][yCurrent][1] == null && figureToBlock.isValidMove(yCurrent,i,yMove,xMove,color)) {
-                    canBlock = false;
+                    canBlock = true;
                     break;
                 }
             }
