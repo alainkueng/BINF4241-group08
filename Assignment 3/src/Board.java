@@ -305,7 +305,7 @@ public class Board {
      * @return true if passant was done succesfully
      */
     @SuppressWarnings("Duplicates") //pawn, xC,yC ,xM,yM
-    public boolean passant(Class pawn, int xPawn, int yPawn, int xPawnMove, int yPawnMove, int xLastMove, int yLastMove, Player.colors color) {
+    public boolean passant(Class pawn, int xPawn, int yPawn, int xPawnMove, int yPawnMove, int xLastMove, int yLastMove, Player.colors color, Player currentPlayer) {
         boolean passant;
         Pawn pawnPassant = (Pawn) board[xPawn][yPawn][1];
         String lastClass = lastMove[0].toString();
@@ -318,6 +318,7 @@ public class Board {
                     //delete pawn at past location
                     board[xPawn][yPawn][1] = null;
                     //delete piece that the pawn ate
+                    currentPlayer.setEatenPieces((Figure)board[xLastMove][yLastMove][1]);
                     board[xLastMove][yLastMove][1] = null;
                     passant = true;
                     //pawn wants to move diagonal to the left, figure to eat has to be to the left
@@ -326,6 +327,7 @@ public class Board {
                     //delete pawn at past location
                     board[xPawn][yPawn][1] = null;
                     //delete piece that the pawn ate
+                    currentPlayer.setEatenPieces((Figure)board[xLastMove][yLastMove][1]);
                     board[xLastMove][yLastMove][1] = null;
                     passant = true;
                 } else {
@@ -338,6 +340,7 @@ public class Board {
                     //delete pawn at past location
                     board[xPawn][yPawn][1] = null;
                     //delete piece that the pawn ate
+                    currentPlayer.setEatenPieces((Figure)board[xLastMove][yLastMove][1]);
                     board[xLastMove][yLastMove][1] = null;
                     passant = true;
 
@@ -347,6 +350,7 @@ public class Board {
                     //delete pawn at past location
                     board[xPawn][yPawn][1] = null;
                     //delete piece that the pawn ate
+                    currentPlayer.setEatenPieces((Figure)board[xLastMove][yLastMove][1]);
                     board[xLastMove][yLastMove][1] = null;
                     passant = true;
                 } else {
@@ -548,7 +552,7 @@ public class Board {
                     freePath = false;
                     break;
                 }
-                j++;
+                j--;
                 if(j == yMove){
                     break;
                 }
@@ -679,7 +683,7 @@ public class Board {
             }
         }
         else if((Boolean)moveInput.get(8)) {//check and do enpassant //change (1) to class input not figure since its only a class given
-            validMove = passant((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11));
+            validMove = passant((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11), currentPlayer);
         }
         else if((Boolean)moveInput.get(9)){//check and do promotion //this needs color too //change to class
               validMove = promote((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));

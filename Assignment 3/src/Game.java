@@ -423,7 +423,7 @@ public class Game {
             response = opponent.nextLine();
             if(response.toLowerCase().equals("n") || response.toLowerCase().equals("y")){
             stringCheck = true;
-                if(response.matches("^[y]*$")){
+                if(response.toLowerCase().matches("^[y]*$")){
                     this.isDraw = true;
                 }
                 else{
