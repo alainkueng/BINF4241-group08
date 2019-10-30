@@ -395,31 +395,89 @@ public class Board {
         return check;
     }
     public boolean checkNextToKing(int x, int y, King king, Player.colors color){
-        boolean canMove = true;
+        boolean canMove = false;
         check(x, y, king, color);
         if (x + 1 < 8 && y + 1 < 8) {
-            if (check(x + 1, y, king, color) && board[x + 1][y][1] != null && king.isValidMove(x,y,x+1,y,color)
-                    || check(x + 1, y + 1, king, color) && board[x + 1][y + 1][1] != null && king.isValidMove(x,y,x+1,y+1,color)
-                    || check(x, y + 1, king, color) && board[x][y + 1][1] != null && king.isValidMove(x,y,x,y+1,color)) {
-                canMove = false;
+            if (!check(x + 1, y, king, color)){
+                if(board[x + 1][y][1] != null){
+                    Figure fig = (Figure) board[x + 1][y][1];
+                    if(fig.getColor() != king.getColor()){
+                        canMove = true;
+                        return canMove;
+                    }
+                }
+            }
+            if (!check(x + 1, y + 1, king, color)) {
+                if (board[x + 1][y + 1][1] != null) {
+                    Figure fig = (Figure) board[x + 1][y + 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                }
+            }
+            if (!check(x, y + 1, king, color)) {
+                if (board[x][y + 1][1] != null) {
+                    Figure fig = (Figure) board[x][y + 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                }
             }
         }
         else if(x-1 >= 0 && y-1 > 0) {
-            if(check(x - 1, y, king, color) && board[x - 1][y][1] != null && king.isValidMove(x,y,x-1,y,color)
-                    || check(x, y - 1, king, color) && board[x][y - 1][1] != null && king.isValidMove(x,y,x,y-1,color)
-                    || check(x - 1, y - 1, king, color) && board[x - 1][y + 1][1] != null && king.isValidMove(x,y,x-1,y-1,color)){
-                canMove = false;
+            if(!check(x - 1, y, king, color)) {
+                if (board[x - 1][y][1] != null) {
+                    Figure fig = (Figure) board[x - 1][y][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                }
+            }
+            if(check(x, y - 1, king, color)) {
+                if (board[x][y - 1][1] != null) {
+                    Figure fig = (Figure) board[x][y - 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                }
+            }
+            if(check(x - 1, y - 1, king, color)) {
+                if (board[x - 1][y - 1][1] != null) {
+                    Figure fig = (Figure) board[x - 1][y - 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                }
             }
         }
         else if(x + 1 < 8 && y + 1 < 8 && x-1 >= 0 && y-1 > 0) {
-            if(check(x + 1, y - 1, king, color) && board[x + 1][y - 1][1] != null && king.isValidMove(x,y,x+1,y-1,color)
-                || check(x - 1, y + 1, king, color) && board[x - 1][y + 1][1] != null && king.isValidMove(x,y,x-1,y+1,color)){
-                canMove = false;
+            if(check(x + 1, y - 1, king, color)) {
+                if (board[x + 1][y - 1][1] != null) {
+                    Figure fig = (Figure) board[x + 1][y - 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                }
+            }
+            if(check(x - 1, y + 1, king, color)) {
+                if (board[x - 1][y + 1][1] != null) {
+                    Figure fig = (Figure) board[x - 1][y + 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
 
+                }
             }
         }
         else
-            canMove = true;
+            canMove = false;
         return canMove;
     }
 
