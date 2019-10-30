@@ -1,5 +1,5 @@
 # Repository of group 08 in Software Construction
-#### Here you find code, used for the assignment
+#### Here you find code, used for the assignments given during the course.
 
 
 ## Projects
