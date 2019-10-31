@@ -197,36 +197,36 @@ public class Board {
                 }
             }
         }
-            //white king
-       if (color.toString() == Figure.Colors.WHITE.toString()) {
-           if (board[7][4][1].getClass() == King.class) {
-               King kingToCastle = (King) board[7][4][1];
-               if (!check(7, 4, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.WHITE) && kingToCastle.getColor().equals(Figure.Colors.WHITE)) {
-                   if (kingToCastle.getColor() == Figure.Colors.WHITE && board[7][7][1] != null && board[7][7][1].getClass() == Rook.class) {
-                       Rook rook = (Rook) board[7][7][1];
-                       if (rook.getColor() == Figure.Colors.WHITE && !rook.getHasMoved()) {
-                           //prove that path is empty and king does not go through check
-                           for (int i = 5; i < 7; i++) {
-                               if (board[7][i][1] == null && !check(7, i, kingToCastle, color))
-                                   castled = true;
-                               else
-                                   castled = false;
-                               break;
-                           }
-                           if (castled) {
-                               board[7][6][1] = kingToCastle;
-                               board[7][4][1] = null;
+        //white king
+        if (color.toString() == Figure.Colors.WHITE.toString()) {
+            if (board[7][4][1].getClass() == King.class) {
+                King kingToCastle = (King) board[7][4][1];
+                if (!check(7, 4, kingToCastle, color) && !kingToCastle.getHasMoved() && color.equals(Player.colors.WHITE) && kingToCastle.getColor().equals(Figure.Colors.WHITE)) {
+                    if (kingToCastle.getColor() == Figure.Colors.WHITE && board[7][7][1] != null && board[7][7][1].getClass() == Rook.class) {
+                        Rook rook = (Rook) board[7][7][1];
+                        if (rook.getColor() == Figure.Colors.WHITE && !rook.getHasMoved()) {
+                            //prove that path is empty and king does not go through check
+                            for (int i = 5; i < 7; i++) {
+                                if (board[7][i][1] == null && !check(7, i, kingToCastle, color))
+                                    castled = true;
+                                else
+                                    castled = false;
+                                break;
+                            }
+                            if (castled) {
+                                board[7][6][1] = kingToCastle;
+                                board[7][4][1] = null;
 
-                               board[7][5][1] = rook;
-                               board[7][7][1] = null;
-                               //move king to row 0, column 6
-                               //move rook to row 0, column 5
-                           }
-                       }
-                   }
-               }
-           }
-       }
+                                board[7][5][1] = rook;
+                                board[7][7][1] = null;
+                                //move king to row 0, column 6
+                                //move rook to row 0, column 5
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         return castled;
     }
@@ -395,31 +395,112 @@ public class Board {
         return check;
     }
     public boolean checkNextToKing(int x, int y, King king, Player.colors color){
-        boolean canMove = true;
+        boolean canMove = false;
         check(x, y, king, color);
         if (x + 1 < 8 && y + 1 < 8) {
-            if (check(x + 1, y, king, color) && board[x + 1][y][1] != null && king.isValidMove(x,y,x+1,y,color)
-                    || check(x + 1, y + 1, king, color) && board[x + 1][y + 1][1] != null && king.isValidMove(x,y,x+1,y+1,color)
-                    || check(x, y + 1, king, color) && board[x][y + 1][1] != null && king.isValidMove(x,y,x,y+1,color)) {
-                canMove = false;
+            if (!check(x + 1, y, king, color)){
+                if(board[x + 1][y][1] != null){
+                    Figure fig = (Figure)board[x + 1][y][1];
+                    if(fig.getColor() != king.getColor()){
+                        canMove = true;
+                        return canMove;
+                    }
+                } else {
+                    canMove = true;
+                    return canMove;
+                }
+            }
+            if (!check(x + 1, y + 1, king, color)) {
+                if (board[x + 1][y + 1][1] != null) {
+                    Figure fig = (Figure) board[x + 1][y + 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                } else {
+                    canMove = true;
+                    return canMove;
+                }
+            }
+            if (!check(x, y + 1, king, color)) {
+                if (board[x][y + 1][1] != null) {
+                    Figure fig = (Figure) board[x][y + 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                } else {
+                    canMove = true;
+                    return canMove;
+                }
             }
         }
         else if(x-1 >= 0 && y-1 > 0) {
-            if(check(x - 1, y, king, color) && board[x - 1][y][1] != null && king.isValidMove(x,y,x-1,y,color)
-                    || check(x, y - 1, king, color) && board[x][y - 1][1] != null && king.isValidMove(x,y,x,y-1,color)
-                    || check(x - 1, y - 1, king, color) && board[x - 1][y + 1][1] != null && king.isValidMove(x,y,x-1,y-1,color)){
-                canMove = false;
+            if(!check(x - 1, y, king, color)) {
+                if (board[x - 1][y][1] != null) {
+                    Figure fig = (Figure) board[x - 1][y][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                } else {
+                    canMove = true;
+                    return canMove;
+                }
+            }
+            if(check(x, y - 1, king, color)) {
+                if (board[x][y - 1][1] != null) {
+                    Figure fig = (Figure) board[x][y - 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                } else {
+                    canMove = true;
+                    return canMove;
+                }
+            }
+            if(check(x - 1, y - 1, king, color)) {
+                if (board[x - 1][y - 1][1] != null) {
+                    Figure fig = (Figure) board[x - 1][y - 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                } else {
+                    canMove = true;
+                    return canMove;
+                }
             }
         }
         else if(x + 1 < 8 && y + 1 < 8 && x-1 >= 0 && y-1 > 0) {
-            if(check(x + 1, y - 1, king, color) && board[x + 1][y - 1][1] != null && king.isValidMove(x,y,x+1,y-1,color)
-                || check(x - 1, y + 1, king, color) && board[x - 1][y + 1][1] != null && king.isValidMove(x,y,x-1,y+1,color)){
-                canMove = false;
-
+            if(check(x + 1, y - 1, king, color)) {
+                if (board[x + 1][y - 1][1] != null) {
+                    Figure fig = (Figure) board[x + 1][y - 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                } else {
+                    canMove = true;
+                    return canMove;
+                }
+            }
+            if(check(x - 1, y + 1, king, color)) {
+                if (board[x - 1][y + 1][1] != null) {
+                    Figure fig = (Figure) board[x - 1][y + 1][1];
+                    if (fig.getColor() != king.getColor()) {
+                        canMove = true;
+                        return canMove;
+                    }
+                } else {
+                    canMove = true;
+                    return canMove;
+                }
             }
         }
         else
-            canMove = true;
+            canMove = false;
         return canMove;
     }
 
@@ -466,7 +547,6 @@ public class Board {
                                                             System.out.print("You can move another piece to block the check\n");
                                                             checkMate = false;
                                                             return checkMate;
-                                                            }
                                                         }
                                                     }
                                                 }
@@ -479,6 +559,7 @@ public class Board {
                     }
                 }
             }
+        }
 
         if(!canBlock && checkNextToKing(x,y,king,color))
             checkMate = false;
@@ -686,7 +767,7 @@ public class Board {
             validMove = passant((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11), currentPlayer);
         }
         else if((Boolean)moveInput.get(9)){//check and do promotion //this needs color too //change to class
-              validMove = promote((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));
+            validMove = promote((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));
         }
         else if((Boolean) moveInput.get(5)){//case if capture move //this needs color too
             validMove = captureMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11), currentPlayer);
@@ -712,7 +793,7 @@ public class Board {
             lastMove[0] = null;
             lastMove[1] = null;
             lastMove[2] = null;
-       }
+        }
         return validMove;
     }
 
@@ -740,7 +821,7 @@ public class Board {
         }
         if(!(newObject == Knight.class)){//when its not a knight do this
             if(!isPathFree(xCurrent, yCurrent, xNew, yNew)) {// if the path is not free do this
-               checkMove = false;
+                checkMove = false;
             }
         }
         if(isOccupied(xNew, yNew)){
@@ -870,7 +951,7 @@ public class Board {
         }
         if(!(newObject == Knight.class)){//when its not a knight do this
             if(!isPathFree(xCurrent, yCurrent, xNew, yNew)) {// if the path is not free do this
-            moveCheck = false;
+                moveCheck = false;
             }
         }
 
@@ -891,20 +972,20 @@ public class Board {
                     System.out.println("Can't capture this figure with your King without sacrificing him\nPlease try another move");
                 }
             } else {
-                    if (check(kingX, kingY, (King) board[kingX][kingY][1], currentColor)) {
-                        moveCheck = false;
-                        eat = false;
-                        //revert capture
-                        board[xNew][yNew][1] = eaten;
-                        board[xCurrent][yCurrent][1] = fig;
-                        System.out.println("Can't capture this figure without sacrificing your king\nPlease input another move");
-                    }
+                if (check(kingX, kingY, (King) board[kingX][kingY][1], currentColor)) {
+                    moveCheck = false;
+                    eat = false;
+                    //revert capture
+                    board[xNew][yNew][1] = eaten;
+                    board[xCurrent][yCurrent][1] = fig;
+                    System.out.println("Can't capture this figure without sacrificing your king\nPlease input another move");
+                }
 
-                }
-                if (eat) {
-                    currentPlayer.setEatenPieces(eaten);//add to eatenpieces
-                }
             }
+            if (eat) {
+                currentPlayer.setEatenPieces(eaten);//add to eatenpieces
+            }
+        }
         if(moveCheck && newObject == King.class){
             ((King)board[xNew][yNew][1]).kingHasMoved();
         }

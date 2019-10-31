@@ -38,6 +38,7 @@ public class Game {
             this.currentPlayer = playersTurn(currentPlayer);
         }
         if(winner){
+            this.currentPlayer = playersTurn(currentPlayer);
             System.out.printf("\n%s wins!", currentPlayer.getName());
         }
         if(isDraw){
@@ -100,9 +101,9 @@ public class Game {
                 }
             }
             else if (inputLength == 3){  //to move a figure "Be5"
-                                    //castling on king side "o-o"
-                                    //asking for a draw "(=)"
-                                    //en passant
+                //castling on king side "o-o"
+                //asking for a draw "(=)"
+                //en passant
                 if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[1-8]*$")){//normal move figure
                     stringCheck = true;
                 }
@@ -119,9 +120,9 @@ public class Game {
                 }
             }
             else if (inputLength == 4) {     //to kill with a figure if there is only one possibility "Bxd5"
-                                        //kill with a pawn since you always give a line which indicates which pawn to take "exd5".
-                                        //To move a figure if there are 2 possibilities "Bdb8"
-                                        //pawn promotion indicated  "e8=Q"
+                //kill with a pawn since you always give a line which indicates which pawn to take "exd5".
+                //To move a figure if there are 2 possibilities "Bdb8"
+                //pawn promotion indicated  "e8=Q"
                 if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[x]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$")) {//to kill with a figure check()
                     stringCheck = true;
                     capture = true;
@@ -143,8 +144,8 @@ public class Game {
             }
 
             else if (inputLength == 5) { //to kill if 2 figures could kill the same enemy figure "Bdxb8"
-                                    //Castling on Queens' side "o-o-o"
-                                    //to move with a figure, both x and y since they could reach the same place e.g Queen "Qh4e1"
+                //Castling on Queens' side "o-o-o"
+                //to move with a figure, both x and y since they could reach the same place e.g Queen "Qh4e1"
                 if (moveKill[0].matches("^[RBNQK]*$") && moveKill[1].matches("^[a-h]*$") && moveKill[2].matches("^[x]*$") && moveKill[3].matches("^[a-h]*$") && moveKill[4].matches("^[1-8]*$")) {//check for 2 figures input
                     stringCheck = true;
                     capture = true;
@@ -248,7 +249,7 @@ public class Game {
                 if (parsedInput.get(0) != Pawn.class){
                     y = mapping.indexOf(input.charAt(1));
                 }
-                    current = gameBoard.getFigure(mapping.indexOf(input.charAt(0)),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0),(Boolean) checkedInput.get(4));
+                current = gameBoard.getFigure(mapping.indexOf(input.charAt(0)),x, y, currentPlayer.getColor(), (Class)parsedInput.get(0),(Boolean) checkedInput.get(4));
                 if(current.size() == 2){
                     parsedInput.add(1,current.get(0));//[1] = current.get(0);
                     parsedInput.add(2,current.get(1));//[2] = current.get(1);
@@ -258,7 +259,7 @@ public class Game {
                 }
                 parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
                 parsedInput.add(4,mapping.indexOf((input.charAt(1))));
-                }
+            }
             else {
                 parsedInput.add(0, true);
                 parsedInput.add(1,0);//filler
@@ -268,29 +269,29 @@ public class Game {
             }
         }
         else if(length == 4){//"Bdb8"
-             //"e8=Q"
+            //"e8=Q"
             String[] matchCheck = input.split("");
             if(!(matchCheck[0].matches("^[a-h]*$") && matchCheck[1].matches("^[1-8]*$") && matchCheck[2].matches("^[=]*$") && matchCheck[3].matches("^[RBNQ]*$"))){
-            parsedInput.add(0,figureCatalog.get(input.charAt(0)));//
-            Object[][][] checkBoard = gameBoard.getBoard();
-            for (int i = 0; i<=7; i++) {
-                int parsed = mapping.indexOf(input.charAt(1));
-                if (checkBoard[i][parsed][1] != null) {
-                    if (checkBoard[i][parsed][1].getClass() == parsedInput.get(0)) {
-                        parsedInput.add(0,figureCatalog.get(input.charAt(0)));
-                        parsedInput.add(1, i);
-                        parsedInput.add(2, mapping.indexOf(input.charAt(1)));
+                parsedInput.add(0,figureCatalog.get(input.charAt(0)));//
+                Object[][][] checkBoard = gameBoard.getBoard();
+                for (int i = 0; i<=7; i++) {
+                    int parsed = mapping.indexOf(input.charAt(1));
+                    if (checkBoard[i][parsed][1] != null) {
+                        if (checkBoard[i][parsed][1].getClass() == parsedInput.get(0)) {
+                            parsedInput.add(0,figureCatalog.get(input.charAt(0)));
+                            parsedInput.add(1, i);
+                            parsedInput.add(2, mapping.indexOf(input.charAt(1)));
+                        }
                     }
+                }//nur wenn null
+                if (parsedInput.get(1) == null){
+                    parsedInput.add(0, false);
+                    parsedInput.add(1, 0);//fillers
+                    parsedInput.add(2, 0);//fillers
                 }
-            }//nur wenn null
-            if (parsedInput.get(1) == null){
-                parsedInput.add(0, false);
-                parsedInput.add(1, 0);//fillers
-                parsedInput.add(2, 0);//fillers
+                parsedInput.add(3, 8-Character.digit(input.charAt(3),10));//[3] = 8-Character.digit(input.charAt(3),10);
+                parsedInput.add(4,mapping.indexOf(input.charAt(2)));//[4] = mapping.indexOf(input.charAt(2));
             }
-            parsedInput.add(3, 8-Character.digit(input.charAt(3),10));//[3] = 8-Character.digit(input.charAt(3),10);
-            parsedInput.add(4,mapping.indexOf(input.charAt(2)));//[4] = mapping.indexOf(input.charAt(2));
-                 }
             else{parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
                 int x = 8-Character.digit(input.charAt(1),10);
                 int y = mapping.indexOf(input.charAt(0));
@@ -349,8 +350,8 @@ public class Game {
         parsedInput.add(12, this.currentPlayer);
 
         if(current.size() == 0 && !input.equals("(=)")){
-                System.out.println("This move is invalid please retry.\n");
-            }
+            System.out.println("This move is invalid please retry.\n");
+        }
         return parsedInput;
     }
 
@@ -367,15 +368,15 @@ public class Game {
 
             for (int j = 0; j < 8; j++){
                 if(gameBoard[i][j][1] != null){
-                Figure figure = (Figure)gameBoard[i][j][1];
-                char color = figure.getColor().toString().charAt(0);
-                if(figure.getClass() == Knight.class){
-                    type = 'N';
-                }
-                else{
-                    type = figure.getClass().getName().charAt(0);
-                }
-                System.out.format("[%s%s]", color, type);
+                    Figure figure = (Figure)gameBoard[i][j][1];
+                    char color = figure.getColor().toString().charAt(0);
+                    if(figure.getClass() == Knight.class){
+                        type = 'N';
+                    }
+                    else{
+                        type = figure.getClass().getName().charAt(0);
+                    }
+                    System.out.format("[%s%s]", color, type);
                 }
                 else{
                     System.out.print("[  ]");
@@ -388,16 +389,16 @@ public class Game {
         System.out.println();
         System.out.printf("%s's list of eaten pieces: ", white.getName());
         for (Figure fig: white.getEatenPieces() ) {
-         System.out.print("[");
-         System.out.printf("%s", fig.getClass().getSimpleName());
-          System.out.print("]");
+            System.out.print("[");
+            System.out.printf("%s", fig.getClass().getSimpleName());
+            System.out.print("]");
         }
         System.out.println();
         System.out.printf("%s's list of eaten pieces: ", black.getName());
         for (Figure fig: black.getEatenPieces() ) {
             System.out.print("[");
-        System.out.printf("%s", fig.getClass().getSimpleName());
-        System.out.print("]");
+            System.out.printf("%s", fig.getClass().getSimpleName());
+            System.out.print("]");
         }
         System.out.println();
     }
@@ -422,7 +423,7 @@ public class Game {
             System.out.println("Do you accept the draw offer? Y/N");
             response = opponent.nextLine();
             if(response.toLowerCase().equals("n") || response.toLowerCase().equals("y")){
-            stringCheck = true;
+                stringCheck = true;
                 if(response.toLowerCase().matches("^[y]*$")){
                     this.isDraw = true;
                 }
