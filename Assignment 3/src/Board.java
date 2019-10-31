@@ -400,11 +400,14 @@ public class Board {
         if (x + 1 < 8 && y + 1 < 8) {
             if (!check(x + 1, y, king, color)){
                 if(board[x + 1][y][1] != null){
-                    Figure fig = (Figure) board[x + 1][y][1];
+                    Figure fig = (Figure)board[x + 1][y][1];
                     if(fig.getColor() != king.getColor()){
                         canMove = true;
                         return canMove;
                     }
+                } else {
+                    canMove = true;
+                    return canMove;
                 }
             }
             if (!check(x + 1, y + 1, king, color)) {
@@ -414,6 +417,9 @@ public class Board {
                         canMove = true;
                         return canMove;
                     }
+                } else {
+                    canMove = true;
+                    return canMove;
                 }
             }
             if (!check(x, y + 1, king, color)) {
@@ -423,6 +429,9 @@ public class Board {
                         canMove = true;
                         return canMove;
                     }
+                } else {
+                    canMove = true;
+                    return canMove;
                 }
             }
         }
@@ -434,6 +443,9 @@ public class Board {
                         canMove = true;
                         return canMove;
                     }
+                } else {
+                    canMove = true;
+                    return canMove;
                 }
             }
             if(check(x, y - 1, king, color)) {
@@ -443,6 +455,9 @@ public class Board {
                         canMove = true;
                         return canMove;
                     }
+                } else {
+                    canMove = true;
+                    return canMove;
                 }
             }
             if(check(x - 1, y - 1, king, color)) {
@@ -452,6 +467,9 @@ public class Board {
                         canMove = true;
                         return canMove;
                     }
+                } else {
+                    canMove = true;
+                    return canMove;
                 }
             }
         }
@@ -463,6 +481,9 @@ public class Board {
                         canMove = true;
                         return canMove;
                     }
+                } else {
+                    canMove = true;
+                    return canMove;
                 }
             }
             if(check(x - 1, y + 1, king, color)) {
@@ -472,7 +493,9 @@ public class Board {
                         canMove = true;
                         return canMove;
                     }
-
+                } else {
+                    canMove = true;
+                    return canMove;
                 }
             }
         }

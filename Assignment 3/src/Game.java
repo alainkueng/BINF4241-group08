@@ -38,6 +38,7 @@ public class Game {
             this.currentPlayer = playersTurn(currentPlayer);
         }
         if(winner){
+            this.currentPlayer = playersTurn(currentPlayer);
             System.out.printf("\n%s wins!", currentPlayer.getName());
         }
         if(isDraw){
