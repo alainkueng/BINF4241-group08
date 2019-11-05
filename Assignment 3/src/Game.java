@@ -93,7 +93,7 @@ public class Game {
         boolean promotion = false;
         String promotionFig = "";
         while (!stringCheck){
-            System.out.printf("Player %s enter your move: ", currentPlayer);
+            System.out.printf("%s enter your move: ", currentPlayer);
             input = player.nextLine();
             moveKill = input.split("");
             int inputLength = input.length();
@@ -430,7 +430,14 @@ public class Game {
         boolean stringCheck = false; //boolean to check if input is correct
         String response = null;
         while (!stringCheck){
-            System.out.println("\nDo you accept the draw offer? Y/N");
+            String playerName;
+            if(currentPlayer.getColor() == Player.colors.WHITE){
+                playerName = this.black.getName();
+            }
+            else{
+                playerName = this.white.getName();
+            }
+            System.out.format("\n%s, do you accept the draw offer? Y/N\n", playerName);
             response = opponent.nextLine();
             if(response.toLowerCase().equals("n") || response.toLowerCase().equals("y")){
                 stringCheck = true;
