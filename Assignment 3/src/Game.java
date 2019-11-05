@@ -11,12 +11,17 @@ public class Game {
     private Player currentPlayer;
     private boolean winner = false;
     private boolean isDraw = false;
+    private Score score;
+    private Scoreboard scoreboard;
 
     Game(){
         this.gameBoard = new Board();
         this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE); //Create white Player
         this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK); //Create black Player
         this.currentPlayer = this.white; //Add white Player to current list to track whose turn it is
+        this.score = new Score();
+        this.scoreboard = new Scoreboard();
+        score.registerObserver(scoreboard);
         System.out.println("Start state:");
         printBoard(gameBoard.getBoard());
         while(!winner){
@@ -238,7 +243,7 @@ public class Game {
         }
         else if(length == 3){//"Be5", "o-o"
             String[] matchCheck = input.split("");
-            if(!(matchCheck[0].matches("^[o]*$") && matchCheck[1].matches("^[-]*$") && matchCheck[2].matches("^[o]*$")) ){ // if not o-o
+            if(!input.equals("o-o")){ // if not o-o
                 parsedInput.add(0,figureCatalog.get(input.charAt(0)));//[0] = figureCatalog.get(input.charAt(0));
                 int y = -1;
                 if(parsedInput.get(0) == null){
@@ -260,12 +265,12 @@ public class Game {
                 parsedInput.add(3,8-Character.digit(input.charAt(2),10));//[3] = 8-Character.digit(input.charAt(2),10);
                 parsedInput.add(4,mapping.indexOf((input.charAt(1))));
             }
-            else {
-                parsedInput.add(0, true);
-                parsedInput.add(1,0);//filler
-                parsedInput.add(2,0);//filler
-                parsedInput.add(3, 0);//filler
-                parsedInput.add(4, 0);//filler
+            else{
+                parsedInput.add(0, 0);
+//                parsedInput.add(1,0);//filler
+//                parsedInput.add(2,0);//filler
+//                parsedInput.add(3, 0);//filler
+//                parsedInput.add(4, 0);//filler
             }
         }
         else if(length == 4){//"Bdb8"
@@ -330,7 +335,6 @@ public class Game {
             }
             else{
                 parsedInput.add(0, 0);
-
             }
         }
 
@@ -349,7 +353,7 @@ public class Game {
         parsedInput.add(11, currentPlayer.getColor());//[10] = currentPlayer.getColor();
         parsedInput.add(12, this.currentPlayer);
 
-        if(current.size() == 0 && !input.equals("(=)")){
+        if(current.size() == 0 && !input.equals("(=)") && !(boolean)parsedInput.get(6) && !(boolean)parsedInput.get(7)){
             System.out.println("This move is invalid please retry.\n");
         }
         return parsedInput;
@@ -360,7 +364,6 @@ public class Game {
      *                  Prints the chessboard with the current location of every piece
      */
     private void printBoard(Object[][][] gameBoard){
-        char[] chars = {'a','b','c','d','h'};
         int[] numeration = {8,7,6,5,4,3,2,1};
         char type;
         for (int i = 0; i < 8; i++){
@@ -388,6 +391,9 @@ public class Game {
         System.out.print("     a   b   c   d   e   f   g   h\n");
         System.out.println();
         System.out.printf("%s's list of eaten pieces: ", white.getName());
+        if(white.getEatenPieces().size() == 0){
+            System.out.print("Empty");
+        }
         for (Figure fig: white.getEatenPieces() ) {
             System.out.print("[");
             System.out.printf("%s", fig.getClass().getSimpleName());
@@ -395,11 +401,15 @@ public class Game {
         }
         System.out.println();
         System.out.printf("%s's list of eaten pieces: ", black.getName());
+        if(black.getEatenPieces().size() == 0){
+            System.out.print("Empty");
+        }
         for (Figure fig: black.getEatenPieces() ) {
             System.out.print("[");
             System.out.printf("%s", fig.getClass().getSimpleName());
             System.out.print("]");
         }
+        score.notifyObservers(white, black, currentPlayer.getColor());
         System.out.println();
     }
 
@@ -420,7 +430,7 @@ public class Game {
         boolean stringCheck = false; //boolean to check if input is correct
         String response = null;
         while (!stringCheck){
-            System.out.println("Do you accept the draw offer? Y/N");
+            System.out.println("\nDo you accept the draw offer? Y/N");
             response = opponent.nextLine();
             if(response.toLowerCase().equals("n") || response.toLowerCase().equals("y")){
                 stringCheck = true;
@@ -428,15 +438,14 @@ public class Game {
                     this.isDraw = true;
                 }
                 else{
-                    System.out.println("Wow, that's harsh, you just pushed your enemy's confidence - Game on!");
+                    System.out.println("\nWow, that's harsh, you just pushed your enemy's confidence - Game on!\n");
                 }
             }
             else{
-                System.out.println("This is not a proper answer, let's try again");
+                System.out.println("\nThis is not a proper answer, let's try again\n");
             }
         }
     }
-
     public static void main(String[] args) {
         Game game = new Game();
     }
