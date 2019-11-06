@@ -170,6 +170,13 @@ public class Game {
                     capture = true;
                     input = moveKill[0] + moveKill[1] + moveKill[2] + moveKill[4] + moveKill[5];//change input
                 }
+                else if(moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[x]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$") && moveKill[4].equals("=") && moveKill[5].matches("^[RBNQ]*$")){
+                    stringCheck = true;
+                    capture = true;
+                    promotion = true;
+                    promotionFig = moveKill[5];
+                    input = moveKill[0] + moveKill[2] + moveKill[3] + moveKill[4] + moveKill[5];
+                }//check for 2 figures input
             }
             else if (inputLength == 8){ //make a en passant move "exd6e.p."
                 if (moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[x]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$") && moveKill[4].matches("^[e]*$") && moveKill[5].matches("^[.]*$") && moveKill[6].matches("^[p]*$") && moveKill[7].matches("^[.]*$")) {//check for 2 figures input
@@ -305,7 +312,7 @@ public class Game {
                     parsedInput.add(1,current.get(0));
                     parsedInput.add(2,current.get(1));
                 }
-                else {
+                else{
                     parsedInput.add(0, true);
                     parsedInput.add(1,0);//filler
                     parsedInput.add(2,0);//filler
@@ -317,7 +324,8 @@ public class Game {
             }
         }
         else if(length == 5) {
-            if (!input.equals("o-o-o")) {
+            if (!input.equals("o-o-o")){
+                if(!input.contains("=")){
                 int x = 8-Character.digit(input.charAt(4),10);
                 int y = mapping.indexOf(input.charAt(3));
                 int givenColumn = mapping.indexOf(input.charAt(1));
@@ -332,6 +340,27 @@ public class Game {
                 }
                 parsedInput.add(3, 8 - Character.digit(input.charAt(4), 10));//[3] = 8-Character.digit(input.charAt(4),10);
                 parsedInput.add(4, mapping.indexOf(input.charAt(3)));//[4] = mapping.indexOf(input.charAt(3));
+                }
+                else{
+                    parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
+                    int x = 8-Character.digit(input.charAt(2),10);
+                    int y = mapping.indexOf(input.charAt(1));
+                    int givenColumn = mapping.indexOf(input.charAt(0));
+                    current = gameBoard.getFigure(givenColumn, x, y, currentPlayer.getColor(), Pawn.class, (Boolean) checkedInput.get(4));
+                    if(current.size() == 2){
+                        parsedInput.add(1,current.get(0));
+                        parsedInput.add(2,current.get(1));
+                    }
+                    else {
+                        parsedInput.add(0, true);
+                        parsedInput.add(1,0);//filler
+                        parsedInput.add(2,0);//filler
+                        parsedInput.add(3, 0);//filler
+                        parsedInput.add(4, 0);//filler
+                    }
+                    parsedInput.add(3,8-Character.digit(input.charAt(2),10));
+                    parsedInput.add(4,mapping.indexOf(input.charAt(1)));//[4] = mapping.indexOf(input.charAt(0));}
+                }
             }
             else{
                 parsedInput.add(0, 0);
