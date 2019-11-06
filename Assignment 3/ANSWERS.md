@@ -7,6 +7,8 @@ Design Pattern: Singleton
 All figures are created more than once and therefore are not usable for Singleton. Both the Board and the Game class are created in 
 a static initializer and are therefore thread safe. In the public getInstance() you get the one uniqueInstance returned.
 
+2.![Test Image 4](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Class%20Diagram%20Singleton.png)
+
  
 1. Why & How the two chosen patterns (Singleton, Observer, Adapter and Iterator) are implemented in our code
 
