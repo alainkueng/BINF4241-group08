@@ -2,14 +2,14 @@ import java.util.ArrayList;
 
 /** @noinspection ALL*/
 public class Board {
-
     public Object[][][] board;
     private Object[] lastMove = new Object[3];//fig,x,y
     private boolean checkmate;
     private boolean whitecastling;
     private boolean blackcastling;
+    private static Board uniqueInstance = new Board();
 
-    public Board() {
+    private Board() {
         board = new Object[8][8][2];
         checkmate = false;
         whitecastling = false;
@@ -17,6 +17,10 @@ public class Board {
         initBoard();
         initFigure(Figure.Colors.BLACK, 0);
         initFigure(Figure.Colors.WHITE, 7);
+    }
+
+    public static Board getInstance(){
+        return uniqueInstance;
     }
 
     /**

@@ -13,9 +13,10 @@ public class Game {
     private boolean isDraw = false;
     private Score score;
     private Scoreboard scoreboard;
+    private static Game uniqueInstance = new Game();
 
-    Game(){
-        this.gameBoard = new Board();
+    private Game(){
+        this.gameBoard = Board.getInstance();
         this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE); //Create white Player
         this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK); //Create black Player
         this.currentPlayer = this.white; //Add white Player to current list to track whose turn it is
@@ -50,6 +51,9 @@ public class Game {
             System.out.println("\nThis time you won't decide who's the chess master... for now! It's a draw!");
         }
     }
+
+    public static Game getInstance(){
+        return uniqueInstance;}
 
     /**
      * @param color - to ask for player
@@ -483,7 +487,7 @@ public class Game {
         }
     }
     public static void main(String[] args) {
-        Game game = new Game();
+        Game game = Game.getInstance();
     }
 }
 
