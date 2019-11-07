@@ -589,7 +589,7 @@ public class Board {
                                                         //se if a figure of the kings color can walk into path
                                                         canBlock = isPathFreeModified(i, j, r, c, sameColorFig, color);
                                                         if (canBlock) {
-                                                            System.out.print("You can move another piece to block the check\n");
+//                                                            System.out.print("You can move another piece to block the check\n");
                                                             checkMate = false;
                                                             return checkMate;
                                                         }

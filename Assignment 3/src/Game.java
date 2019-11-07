@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -393,6 +394,17 @@ public class Game {
     }
 
     /**
+     *
+     * @param iter takes iterator and prints it
+     */
+    public void printEatenPieces(Iterator iter){
+        while(iter.hasNext()){
+            System.out.print("[");
+            System.out.printf("%s", iter.next().getClass().getSimpleName());
+            System.out.print("]");
+        }
+    }
+    /**
      * @param gameBoard Copy of the actual game board
      *                  Prints the chessboard with the current location of every piece
      */
@@ -424,23 +436,23 @@ public class Game {
         System.out.print("     a   b   c   d   e   f   g   h\n");
         System.out.println();
         System.out.printf("%s's list of eaten pieces: ", white.getName());
-        if(white.getEatenPieces().size() == 0){
+
+        //creating the iterator for each player
+        Iterator whiteIterator = white.createIterator();
+        Iterator blackIterator = black.createIterator();
+
+        if(!whiteIterator.hasNext()){
             System.out.print("Empty");
+        } else {
+           printEatenPieces(whiteIterator);
         }
-        for (Figure fig: white.getEatenPieces() ) {
-            System.out.print("[");
-            System.out.printf("%s", fig.getClass().getSimpleName());
-            System.out.print("]");
-        }
+
         System.out.println();
         System.out.printf("%s's list of eaten pieces: ", black.getName());
-        if(black.getEatenPieces().size() == 0){
+        if(!blackIterator.hasNext()){
             System.out.print("Empty");
-        }
-        for (Figure fig: black.getEatenPieces() ) {
-            System.out.print("[");
-            System.out.printf("%s", fig.getClass().getSimpleName());
-            System.out.print("]");
+        } else {
+            printEatenPieces(blackIterator);
         }
         score.notifyObservers(white, black, currentPlayer.getColor());
         System.out.println();

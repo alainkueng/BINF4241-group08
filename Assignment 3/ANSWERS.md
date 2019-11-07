@@ -11,6 +11,25 @@ a static initializer and are therefore thread safe. In the public getInstance() 
 ![Test Image 4](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Class%20Diagram%20Singleton.png)
 
  
+ 
+ 
+Design Pattern Iterator
+1. We decided to implement the Iterator design pattern to update the list of eaten pieces of both players. This way it
+doesnt matter if we store the eaten pieces in an array/arraylist/list/etc it will always work. This improves the 
+extensibility of the code. We implemented the iterator in our printBoard method in the Game class.
+
+
+![Test Image 5](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20sequence)
+
+
+
+
+
+
+
+
+
+
 1. Why & How the two chosen patterns (Singleton, Observer, Adapter and Iterator) are implemented in our code
 
 2. Class diagram of how the pattern is structured statically in our code
