@@ -43,6 +43,12 @@ Consider the Board class implemented in your chess game. Draw its sequence diagr
 Write a description of the sequence diagram (if needed) to further describe some of your choices. 
 
 ## Part 3
-Implement a Scoreboard using the Observer pattern. The Scoreboard class must keep track of the score of each player. Each player scores a point when he/she eats an opponent piece and the Scoreboard must be updated accordingly.  
-Note: each piece is worth 1 point, excluding the queen who's worth 5 points. Furthermore, the output of the game must be modified to show the players' score after each turn. For example, you should output a String similar to this: "Player 1, score: x - Player 2, score: y", 
-where x and y are the scores of the players. Every time a piece is eaten the Board (or an equivalent class in your implementation) must notify the                  Scoreboard that something has changed. The Scoreboard must update itself accordingly. 
+We implemented the Scoreboard using the _Observer_ pattern. We therefore created a Subject and Observer Interface
+which are used by the Score Class (implements Subject) and Scoreboard Class (implements Observer). Score is keeping
+track of all Observers through storing a list with all the registered Observers. In this case the only Observer is 
+the Scoreboard. It gets notified after every turn through the Subject Score and checks in the update method if there
+has been a change in the eatenPieces-list. If so, it updates the Scoreboard accordingly. However, in every case it
+is responsible for printing the current score, even if it remains unchanged. We chose this design in order to
+leave the "source code" mainly unchanged. The only change we made, was to create a Score and Scoreboard in our Game
+Class as this class is the interface for the user interacting with the Application, and to notify the Observers
+after each printout of the board. 
