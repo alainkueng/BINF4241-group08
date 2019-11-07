@@ -8,7 +8,7 @@ All figures are created more than once and therefore are not usable for Singleto
 a static initializer and are therefore thread safe. In the public getInstance() you get the one uniqueInstance returned.
 
 #####2.
-![Singleton pattern](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Class%20Diagram%20Singleton.png)
+[Singleton pattern](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Class%20Diagram%20Singleton.png)
 
 #####3.
  
@@ -20,27 +20,15 @@ doesnt matter if we store the eaten pieces in an array/arraylist/list/etc it wil
 extensibility of the code. We implemented the iterator in our printBoard method in the Game class.
 
 #####2.
-![Iterator pattern](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20diagram.png)
+[Iterator pattern](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20diagram.png)
 
 #####3.
-![Iterator Sequence Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20Sequence%20Diagram.png)
-
-
-
-
-
-
-
-
-1. Why & How the two chosen patterns (Singleton, Observer, Adapter and Iterator) are implemented in our code
-
-2. Class diagram of how the pattern is structured statically in our code
-
-3. Sequence diagram of how the pattern works dynamically in our code
+[Iterator Sequence Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20Sequence%20Diagram.png)
 
 ## Part 2
-Consider the Board class implemented in your chess game. Draw its sequence diagram, considering all the method calls that can make it transition to a different state.  
-Write a description of the sequence diagram (if needed) to further describe some of your choices. 
+For encapsulation reasons we decided that only the Board class can change its state itself. It gathers information from other classes and decides what action to take.
+
+[Sequence Diagram for Board Class](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Board%20Sequence%20Diagram.png)
 
 ## Part 3
 We implemented the Scoreboard using the _Observer_ pattern. We therefore created a Subject and Observer Interface
