@@ -1,27 +1,29 @@
 # Assignment 3 ANSWERS
 ## Part 1
 
-Design Pattern: Singleton
+####Singleton Design Pattern 
 
-1. We chose to use the Singleton design pattern for our Board and Game initialization, since those should only be generated once. 
+#####1. We chose to use the Singleton design pattern for our Board and Game initialization, since those should only be generated once. 
 All figures are created more than once and therefore are not usable for Singleton. Both the Board and the Game class are created in 
 a static initializer and are therefore thread safe. In the public getInstance() you get the one uniqueInstance returned.
 
-2.
-![Test Image 4](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Class%20Diagram%20Singleton.png)
+#####2.
+![Singleton pattern](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Class%20Diagram%20Singleton.png)
 
+#####3.
  
  
  
-Design Pattern Iterator
-1. We decided to implement the Iterator design pattern to update the list of eaten pieces of both players. This way it
+####Iterator Design Pattern 
+#####1. We decided to implement the Iterator design pattern to update the list of eaten pieces of both players. This way it
 doesnt matter if we store the eaten pieces in an array/arraylist/list/etc it will always work. This improves the 
 extensibility of the code. We implemented the iterator in our printBoard method in the Game class.
 
+#####2.
+![Iterator pattern](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20diagram.png)
 
-![Test Image 5](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20sequence)
-
-
+#####3.
+![Iterator Sequence Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20Sequence%20Diagram.png)
 
 
 
