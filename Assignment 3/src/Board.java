@@ -2,14 +2,14 @@ import java.util.ArrayList;
 
 /** @noinspection ALL*/
 public class Board {
-
     public Object[][][] board;
     private Object[] lastMove = new Object[3];//fig,x,y
     private boolean checkmate;
     private boolean whitecastling;
     private boolean blackcastling;
+    private static Board uniqueInstance = new Board();
 
-    public Board() {
+    private Board() {
         board = new Object[8][8][2];
         checkmate = false;
         whitecastling = false;
@@ -17,6 +17,10 @@ public class Board {
         initBoard();
         initFigure(Figure.Colors.BLACK, 0);
         initFigure(Figure.Colors.WHITE, 7);
+    }
+
+    public static Board getInstance(){
+        return uniqueInstance;
     }
 
     /**
@@ -99,59 +103,100 @@ public class Board {
      *                      If the pawn has to be promoted the method also does this automatically.
      */
 
-    public boolean promote(Class pawn, int xCurrent, int yCurrent, int xMove, int yMove, Class promoteInfo, Player.colors color) {
+    public boolean promote(Class pawn, int xCurrent, int yCurrent, int xMove, int yMove, Class promoteInfo, Player.colors color, boolean capture, Player currentPlayer){
         boolean promoteSuccess = false;
-        Pawn pawnToPromote = (Pawn) board[xCurrent][yCurrent][1];
-        Figure fig = null;
-        if(promoteInfo == Rook.class){
-            if(color.name() == Figure.Colors.WHITE.name()){
-                Rook rookW = new Rook(Figure.Colors.WHITE);
-                fig = rookW;
-            } else {
-                Rook rookB = new Rook(Figure.Colors.BLACK);
-                fig = rookB;
-            }
-        }
-        else if(promoteInfo == Bishop.class){
-            if(color.name() == Figure.Colors.WHITE.name()){
-                Bishop bishopW = new Bishop(Figure.Colors.WHITE);
-                fig = bishopW;
-            } else {
-                Bishop bishopB = new Bishop(Figure.Colors.BLACK);
-                fig = bishopB;
-            }
+        if(!capture) {
+            Pawn pawnToPromote = (Pawn) board[xCurrent][yCurrent][1];
+            Figure fig = null;
+            if (promoteInfo == Rook.class) {
+                if (color.name() == Figure.Colors.WHITE.name()) {
+                    Rook rookW = new Rook(Figure.Colors.WHITE);
+                    fig = rookW;
+                } else {
+                    Rook rookB = new Rook(Figure.Colors.BLACK);
+                    fig = rookB;
+                }
+            } else if (promoteInfo == Bishop.class) {
+                if (color.name() == Figure.Colors.WHITE.name()) {
+                    Bishop bishopW = new Bishop(Figure.Colors.WHITE);
+                    fig = bishopW;
+                } else {
+                    Bishop bishopB = new Bishop(Figure.Colors.BLACK);
+                    fig = bishopB;
+                }
 
-        }
-        else if(promoteInfo == Knight.class){
-            if(color.name() == Figure.Colors.WHITE.name()){
-                Knight knightW = new Knight(Figure.Colors.WHITE);
-                fig = knightW;
-            } else {
-                Knight knightB = new Knight(Figure.Colors.BLACK);
-                fig = knightB;
+            } else if (promoteInfo == Knight.class) {
+                if (color.name() == Figure.Colors.WHITE.name()) {
+                    Knight knightW = new Knight(Figure.Colors.WHITE);
+                    fig = knightW;
+                } else {
+                    Knight knightB = new Knight(Figure.Colors.BLACK);
+                    fig = knightB;
+                }
+            } else if (promoteInfo == Queen.class) {
+                if (color.name() == Figure.Colors.WHITE.name()) {
+                    Queen queenW = new Queen(Figure.Colors.WHITE);
+                    fig = queenW;
+                } else {
+                    Queen queenB = new Queen(Figure.Colors.BLACK);
+                    fig = queenB;
+                }
+            }
+            if (pawnToPromote.getColor() == Figure.Colors.BLACK && pawnToPromote.isValidMove(xCurrent, yCurrent, xMove, yMove, color) && !isOccupied(xMove, yMove) && fig != null) {
+                board[xMove][yMove][1] = fig;
+                board[xCurrent][yCurrent][1] = null;
+                promoteSuccess = true;
+            } else if (pawnToPromote.getColor() == Figure.Colors.WHITE && pawnToPromote.isValidMove(xCurrent, yCurrent, xMove, yMove, color) && !isOccupied(xMove, yMove) && fig != null) {
+                board[xMove][yMove][1] = fig;
+                board[xCurrent][yCurrent][1] = null;
+                promoteSuccess = true;
             }
         }
-        else if(promoteInfo == Queen.class){
-            if(color.name() == Figure.Colors.WHITE.name()){
-                Queen queenW = new Queen(Figure.Colors.WHITE);
-                fig = queenW;
-            } else {
-                Queen queenB = new Queen(Figure.Colors.BLACK);
-                fig = queenB;
+        else{
+            if(captureMove(pawn, xCurrent, yCurrent, xMove, yMove,color, currentPlayer)){
+                Pawn pawnToPromote = (Pawn) board[xMove][yMove][1];
+                Figure fig = null;
+                if (promoteInfo == Rook.class) {
+                    if (color.name() == Figure.Colors.WHITE.name()) {
+                        Rook rookW = new Rook(Figure.Colors.WHITE);
+                        fig = rookW;
+                    } else {
+                        Rook rookB = new Rook(Figure.Colors.BLACK);
+                        fig = rookB;
+                    }
+                } else if (promoteInfo == Bishop.class) {
+                    if (color.name() == Figure.Colors.WHITE.name()) {
+                        Bishop bishopW = new Bishop(Figure.Colors.WHITE);
+                        fig = bishopW;
+                    } else {
+                        Bishop bishopB = new Bishop(Figure.Colors.BLACK);
+                        fig = bishopB;
+                    }
+
+                } else if (promoteInfo == Knight.class) {
+                    if (color.name() == Figure.Colors.WHITE.name()) {
+                        Knight knightW = new Knight(Figure.Colors.WHITE);
+                        fig = knightW;
+                    } else {
+                        Knight knightB = new Knight(Figure.Colors.BLACK);
+                        fig = knightB;
+                    }
+                } else if (promoteInfo == Queen.class) {
+                    if (color.name() == Figure.Colors.WHITE.name()) {
+                        Queen queenW = new Queen(Figure.Colors.WHITE);
+                        fig = queenW;
+                    } else {
+                        Queen queenB = new Queen(Figure.Colors.BLACK);
+                        fig = queenB;
+                    }
+                }
+                board[xMove][yMove][1] = fig;
+                promoteSuccess = true;
             }
-        }
-        if (pawnToPromote.getColor() == Figure.Colors.BLACK && pawnToPromote.isValidMove(xCurrent,yCurrent,xMove,yMove, color) && !isOccupied(xMove,yMove) && fig != null) {
-            board[xMove][yMove][1] = fig;
-            board[xCurrent][yCurrent][1] = null;
-            promoteSuccess = true;
-        }
-        else if (pawnToPromote.getColor() == Figure.Colors.WHITE && pawnToPromote.isValidMove(xCurrent,yCurrent,xMove,yMove, color) && !isOccupied(xMove,yMove) && fig != null) {
-            board[xMove][yMove][1] = fig;
-            board[xCurrent][yCurrent][1] = null;
-            promoteSuccess = true;
         }
         return promoteSuccess;
     }
+
 
 
     /**
@@ -544,7 +589,7 @@ public class Board {
                                                         //se if a figure of the kings color can walk into path
                                                         canBlock = isPathFreeModified(i, j, r, c, sameColorFig, color);
                                                         if (canBlock) {
-                                                            System.out.print("You can move another piece to block the check\n");
+//                                                            System.out.print("You can move another piece to block the check\n");
                                                             checkMate = false;
                                                             return checkMate;
                                                         }
@@ -767,9 +812,9 @@ public class Board {
             validMove = passant((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Integer) lastMove[1],(Integer) lastMove[2], (Player.colors)moveInput.get(11), currentPlayer);
         }
         else if((Boolean)moveInput.get(9)){//check and do promotion //this needs color too //change to class
-            validMove = promote((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11));
+            validMove = promote((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Class) moveInput.get(10), (Player.colors)moveInput.get(11), (Boolean) moveInput.get(5), (Player)moveInput.get(12));
         }
-        else if((Boolean) moveInput.get(5)){//case if capture move //this needs color too
+        else if((Boolean) moveInput.get(5) && !(Boolean) moveInput.get(9)){//case if capture move //this needs color too
             validMove = captureMove((Class)moveInput.get(0), (Integer)moveInput.get(1), (Integer)moveInput.get(2), (Integer)moveInput.get(3), (Integer)moveInput.get(4), (Player.colors)moveInput.get(11), currentPlayer);
         }
         else if ((!(Boolean)(moveInput.get(6)) && !(Boolean)moveInput.get(7) && !(Boolean)moveInput.get(8) && !(Boolean)moveInput.get(9) && !(Boolean)moveInput.get(5))) {//case if normal move //this needs color too

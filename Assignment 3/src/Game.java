@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -13,9 +14,10 @@ public class Game {
     private boolean isDraw = false;
     private Score score;
     private Scoreboard scoreboard;
+    private static Game uniqueInstance = new Game();
 
-    Game(){
-        this.gameBoard = new Board();
+    private Game(){
+        this.gameBoard = Board.getInstance();
         this.white = new Player(initPlayer(Player.colors.WHITE), Player.colors.WHITE); //Create white Player
         this.black = new Player(initPlayer(Player.colors.BLACK), Player.colors.BLACK); //Create black Player
         this.currentPlayer = this.white; //Add white Player to current list to track whose turn it is
@@ -50,6 +52,9 @@ public class Game {
             System.out.println("\nThis time you won't decide who's the chess master... for now! It's a draw!");
         }
     }
+
+    public static Game getInstance(){
+        return uniqueInstance;}
 
     /**
      * @param color - to ask for player
@@ -93,7 +98,7 @@ public class Game {
         boolean promotion = false;
         String promotionFig = "";
         while (!stringCheck){
-            System.out.printf("Player %s enter your move: ", currentPlayer);
+            System.out.printf("%s enter your move: ", currentPlayer);
             input = player.nextLine();
             moveKill = input.split("");
             int inputLength = input.length();
@@ -170,6 +175,13 @@ public class Game {
                     capture = true;
                     input = moveKill[0] + moveKill[1] + moveKill[2] + moveKill[4] + moveKill[5];//change input
                 }
+                else if(moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[x]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$") && moveKill[4].equals("=") && moveKill[5].matches("^[RBNQ]*$")){
+                    stringCheck = true;
+                    capture = true;
+                    promotion = true;
+                    promotionFig = moveKill[5];
+                    input = moveKill[0] + moveKill[2] + moveKill[3] + moveKill[4] + moveKill[5];
+                }//check for 2 figures input
             }
             else if (inputLength == 8){ //make a en passant move "exd6e.p."
                 if (moveKill[0].matches("^[a-h]*$") && moveKill[1].matches("^[x]*$") && moveKill[2].matches("^[a-h]*$") && moveKill[3].matches("^[1-8]*$") && moveKill[4].matches("^[e]*$") && moveKill[5].matches("^[.]*$") && moveKill[6].matches("^[p]*$") && moveKill[7].matches("^[.]*$")) {//check for 2 figures input
@@ -305,7 +317,7 @@ public class Game {
                     parsedInput.add(1,current.get(0));
                     parsedInput.add(2,current.get(1));
                 }
-                else {
+                else{
                     parsedInput.add(0, true);
                     parsedInput.add(1,0);//filler
                     parsedInput.add(2,0);//filler
@@ -317,7 +329,8 @@ public class Game {
             }
         }
         else if(length == 5) {
-            if (!input.equals("o-o-o")) {
+            if (!input.equals("o-o-o")){
+                if(!input.contains("=")){
                 int x = 8-Character.digit(input.charAt(4),10);
                 int y = mapping.indexOf(input.charAt(3));
                 int givenColumn = mapping.indexOf(input.charAt(1));
@@ -332,6 +345,27 @@ public class Game {
                 }
                 parsedInput.add(3, 8 - Character.digit(input.charAt(4), 10));//[3] = 8-Character.digit(input.charAt(4),10);
                 parsedInput.add(4, mapping.indexOf(input.charAt(3)));//[4] = mapping.indexOf(input.charAt(3));
+                }
+                else{
+                    parsedInput.add(0,Pawn.class);//[0] = Pawn.class;
+                    int x = 8-Character.digit(input.charAt(2),10);
+                    int y = mapping.indexOf(input.charAt(1));
+                    int givenColumn = mapping.indexOf(input.charAt(0));
+                    current = gameBoard.getFigure(givenColumn, x, y, currentPlayer.getColor(), Pawn.class, (Boolean) checkedInput.get(4));
+                    if(current.size() == 2){
+                        parsedInput.add(1,current.get(0));
+                        parsedInput.add(2,current.get(1));
+                    }
+                    else {
+                        parsedInput.add(0, true);
+                        parsedInput.add(1,0);//filler
+                        parsedInput.add(2,0);//filler
+                        parsedInput.add(3, 0);//filler
+                        parsedInput.add(4, 0);//filler
+                    }
+                    parsedInput.add(3,8-Character.digit(input.charAt(2),10));
+                    parsedInput.add(4,mapping.indexOf(input.charAt(1)));//[4] = mapping.indexOf(input.charAt(0));}
+                }
             }
             else{
                 parsedInput.add(0, 0);
@@ -359,6 +393,17 @@ public class Game {
         return parsedInput;
     }
 
+    /**
+     *
+     * @param iter takes iterator and prints it
+     */
+    public void printEatenPieces(Iterator iter){
+        while(iter.hasNext()){
+            System.out.print("[");
+            System.out.printf("%s", iter.next().getClass().getSimpleName());
+            System.out.print("]");
+        }
+    }
     /**
      * @param gameBoard Copy of the actual game board
      *                  Prints the chessboard with the current location of every piece
@@ -391,23 +436,23 @@ public class Game {
         System.out.print("     a   b   c   d   e   f   g   h\n");
         System.out.println();
         System.out.printf("%s's list of eaten pieces: ", white.getName());
-        if(white.getEatenPieces().size() == 0){
+
+        //creating the iterator for each player
+        Iterator whiteIterator = white.createIterator();
+        Iterator blackIterator = black.createIterator();
+
+        if(!whiteIterator.hasNext()){
             System.out.print("Empty");
+        } else {
+           printEatenPieces(whiteIterator);
         }
-        for (Figure fig: white.getEatenPieces() ) {
-            System.out.print("[");
-            System.out.printf("%s", fig.getClass().getSimpleName());
-            System.out.print("]");
-        }
+
         System.out.println();
         System.out.printf("%s's list of eaten pieces: ", black.getName());
-        if(black.getEatenPieces().size() == 0){
+        if(!blackIterator.hasNext()){
             System.out.print("Empty");
-        }
-        for (Figure fig: black.getEatenPieces() ) {
-            System.out.print("[");
-            System.out.printf("%s", fig.getClass().getSimpleName());
-            System.out.print("]");
+        } else {
+            printEatenPieces(blackIterator);
         }
         score.notifyObservers(white, black, currentPlayer.getColor());
         System.out.println();
@@ -430,7 +475,14 @@ public class Game {
         boolean stringCheck = false; //boolean to check if input is correct
         String response = null;
         while (!stringCheck){
-            System.out.println("\nDo you accept the draw offer? Y/N");
+            String playerName;
+            if(currentPlayer.getColor() == Player.colors.WHITE){
+                playerName = this.black.getName();
+            }
+            else{
+                playerName = this.white.getName();
+            }
+            System.out.format("\n%s, do you accept the draw offer? Y/N\n", playerName);
             response = opponent.nextLine();
             if(response.toLowerCase().equals("n") || response.toLowerCase().equals("y")){
                 stringCheck = true;
@@ -447,7 +499,7 @@ public class Game {
         }
     }
     public static void main(String[] args) {
-        Game game = new Game();
+        Game game = Game.getInstance();
     }
 }
 

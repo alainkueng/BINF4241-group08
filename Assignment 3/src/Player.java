@@ -1,5 +1,7 @@
 import java.util.ArrayList;
- public class Player {
+import java.util.Iterator;
+
+public class Player {
     enum colors {BLACK, WHITE}
     private colors color;
     private String name;
@@ -28,6 +30,9 @@ import java.util.ArrayList;
     }
     public ArrayList<Figure> getEatenPieces(){
         return eatenPieces;
+    }
+    public Iterator createIterator(){
+        return new EatenPiecesIterator(eatenPieces);
     }
 
      /**
