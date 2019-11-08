@@ -13,7 +13,7 @@ a static initializer and are therefore thread safe. In the public getInstance() 
 ##### 2.
 ![Singleton Class Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Class%20Diagram%20Singleton.png)
 
-#####3.
+##### 3.
 ![Singleton Sequence Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Sequence%20Diagram%20Singleton.png)
  
  
