@@ -1,34 +1,39 @@
 # Assignment 3 ANSWERS
+
+Please view this md-file on the Github website since it's not properly shown in IntelliJ
 ## Part 1
 
 #### Singleton Design Pattern 
 
-##### 1. We chose to use the Singleton design pattern for our Board and Game initialization, since those should only be generated once. 
+##### 1. 
+We chose to use the Singleton design pattern for our Board and Game initialization, since those should only be generated once. 
 All figures are created more than once and therefore are not usable for Singleton. Both the Board and the Game class are created in 
 a static initializer and are therefore thread safe. In the public getInstance() you get the one uniqueInstance returned.
 
 ##### 2.
-[Singleton pattern](https://github.com/alainkueng/BINF4241-group08/blob/Test/Assignment%203/Class%20Diagram%20Singleton.png)
+![Singleton Class Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Class%20Diagram%20Singleton.png)
 
 ##### 3.
+![Singleton Sequence Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Sequence%20Diagram%20Singleton.png)
  
  
  
 #### Iterator Design Pattern 
-##### 1. We decided to implement the Iterator design pattern to update the list of eaten pieces of both players. This way it
+##### 1. 
+We decided to implement the Iterator design pattern to update the list of eaten pieces of both players. This way it
 doesnt matter if we store the eaten pieces in an array/arraylist/list/etc it will always work. This improves the 
 extensibility of the code. We implemented the iterator in our printBoard method in the Game class.
 
 ##### 2.
-[Iterator pattern](https://github.com/alainkueng/BINF4241-group08/blob/Test/Assignment%203/Iterator%20diagram.png)
+![Iterator pattern](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20diagram.png)
 
 ##### 3.
-[Iterator Sequence Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Test/Assignment%203/Iterator%20Sequence%20Diagram.png)
+![Iterator Sequence Diagram](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Iterator%20Sequence%20Diagram.png)
 
 ## Part 2
 For encapsulation reasons we decided that only the Board class can change its state itself. It gathers information from other classes and decides what action to take.
 
-[Sequence Diagram for Board Class](https://github.com/alainkueng/BINF4241-group08/blob/Test/Assignment%203/Board%20Sequence%20Diagram.png)
+![Sequence Diagram for Board Class](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/Board%20Sequence%20Diagram.png)
 
 ## Part 3
 We implemented the Scoreboard using the _Observer_ pattern. We therefore created a Subject and Observer Interface

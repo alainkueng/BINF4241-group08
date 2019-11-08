@@ -584,14 +584,44 @@ public class Board {
                                             Figure sameColorFig = (Figure) board[i][j][1];
                                             if (king.getColor() == sameColorFig.getColor() && king.getClass() != sameColorFig.getClass()) {
                                                 //path from attacking fig to king in check
-                                                for (int r = row; r <= x; r++) {
-                                                    for (int c = col; c <= y; c++) {
-                                                        //se if a figure of the kings color can walk into path
-                                                        canBlock = isPathFreeModified(i, j, r, c, sameColorFig, color);
-                                                        if (canBlock) {
-//                                                            System.out.print("You can move another piece to block the check\n");
-                                                            checkMate = false;
-                                                            return checkMate;
+                                                if(row <= x && col <= y) {
+                                                    for (int r = row; r <= x; r++) {
+                                                        for (int c = col; c <= y; c++) {
+                                                            canBlock = isPathFreeModified(i, j, r, c, sameColorFig, color);
+                                                            if (canBlock) {
+                                                                checkMate = false;
+                                                                return checkMate;
+                                                            }
+                                                        }
+                                                    }
+                                                } else if(row <= x && col >= y){
+                                                    for (int r = row; r <= x; r++) {
+                                                        for (int c = col; c >= y; c--) {
+                                                            canBlock = isPathFreeModified(i, j, r, c, sameColorFig, color);
+                                                            if (canBlock) {
+                                                                checkMate = false;
+                                                                return checkMate;
+                                                            }
+                                                        }
+                                                    }
+                                                } else if(row >= x && col <= y){
+                                                    for (int r = row; r >= x; r--) {
+                                                        for (int c = col; c <= y; c++) {
+                                                            canBlock = isPathFreeModified(i, j, r, c, sameColorFig, color);
+                                                            if (canBlock) {
+                                                                checkMate = false;
+                                                                return checkMate;
+                                                            }
+                                                        }
+                                                    }
+                                                }else if(row >= x && col >= y){
+                                                    for (int r = row; r >= x; r--) {
+                                                        for (int c = col; c >= y; c--) {
+                                                            canBlock = isPathFreeModified(i, j, r, c, sameColorFig, color);
+                                                            if (canBlock) {
+                                                                checkMate = false;
+                                                                return checkMate;
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -1056,42 +1086,56 @@ public class Board {
     @SuppressWarnings("Duplicates")
     public boolean isPathFreeModified(int xCurrent, int yCurrent, int xMove, int yMove, Figure figureToBlock, Player.colors color) {
         boolean canBlock = false;
+
+
         //straight down
         if (yCurrent == yMove && xCurrent < xMove) {
             xCurrent++;
             for (int i = xCurrent; i < xMove; i++) {
-                if (board[i][yCurrent][1] == null && figureToBlock.isValidMove(yCurrent,i,yMove,xMove,color)) {
+                if (board[i][yCurrent][1] == null && figureToBlock.isValidMove(xCurrent,yCurrent,i,yMove,color) & !(xCurrent == i & yMove == yCurrent)) {
                     canBlock = true;
+                    break;
+                } else {
+                    canBlock = false;
                     break;
                 }
             }
         }
         //straight up
         else if (yCurrent == yMove && xCurrent > xMove) {
-            xCurrent--;
-            for (int i = xCurrent; i > xMove; i--) {
-                if (board[i][yCurrent][1] == null && figureToBlock.isValidMove(yCurrent,i,yMove,xMove,color)) {
+
+            for (int i=xCurrent;i > xMove; --i) {
+                if (board[i][yCurrent][1] == null && figureToBlock.isValidMove(xCurrent,yCurrent,i,yMove,color) & !(xCurrent == i & yMove == yCurrent)) {
                     canBlock = true;
+                    break;
+                } else {
+                    canBlock = false;
                     break;
                 }
             }
         }
         //left
         else if (yCurrent > yMove && xCurrent == xMove) {
-            yCurrent--;
+//            yCurrent--;
             for (int i = yCurrent; i > yMove; i--) {
-                if (board[xCurrent][i][1] == null && figureToBlock.isValidMove(i,xCurrent,yMove,xMove,color)) {
+                if (board[xCurrent][i][1] == null && figureToBlock.isValidMove(xCurrent,yCurrent,xMove,i,color) & !(xCurrent == xMove & i == yCurrent)) {
                     canBlock = true;
+                    break;
+                } else {
+                    canBlock = false;
                     break;
                 }
             }
         }
         //right
         else if (yCurrent < yMove && xCurrent == xMove) {
-            yCurrent++;
+//            yCurrent++;
             for (int i = yCurrent; i < yMove; i++) {
-                if (board[xCurrent][i][1] == null && figureToBlock.isValidMove(i,xCurrent,yMove,xMove,color)) {
+                if (board[xCurrent][i][1] == null && figureToBlock.isValidMove(xCurrent,yCurrent,xMove,i,color) & !(xCurrent == xMove & i == yCurrent)) {
                     canBlock = true;
+                    break;
+                } else {
+                    canBlock = false;
                     break;
                 }
             }
@@ -1100,14 +1144,14 @@ public class Board {
         else if (yMove < yCurrent && xMove > xCurrent) {
             int j = yCurrent;
             j--;
-            xCurrent++;
+//            xCurrent++;
             for (int i = xCurrent; i < xMove; i++) {
-                if (board[i][j][1] == null && figureToBlock.isValidMove(j,i,yMove,xMove,color)) {
+                if (board[i][j][1] == null && figureToBlock.isValidMove(xCurrent,yCurrent,i,j,color) & !(xCurrent == i & j == yCurrent)) {
                     canBlock = true;
                     break;
                 }
-                j++;
-                if(j == yMove){
+                j--;
+                if(j == yMove || j < 0){
                     break;
                 }
             }
@@ -1116,14 +1160,14 @@ public class Board {
         else if (yMove < yCurrent && xMove < xCurrent) {
             int j = yCurrent;
             j--;
-            xCurrent--;
+//            xCurrent--;
             for (int i = xCurrent; i > xMove; i--) {
-                if (board[i][j][1] == null && figureToBlock.isValidMove(j,i,yMove,xMove,color)) {
+                if (board[i][j][1] == null && figureToBlock.isValidMove(xCurrent,yCurrent,i,j,color) & !(xCurrent == i & j == yCurrent)) {
                     canBlock = true;
                     break;
                 }
                 j--;
-                if(j == yMove){
+                if(j == yMove || j < 0){
                     break;
                 }
             }
@@ -1132,14 +1176,14 @@ public class Board {
         else if (yMove > yCurrent && xMove > xCurrent) {
             int j = yCurrent;
             j++;
-            xCurrent++;
+//            xCurrent++;
             for (int i = xCurrent; i < xMove; i++) {
-                if (board[i][j][1] == null && figureToBlock.isValidMove(j,i,yMove,xMove,color)) {
+                if (board[i][j][1] == null && figureToBlock.isValidMove(xCurrent,yCurrent,i,j,color) & !(xCurrent == i & j == yCurrent)) {
                     canBlock = true;
                     break;
                 }
                 j++;
-                if(j == yMove){
+                if(j == yMove || j > 7){
                     break;
                 }
             }
@@ -1148,14 +1192,14 @@ public class Board {
         else if (yMove > yCurrent && xMove < xCurrent) {
             int j = yCurrent;
             j++;
-            xCurrent--;
+//            xCurrent--;
             for (int i = xCurrent; i > xMove; i--) {
-                if (board[i][j][1] == null && figureToBlock.isValidMove(j,i,yMove,xMove,color)) {
+                if (board[i][j][1] == null && figureToBlock.isValidMove(xCurrent,yCurrent,i,j,color) & !(xCurrent == i & j == yCurrent)) {
                     canBlock = true;
                     break;
                 }
                 j++;
-                if(j == yMove){
+                if(j == yMove || j > 7){
                     break;
                 }
             }
