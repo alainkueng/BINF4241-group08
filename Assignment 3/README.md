@@ -24,4 +24,4 @@ The notation in such a case is as follows: "**gxh8=Q**" (*Pawn in column g makes
 
 For ANSWERS.md file please refer to:
 
-[ANSWERS.md](https://github.com/alainkueng/BINF4241-group08/edit/Dev/Assignment%203/ANSWERS.md)
+[ANSWERS.md](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%203/ANSWERS.md)
