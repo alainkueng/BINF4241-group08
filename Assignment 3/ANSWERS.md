@@ -25,7 +25,7 @@ doesnt matter if we store the eaten pieces in an array/arraylist/list/etc it wil
 extensibility of the code. We implemented the iterator in our printBoard method in the Game class.
 
 ##### 2.
-![Iterator pattern](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%203/Iterator%20diagram.png)
+![Iterator pattern](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%203/Iterator%20class%20diagram.png)
 
 ##### 3.
 ![Iterator Sequence Diagram](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%203/Iterator%20Sequence%20Diagram.png)
