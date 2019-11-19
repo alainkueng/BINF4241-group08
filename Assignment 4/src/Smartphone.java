@@ -1,3 +1,6 @@
+import commands.Command;
+import devices.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

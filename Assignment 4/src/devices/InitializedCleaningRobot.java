@@ -1,6 +1,8 @@
+package devices;
+
 import java.util.ArrayList;
 
-public class InitializedDishwasher implements Dishwasher{
+public class InitializedCleaningRobot implements CleaningRobot {
     public void switchOn(){}
     public void setTimer(Integer time){}
     public Integer checkTimer(){return 1;}

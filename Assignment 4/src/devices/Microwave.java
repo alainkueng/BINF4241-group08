@@ -1,6 +1,8 @@
+package devices;
+
 import java.util.ArrayList;
 
-public interface CleaningRobot {
+public interface Microwave {
     public void switchOn();
     public void setTimer(Integer time);
     public Integer checkTimer();

@@ -1,3 +1,5 @@
+package devices;
+
 import java.util.ArrayList;
 
 public class InitializedMicrowave implements Microwave {
