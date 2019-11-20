@@ -14,26 +14,14 @@ public class Smartphone{
     //  for device : devices
     //      if device.getClass().getInterfaces()[0] == returnValue.getClass().getInterfaces()[0] then
     //          device = returnValue, not sure if this works but it's just exchanging the device at this index basically
-
-    private Oven oven;
-    private Microwave microwave;
-    private Dishwasher dishwasher;
-    private CleaningRobot cleaningRobot;
     private ArrayList<Object> devices;
     private boolean appOpen;
     Command[] deviceCommands;
 
     public Smartphone(){
-        this.oven = new InitializedOven();
-        this.microwave = new InitializedMicrowave();
-        this.dishwasher = new InitializedDishwasher();
-        this.cleaningRobot = new InitializedCleaningRobot();
         this.appOpen = true;
         this.devices = new ArrayList<>();
-        addDevice(this.oven);
-        addDevice(this.microwave);
-        addDevice(this.dishwasher);
-        addDevice(this.cleaningRobot);
+
         mainMenu();
     }
 

@@ -1,13 +1,15 @@
 package commands;
 
-import commands.Command;
-import devices.Oven;
-
 public class StartCommand implements Command {
-    private Oven oven;
+    Object device;
+
+    public StartCommand(Object device){
+        this.device = ;
+    }
 
     @Override
     public void execute() {
+        device.switchOn();
     }
 
     @Override
