@@ -11,4 +11,5 @@ public interface Device {
     public void setTimer(int time);
     public Integer checkTimer();
     public ArrayList getCommandList();
+    public String printState();
 }

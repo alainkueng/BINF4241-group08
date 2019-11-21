@@ -1,5 +1,5 @@
 import commands.Command;
-import devices.*;
+import devices.Device;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,33 +14,79 @@ public class Smartphone{
     //  for device : devices
     //      if device.getClass().getInterfaces()[0] == returnValue.getClass().getInterfaces()[0] then
     //          device = returnValue, not sure if this works but it's just exchanging the device at this index basically
-    private ArrayList<Object> devices;
+    private ArrayList<Device> devices;
+    private ArrayList<Command> commands;
     private boolean appOpen;
-    Command[] deviceCommands;
+
 
     public Smartphone(){
         this.appOpen = true;
-        this.devices = new ArrayList<>();
-
+        this.devices = null;
+        this.commands = null;
         mainMenu();
-    }
-
-    private void setCommand(Command command){
-
     }
 
     private void mainMenu(){
         while(this.appOpen){
+            String input;
+
             System.out.println("Which one of the following devices you'd like to modify?");
-            for(Object device:devices){
-                System.out.format("- %s\n", device.getClass().getInterfaces()[0].getSimpleName());
+            for(Device device:devices){
+                System.out.format("- %s\n", device.printState());
             }
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
+            System.out.println("Close app");
+            input = inputCheck().toLowerCase();
+            if(input.equals("close app") || input.equals("close")){
+                this.appOpen = false;
+                break;
+            }
+            for(int i = 0; i < devices.size(); i++){
+                Device device = devices.get(i);
+                if(device.printState().equals(input)){
+                    commands = devices.get(i).getCommandList();
+                    subMenu(device);
+                    break;
+                }
+                if(i + 1 == devices.size()){
+                    System.out.println("This doesn't exist in the menu, please choose something from the menu.");
+                    input = inputCheck().toLowerCase();
+                    i = 0;
+                }
+            }
         }
     }
 
-    public void addDevice(Object device){
+    private void subMenu(Device device){
+        while(true){
+            String input;
+            System.out.format("What do you want to do with the %s?", device.printState());
+            for(Command command:commands){
+                System.out.format("- %s\n", command.toString());
+            }
+            System.out.println("Back to devices menu");
+            input = inputCheck().toLowerCase();
+            if(input.equals("back to devices menu")){
+                break;
+            }
+            for(int i = 0; i < commands.size(); i++){
+                Command command = commands.get(i);
+
+            }
+
+        }
+    }
+
+    public void addDevice(Device device){
         this.devices.add(device);
+    }
+
+    public String inputCheck(){
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        while(input.equals("") || !input.matches("^[a-zA-Z]*$")){
+            System.out.println("This doesn't exist in the menu, please choose something from the menu.");
+            input = scanner.nextLine();
+        }
+        return input;
     }
 }
