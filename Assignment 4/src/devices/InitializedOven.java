@@ -3,16 +3,16 @@ package devices;
 import java.util.ArrayList;
 
 public class InitializedOven implements Oven {
-    private boolean isOn;
+    private ArrayList commandList;
 
-    public InitializedOven(){
-        this.isOn = false;
+    public InitializedOven(ArrayList commandList){
+        this.commandList = commandList;
     }
 
-    public void switchOn(){
-        this.isOn = true;
+    public Device switchOn(){
+        return new SwitchedOnOven(this.commandList);
     }
-    public void setTimer(Integer time){
+    public void setTimer(int time){
         System.out.println("You can't set a timer if the oven isn't switched on.");
     }
     public Integer checkTimer(){
@@ -26,13 +26,19 @@ public class InitializedOven implements Oven {
         System.out.println("You can't get the programs if the oven isn't switched on.");
         return null;
     }
-    public void start(){
+    public Device start(){
         System.out.println("You can't start baking if the oven isn't switched on.");
+        return null;
     }
     public void interrupt(){
         System.out.println("You can't interrupt the oven if it isn't even switched on.");
     };
-    public void switchOff(){
+
+    public Device switchOff(){
         System.out.println("Thank you for caring about the environment, but it is already switched off.");
+        return null;
     };
+    public ArrayList getCommandList(){
+        return this.commandList;
+    }
 }
