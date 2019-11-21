@@ -60,8 +60,8 @@ public class Smartphone{
         while(true){
             String input;
             System.out.format("What do you want to do with the %s?", device.printState());
-            for(Command command:commands){
-                System.out.format("- %s\n", command.toString());
+            for (String command : device.getAvailableCommands()){
+                System.out.format("- %s\n", command);
             }
             System.out.println("Back to devices menu");
             input = inputCheck().toLowerCase();
