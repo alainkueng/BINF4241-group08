@@ -2,7 +2,7 @@ package devices;
 
 import java.util.ArrayList;
 
-public interface Oven implements Device{
+public interface Oven extends Device{
     public void switchOn();
     public void setTimer(Integer time);
     public Integer checkTimer();

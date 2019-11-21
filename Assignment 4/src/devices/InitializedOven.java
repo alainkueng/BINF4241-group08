@@ -26,7 +26,7 @@ public class InitializedOven implements Oven {
         System.out.println("You can't get the programs if the oven isn't switched on.");
         return null;
     }
-    public void startBaking(){
+    public void start(){
         System.out.println("You can't start baking if the oven isn't switched on.");
     }
     public void interrupt(){

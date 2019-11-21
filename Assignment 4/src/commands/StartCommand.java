@@ -1,10 +1,12 @@
 package commands;
 
-public class StartCommand implements Command {
-    Object device;
+import devices.*;
 
-    public StartCommand(Object device){
-        this.device = ;
+public class StartCommand implements Command {
+    private Device device;
+
+    public StartCommand(Device device){
+        this.device = device;
     }
 
     @Override
