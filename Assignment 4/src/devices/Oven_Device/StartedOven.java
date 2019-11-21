@@ -1,17 +1,20 @@
-package devices;
+package devices.Oven_Device;
+
+import devices.Device;
+import devices.Oven_Device.Oven;
 
 import java.util.ArrayList;
 
-public class StartedOven implements Oven{
+public class StartedOven implements Oven {
 
     private ArrayList commandList;
 
-    StartedOven(ArrayList commandList){
+    StartedOven(ArrayList commandList, int timer, String program, int heat){
         this.commandList = commandList;
     }
 
     @Override
-    public void setProgram(String program) {
+    public void setProgram() {
 
     }
 
@@ -22,6 +25,11 @@ public class StartedOven implements Oven{
 
     @Override
     public void interrupt() {
+
+    }
+
+    @Override
+    public void setHeat(int heat) {
 
     }
 

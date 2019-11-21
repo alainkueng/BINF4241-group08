@@ -1,9 +1,12 @@
 package devices;
 
-public interface WashingMachine {
-    public WashingMachine switchOn();
-    public void setTemperature();
-    public void setProgram();
-    public WashingMachine start();
-    public WashingMachine switchOff();
+import java.util.ArrayList;
+
+public interface WashingMachine extends Device {
+
+    void setTemperature();
+    void setProgram(String program);
+    void interrupt();
+    ArrayList getPrograms();
+
 }

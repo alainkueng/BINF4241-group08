@@ -2,26 +2,26 @@ package commands;
 
 import devices.*;
 
-public class StartCommand implements Command {
+public class SwitchOffCommand implements Command {
     private Device device;
 
-    public StartCommand(Device device){
+    public SwitchOffCommand(Device device){
         this.device = device;
     }
 
     @Override
     public void execute() {
-        device.start();
+        device.switchOff();
     }
 
     @Override
     public void undo() {
-
+        device.switchOn();
     }
 
     @Override
     public String toString() {
-        System.out.println("Start");
-        return "Start";
+        System.out.println("Switch off");
+        return "Switch off";
     }
 }
