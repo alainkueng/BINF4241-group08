@@ -42,8 +42,8 @@ public class Smartphone{
             }
             for(int i = 0; i < devices.size(); i++){
                 Device device = devices.get(i);
-                if(device.printState().equals(input)){
-                    commands = devices.get(i).getCommandList();
+                if(device.printState().toLowerCase().equals(input)){
+                    this.commands = devices.get(i).getCommandList();
                     subMenu(device);
                     break;
                 }
@@ -70,9 +70,16 @@ public class Smartphone{
             }
             for(int i = 0; i < commands.size(); i++){
                 Command command = commands.get(i);
-
+                if(command.toString().toLowerCase().equals(input)){
+                    command.execute();
+                    break;
+                }
+                if(i + 1 == commands.size()){
+                    System.out.println("This doesn't exist in the menu, please choose something from the menu.");
+                    input = inputCheck().toLowerCase();
+                    i = 0;
+                }
             }
-
         }
     }
 
