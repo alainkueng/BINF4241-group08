@@ -61,8 +61,8 @@ public class InitializedOven implements Oven {
         return this.availableCommands;
     }
 
-    public static String printState(){
-        System.out.println("Initialized");
-        return "Initialized";
+    public String printState(){
+        System.out.println("Oven: Initialized");
+        return "Oven: Initialized";
     }
 }

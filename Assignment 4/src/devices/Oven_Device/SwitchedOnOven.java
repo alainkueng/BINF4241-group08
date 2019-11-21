@@ -109,8 +109,8 @@ public class SwitchedOnOven implements Oven {
         return this.availableCommands;
     }
 
-    public static String printState(){
-        System.out.println("Switched On");
-        return "Switched On";
+    public String printState(){
+        System.out.println("Oven: Switched On");
+        return "Oven: Switched On";
     }
 }
