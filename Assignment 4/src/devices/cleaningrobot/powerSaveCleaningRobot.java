@@ -26,7 +26,7 @@ public class powerSaveCleaningRobot implements CleaningRobot {
     }
 
     @Override
-    public Integer checkTimer() {
+    public Long checkTimer() {
         return null;
     }
 
@@ -48,5 +48,10 @@ public class powerSaveCleaningRobot implements CleaningRobot {
     @Override
     public Device interrupt() {
         return null;
+    }
+
+    @Override
+    public void setProgram() {
+        System.out.println("The cleaning robot has no programs.");
     }
 }
