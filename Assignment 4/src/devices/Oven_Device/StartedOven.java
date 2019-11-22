@@ -1,4 +1,5 @@
 package devices.Oven_Device;
+import java.util.Scanner;
 
 import devices.Device;
 import devices.Oven_Device.Oven;
@@ -28,13 +29,21 @@ public class StartedOven implements Oven, Runnable {
 
     @Override
     public void interrupt() {
-//        if(isRunning()){
-//        }
+        System.out.println("Action was stopped");
     }
+    public void interruptAdapter(Thread thread, long elapsedTime){
+        if (isRunning()) {
+            thread = null;
+            float time = System.currentTimeMillis() - elapsedTime;
+            interrupt();
+            System.out.println("Elapsed time: " + time);
+        }
+    }
+
 
     @Override
     public void setHeat(int heat) {
-
+        System.out.println("Oven is ");
     }
 
     @Override
@@ -73,6 +82,7 @@ public class StartedOven implements Oven, Runnable {
             running = true;
             time = time*1000; // from seconds to milliseconds
             Thread.sleep(time);
+            running = false;
         } catch (InterruptedException e){
             e.printStackTrace();
         }

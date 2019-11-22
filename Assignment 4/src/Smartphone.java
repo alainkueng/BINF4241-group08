@@ -74,8 +74,10 @@ public class Smartphone{
                     statusChanged = command.execute();
                     if(statusChanged != null){
                         for(int j = 0; j < devices.size(); j++){
-                            if(devices.get(j).printState().equals(device.printState())){
-                                devices.set(j, device);
+                            if(devices.get(j).printState().equals(statusChanged.printState())){
+                                devices.set(j,statusChanged);
+                                device = statusChanged;
+                                break;
                             }
                         }
                     }
@@ -97,7 +99,7 @@ public class Smartphone{
     private String inputCheck(){
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        while(input.equals("") || !input.matches("^[a-zA-Z]*$")){
+        while(input.equals("") || !input.matches("^[a-z A-Z]*$")){
             System.out.println("This doesn't exist in the menu, please choose something from the menu.\n");
             input = scanner.nextLine();
         }

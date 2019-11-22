@@ -13,5 +13,6 @@ public interface Device {
     public ArrayList getCommandList();
     public String printState();
     public ArrayList<String> getAvailableCommands();
-    public Device interrupt();
+    public void interrupt();
+
 }

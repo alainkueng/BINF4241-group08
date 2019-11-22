@@ -57,7 +57,7 @@ public class SwitchedOnOven implements Oven {
         return programs;
     }
 
-    @Override
+
     public void interrupt() {
         System.out.println("Oven_Device is not running");
     }
@@ -69,28 +69,29 @@ public class SwitchedOnOven implements Oven {
             StartedOven sO = new StartedOven(this.commandList, timer, setting, heat);
             Thread threadOven = new Thread(sO);
             long elapsedTime = System.currentTimeMillis();
-            threadOven.start();
-
-            System.out.println("Write Interrupt to stop action: ");
+            threadOven.start(); //start thread
+            System.out.println("Available commands:\n");
+            for(String s : sO.getAvailableCommands()){
+                System.out.println("- " + s);
+            }
             Scanner scanner = new Scanner(System.in);
             String command = scanner.nextLine();
-            while (command.equals("") || !command.matches("^[a-zA-Z]*$") || !(command.equals("interrupt"))) {
+            while (command.equals("") && sO.isRunning() || !command.matches("^[a-zA-Z]*$") && sO.isRunning()
+                    || !(command.equals("interrupt")) && sO.isRunning()) {
                 command = scanner.nextLine();
                 if (command.toLowerCase().equals("Interrupt".toLowerCase()) && sO.isRunning()) {
-                    threadOven = null;
-                    float time = System.currentTimeMillis() - elapsedTime;
-                    System.out.println("Elapsed time: " + time);
-                    return this;
+                    sO.interruptAdapter(threadOven, elapsedTime); //interrupt thread
+                    return sO;
                 } else {
                     command = scanner.nextLine();
                 }
             }
+            return this; //thread is over and oven goes from startedOven to SwitchedOnOven
         }
         else {
             System.out.println("Please set timer, setting and heat to start the oven");
             return null;
         }
-        return null;
     }
 
 
@@ -117,7 +118,10 @@ public class SwitchedOnOven implements Oven {
 
     @Override
     public Integer checkTimer() {
-        System.out.println("No timer has been set yet");
+        if(timer == -1)
+            System.out.println("No timer has been set yet");
+        else
+            System.out.println("Timer: " + timer);
         return null;
     }
 
