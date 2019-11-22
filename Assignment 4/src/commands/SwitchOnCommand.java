@@ -22,4 +22,8 @@ public class SwitchOnCommand implements Command {
     public String toString() {
         return "Switch on";
     }
+
+    public void updateDevice(Device device) {
+        this.device = device;
+    }
 }

@@ -33,7 +33,6 @@ public class Smartphone{
             for(int i = 0; i < devices.size(); i++){
                 Device device = devices.get(i);
                 if(device.printState().toLowerCase().equals(input)){
-                    this.commands = devices.get(i).getCommandList();
                     subMenu(device);
                     break;
                 }
@@ -111,7 +110,6 @@ public class Smartphone{
                 }
             }
         }
-
     }
 
     public void start(){

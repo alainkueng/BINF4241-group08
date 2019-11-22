@@ -1,6 +1,7 @@
 package commands;
 
 import devices.*;
+import devices.Oven_Device.Oven;
 
 public class SwitchOffCommand implements Command {
     private Device device;
@@ -22,5 +23,9 @@ public class SwitchOffCommand implements Command {
     @Override
     public String toString() {
         return "Switch off";
+    }
+
+    public void updateDevice(Device device) {
+        this.device = device;
     }
 }

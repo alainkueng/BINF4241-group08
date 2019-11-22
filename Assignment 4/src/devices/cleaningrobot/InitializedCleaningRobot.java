@@ -11,7 +11,7 @@ public class InitializedCleaningRobot implements CleaningRobot {
 
     @Override
     public Device start() {
-        return new cleaningCleaningRobot();
+        return new cleaningCleaningRobot(timer, batteryStatus, completion, commandList);
     }
 
     @Override

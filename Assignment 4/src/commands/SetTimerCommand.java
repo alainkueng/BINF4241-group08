@@ -1,6 +1,7 @@
 package commands;
 
 import devices.*;
+import devices.Oven_Device.Oven;
 
 import java.util.Scanner;
 
@@ -39,5 +40,10 @@ public class SetTimerCommand implements Command {
     @Override
     public String toString() {
         return "Set Timer";
+    }
+
+    @Override
+    public void updateDevice(Device device) {
+        this.device = device;
     }
 }

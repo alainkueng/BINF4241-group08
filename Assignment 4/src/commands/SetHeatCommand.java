@@ -44,4 +44,8 @@ public class SetHeatCommand implements Command {
     public String toString() {
         return "Set Heat";
     }
+    @Override
+    public void updateDevice(Device device) {
+        this.oven = (Oven)device;
+    }
 }

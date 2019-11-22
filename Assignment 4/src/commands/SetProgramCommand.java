@@ -26,4 +26,9 @@ public class SetProgramCommand implements Command {
     public String toString() {
         return "Set program";
     }
+
+    @Override
+    public void updateDevice(Device device) {
+        this.oven = (Oven)device;
+    }
 }

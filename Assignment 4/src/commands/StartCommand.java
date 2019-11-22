@@ -23,4 +23,8 @@ public class StartCommand implements Command {
     public String toString() {
         return "Start";
     }
+
+    public void updateDevice(Device device) {
+        this.device = device;
+    }
 }
