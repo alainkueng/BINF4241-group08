@@ -1,6 +1,6 @@
 package devices.Dishwasher_Device;
 
-import commands.Command;
+import commands.*;
 import devices.Device;
 
 import java.util.ArrayList;
@@ -29,7 +29,14 @@ public class InitializedDishwasher implements Dishwasher {
 
     @Override
     public ArrayList getCommandList() {
-        return this.commandList;
+        ArrayList<Command> placeholder = new ArrayList<>();
+        placeholder.add(new SetTimerCommand(this));
+        placeholder.add(new SetProgramCommand(this));
+        placeholder.add(new InterruptCommand(this));
+        placeholder.add(new SwitchOffCommand(this));
+        placeholder.add(new SwitchOnCommand(this));
+        placeholder.add(new CheckTimerCommand(this));
+        return placeholder;
     }
 
     @Override
@@ -41,7 +48,7 @@ public class InitializedDishwasher implements Dishwasher {
         return new StartedDishwasher(this.commandList);
     }
 
-    public Integer checkTimer(){
+    public Long checkTimer(){
         System.out.println("You can't check the timer if the dishwasher isn't switched on.");
         return null;
     }

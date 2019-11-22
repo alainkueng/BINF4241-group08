@@ -106,7 +106,7 @@ public class StartedOven implements Oven {
         ArrayList<Command> placeholder = new ArrayList<>();
         placeholder.add(new SetProgramCommand(this));
         placeholder.add(new SetTimerCommand(this));
-        placeholder.add(new SetHeatCommand(this));
+        placeholder.add(new SetHeatCommandOven(this));
         placeholder.add(new InterruptCommand(this));
         placeholder.add(new SwitchOffCommand(this));
         placeholder.add(new CheckTimerCommand(this));

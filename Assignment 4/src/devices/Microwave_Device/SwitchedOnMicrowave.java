@@ -1,5 +1,6 @@
 package devices.Microwave_Device;
 
+import commands.*;
 import devices.Device;
 
 import java.util.ArrayList;
@@ -53,13 +54,23 @@ public class SwitchedOnMicrowave implements Microwave {
     }
 
     @Override
-    public Integer checkTimer() {
-        return timer;
-    }//Here
+    public Long checkTimer() {
+        if(timer == -1)
+            System.out.println("No timer has been set yet");
+        else
+            System.out.println("Timer: " + timer);
+        return null;
+    }
 
     @Override
     public ArrayList getCommandList() {
-        return null;
+        ArrayList<Command> placeholder = new ArrayList<>();
+        placeholder.add(new SetTimerCommand(this));
+        placeholder.add(new SetWattCommand(this));
+        placeholder.add(new InterruptCommand(this));
+        placeholder.add(new SwitchOffCommand(this));
+        placeholder.add(new CheckTimerCommand(this));
+        return placeholder;
     }//Here
 
     @Override
@@ -68,7 +79,12 @@ public class SwitchedOnMicrowave implements Microwave {
     }
 
     @Override
-    public ArrayList<String> getAvailableCommands() {
-        return null;
+    public ArrayList getAvailableCommands() {
+        ArrayList<String> availableCommands = new ArrayList<>();
+        availableCommands.add("Set timer");
+        availableCommands.add("Set watt");
+        availableCommands.add("Start");
+        availableCommands.add("Switch off");
+        return availableCommands;
     }//Here
 }
