@@ -1,7 +1,9 @@
 package commands;
 
+import devices.Device;
+
 public interface Command {
-    public void execute();
-    public void undo();
+    public Device execute();
+    public Device undo();
     public String toString();
 }

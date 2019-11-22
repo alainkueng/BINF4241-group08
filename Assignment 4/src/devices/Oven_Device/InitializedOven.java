@@ -9,14 +9,6 @@ import java.util.ArrayList;
 
 public class InitializedOven implements Oven {
     private ArrayList commandList;
-    private ArrayList<Command> availableCommands;
-
-
-    public InitializedOven(ArrayList commandList){
-        this.commandList = commandList;
-        availableCommands = new ArrayList<>();
-        availableCommands.add(new SwitchOnCommand(null));
-    }
 
     public Device switchOn(){
         return new SwitchedOnOven(this.commandList);
@@ -54,14 +46,22 @@ public class InitializedOven implements Oven {
         return null;
     }
     @Override
-    public ArrayList<Command> getCommandList() {
-        for(Command command : availableCommands){
-            System.out.println(command.toString());
-        }
-        return this.availableCommands;
+    public ArrayList getCommandList() {
+        return this.commandList;
     }
 
     public String printState(){
         return "Oven";
+    }
+
+    @Override
+    public ArrayList<String> getAvailableCommands(){
+        ArrayList<String> availableCommands = new ArrayList<>();
+        availableCommands.add("Start");
+        return availableCommands;
+    }
+
+    public void addCommandList(ArrayList commands){
+        this.commandList = commands;
     }
 }

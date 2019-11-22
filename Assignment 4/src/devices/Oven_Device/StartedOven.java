@@ -62,4 +62,14 @@ public class StartedOven implements Oven {
     public ArrayList getCommandList() {
         return this.commandList;
     }
+
+    @Override
+    public String printState(){
+        return "Oven";
+    }
+
+    @Override
+    public ArrayList<String> getAvailableCommands() {
+        return null;
+    }
 }

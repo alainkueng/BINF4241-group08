@@ -10,13 +10,13 @@ public class StartCommand implements Command {
     }
 
     @Override
-    public void execute() {
-        device.start();
+    public Device execute() {
+        return device.start();
     }
 
     @Override
-    public void undo() {
-
+    public Device undo() {
+        return null;
     }
 
     @Override

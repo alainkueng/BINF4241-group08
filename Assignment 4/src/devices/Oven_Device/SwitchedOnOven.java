@@ -21,12 +21,6 @@ public class SwitchedOnOven implements Oven {
         programs.add("Defrost");
         programs.add("Fan");
         programs.add("Normal");
-        availableCommands = new ArrayList<>();
-        availableCommands.add(new StartCommand(null));
-        availableCommands.add(new SwitchOffCommand(null));
-        availableCommands.add(new SetHeatCommand(null));
-        availableCommands.add(new SetTimerCommand(null));
-        availableCommands.add(new SetProgramCommand(null));
     }
 
     @Override
@@ -77,13 +71,13 @@ public class SwitchedOnOven implements Oven {
 
     @Override
     public Device switchOn() {
-        System.out.println("Oven_Device is already switched on");
+        System.out.println("Oven is already switched on");
         return this;
     }
 
     @Override
     public Device switchOff() {
-        System.out.println("Oven_Device is turning off");
+        System.out.println("Oven is turning off");
         return new SwitchedOffOven(this.commandList);
     }
 
@@ -112,5 +106,16 @@ public class SwitchedOnOven implements Oven {
     public String printState(){
         System.out.println("Oven: Switched On");
         return "Oven: Switched On";
+    }
+
+    @Override
+    public ArrayList<String> getAvailableCommands() {
+        ArrayList<String> availableCommands = new ArrayList<>();
+        availableCommands.add("Set program");
+        availableCommands.add("Set timer");
+        availableCommands.add("Set temperature");
+        availableCommands.add("Start");
+        availableCommands.add("Switch off");
+        return availableCommands;
     }
 }

@@ -10,13 +10,13 @@ public class SwitchOffCommand implements Command {
     }
 
     @Override
-    public void execute() {
-        device.switchOff();
+    public Device execute() {
+        return device.switchOff();
     }
 
     @Override
-    public void undo() {
-        device.switchOn();
+    public Device undo() {
+        return device.switchOn();
     }
 
     @Override

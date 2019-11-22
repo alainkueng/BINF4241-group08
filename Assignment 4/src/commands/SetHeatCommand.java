@@ -1,5 +1,6 @@
 package commands;
 
+import devices.Device;
 import devices.Oven_Device.Oven;
 
 import java.util.Scanner;
@@ -13,7 +14,7 @@ public class SetHeatCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public Device execute() {
         boolean flag = false;
         while (!flag) {
             Scanner scanner = new Scanner(System.in);
@@ -22,12 +23,14 @@ public class SetHeatCommand implements Command {
                 flag = true;
         }
         oven.setHeat(time);
+        return null;
     }
 
     @Override
-    public void undo() {
+    public Device undo() {
         time = 0;
         oven.setHeat(time);
+        return null;
     }
 
     @Override

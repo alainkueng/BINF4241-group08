@@ -12,7 +12,7 @@ public class SetTimerCommand implements Command {
         this.device = device;
     }
     @Override
-    public void execute() {
+    public Device execute() {
         boolean flag = false;
         while (!flag) {
             Scanner scanner = new Scanner(System.in);
@@ -22,12 +22,14 @@ public class SetTimerCommand implements Command {
 
         }
         device.setTimer(time);
+        return null;
     }
 
     @Override
-    public void undo() {
+    public Device undo() {
         time = 0;
         device.setTimer(time);
+        return null;
     }
     @Override
     public String toString() {

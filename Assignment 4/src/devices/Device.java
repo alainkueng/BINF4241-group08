@@ -12,4 +12,5 @@ public interface Device {
     public Integer checkTimer();
     public ArrayList getCommandList();
     public String printState();
+    public ArrayList<String> getAvailableCommands();
 }

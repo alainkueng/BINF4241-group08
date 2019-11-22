@@ -1,5 +1,6 @@
 package commands;
 
+import devices.Device;
 import devices.Oven_Device.Oven;
 
 public class SetProgramCommand implements Command {
@@ -10,13 +11,15 @@ public class SetProgramCommand implements Command {
         this.oven = oven;
     }
     @Override
-    public void execute() {
+    public Device execute() {
         oven.setProgram();
+        return null;
     }
 
     @Override
-    public void undo() {
+    public Device undo() {
         oven.interrupt();
+        return null;
     }
 
     @Override

@@ -1,20 +1,33 @@
-package devices;
+package devices.cleaningrobot;
+
+import devices.Device;
+import devices.cleaningrobot.CleaningRobot;
 
 import java.util.ArrayList;
 
 public class InitializedCleaningRobot implements CleaningRobot {
     @Override
     public Device start() {
+        System.out.println("The cleaning robot is already running, you don't need to start again.");
         return null;
     }
 
     @Override
     public void setTimer(int time) {
-
     }
 
     @Override
     public ArrayList getCommandList() {
+        return null;
+    }
+
+    @Override
+    public String printState() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> getAvailableCommands() {
         return null;
     }
 
