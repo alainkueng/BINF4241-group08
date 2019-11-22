@@ -13,14 +13,19 @@ public class SetTimerCommand implements Command {
     }
     @Override
     public Device execute() {
-        boolean flag = false;
-        while (!flag) {
-            Scanner scanner = new Scanner(System.in);
-            int time = scanner.nextInt();
-            if(0 < time && time <= 300)
-                flag = true;
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter timer in seconds, max cap 350s: ");
+        String input = scanner.nextLine();
+        while (!input.matches("^[0-9]*$")) {
+            time = Integer.parseInt(input);
+            if(0 < time && time <= 350) {
+                break;
+            } else{
+                System.out.println("Timer has to be between 1 and 350 are allowed!\n Try again: ");
+                input = scanner.nextLine();
+            }
         }
+        time = Integer.parseInt(input);
         device.setTimer(time);
         return null;
     }
@@ -33,7 +38,6 @@ public class SetTimerCommand implements Command {
     }
     @Override
     public String toString() {
-        System.out.println("Set Timer");
         return "Set Timer";
     }
 }

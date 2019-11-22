@@ -20,7 +20,6 @@ public class SwitchOnCommand implements Command {
     }
     @Override
     public String toString() {
-        System.out.println("Switch on");
         return "Switch on";
     }
 }

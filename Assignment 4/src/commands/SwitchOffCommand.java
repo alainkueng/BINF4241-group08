@@ -21,7 +21,6 @@ public class SwitchOffCommand implements Command {
 
     @Override
     public String toString() {
-        System.out.println("Switch off");
         return "Switch off";
     }
 }

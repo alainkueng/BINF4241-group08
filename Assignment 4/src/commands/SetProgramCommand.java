@@ -24,7 +24,6 @@ public class SetProgramCommand implements Command {
 
     @Override
     public String toString() {
-        System.out.println("Set program");
         return "Set program";
     }
 }

@@ -21,7 +21,6 @@ public class StartCommand implements Command {
 
     @Override
     public String toString() {
-        System.out.println("Start");
         return "Start";
     }
 }

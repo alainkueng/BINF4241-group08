@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class SetHeatCommand implements Command {
     private Oven oven;
-    private int time;
+    private int heat;
 
     public SetHeatCommand(Oven oven){
         this.oven = oven;
@@ -15,27 +15,33 @@ public class SetHeatCommand implements Command {
 
     @Override
     public Device execute() {
-        boolean flag = false;
-        while (!flag) {
-            Scanner scanner = new Scanner(System.in);
-            int time = scanner.nextInt();
-            if(0 < time && time <= 350)
-                flag = true;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter temperature in Celcius: ");
+        String input = scanner.nextLine();
+        while (!input.matches("^[0-9]*$")) {
+            System.out.println("Only degrees between 1 and 350 are allowed!\n Try again: ");
+            input = scanner.nextLine();
+            if(0 < heat && heat <= 350) {
+                break;
+            } else{
+                System.out.println("Only degrees between 1 and 350 are allowed!\n Try again: ");
+                input = scanner.nextLine();
+            }
         }
+        int time = Integer.parseInt(input);
         oven.setHeat(time);
         return null;
     }
 
     @Override
     public Device undo() {
-        time = 0;
-        oven.setHeat(time);
+        heat = 0;
+        oven.setHeat(heat);
         return null;
     }
 
     @Override
     public String toString() {
-        System.out.println("Set Heat");
         return "Set Heat";
     }
 }
