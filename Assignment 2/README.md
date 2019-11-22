@@ -19,7 +19,3 @@
    * The games asks for moves, starting with the player of the white side
    
    * For draw if someone's asks for it
-
-
-
-
