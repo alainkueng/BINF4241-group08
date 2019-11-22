@@ -1,38 +1,45 @@
 package devices.cleaningrobot;
+
 import devices.Device;
+
 import java.util.ArrayList;
 
-public class InitializedCleaningRobot implements CleaningRobot {
-
-    private int timer = -1;
-    private int batteryStatus = 100;
-    private int completion = 0;
+public class cleaningCleaningRobot implements CleaningRobot {
+    private int timer;
+    private int batteryStatus;
+    private int completion;
     private ArrayList commandList;
+
+    public cleaningCleaningRobot(int timer, int batteryStatus, int completion, ArrayList commandList){
+        this.timer = timer;
+        this.batteryStatus = batteryStatus;
+        this.completion = completion;
+        this.commandList = commandList;
+    }
 
     @Override
     public Device start() {
-        return new cleaningCleaningRobot();
+        return null;
     }
 
     @Override
     public Device switchOn() {
-        System.out.println("The cleaning robot is already switched on.");
+        System.out.println("The cleaning robot is already cleaning, you can't switch it on again.");
         return null;
     }
 
     @Override
     public Device switchOff() {
-        return new powerSaveCleaningRobot();
+        return null;
     }
 
     @Override
-    public void setTimer(int time) {
-        this.timer = time;
+    public void setTimer(int time){
+        System.out.println("You can't change the timer, while the cleaning robot is cleaning.");
     }
 
     @Override
     public Integer checkTimer() {
-        System.out.format("\nThe timer is set for %d", this.timer);
         return null;
     }
 
@@ -48,8 +55,8 @@ public class InitializedCleaningRobot implements CleaningRobot {
 
     @Override
     public ArrayList<String> getAvailableCommands(){
-        ArrayList<String> availableCommands = new ArrayList<>();
-        availableCommands.add("Start");
+        ArrayList availableCommands = new ArrayList();
+        availableCommands.add("Interrupt");
         availableCommands.add("Check timer");
         availableCommands.add("Check battery");
         availableCommands.add("Check completion");
@@ -59,11 +66,6 @@ public class InitializedCleaningRobot implements CleaningRobot {
 
     @Override
     public Device interrupt() {
-        System.out.println("You can't interrupt, since the cleaning Robot isn't cleaning.");
         return null;
-    }
-
-    public void addCommandList(ArrayList commands){
-        this.commandList = commands;
     }
 }
