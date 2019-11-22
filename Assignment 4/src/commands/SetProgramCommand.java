@@ -4,21 +4,21 @@ import devices.Device;
 import devices.Oven_Device.Oven;
 
 public class SetProgramCommand implements Command {
-    Oven oven;
+    Device device;
     String program;
 
-    public SetProgramCommand(Oven oven){
-        this.oven = oven;
+    public SetProgramCommand(Device device){
+        this.device = device;
     }
     @Override
     public Device execute() {
-        oven.setProgram();
+        device.setProgram();
         return null;
     }
 
     @Override
     public Device undo() {
-        oven.interrupt();
+        device.interrupt();
         return null;
     }
 
@@ -29,6 +29,6 @@ public class SetProgramCommand implements Command {
 
     @Override
     public void updateDevice(Device device) {
-        this.oven = (Oven)device;
+        this.device = (Oven)device;
     }
 }

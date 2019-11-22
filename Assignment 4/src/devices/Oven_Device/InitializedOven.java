@@ -16,9 +16,9 @@ public class InitializedOven implements Oven {
     public void setTimer(int time){
         System.out.println("You can't set a timer if the oven isn't switched on.");
     }
-    public Integer checkTimer(){
+    public long checkTimer(){
         System.out.println("You can't check the timer if the oven isn't switched on.");
-        return null;
+        return 0;
     }
     public void setProgram(){
         System.out.println("You can't set a program if the oven isn't switched on.");
@@ -37,8 +37,9 @@ public class InitializedOven implements Oven {
         System.out.println("You can't start baking if the oven isn't switched on.");
         return null;
     }
-    public void interrupt(){
+    public Device interrupt(){
         System.out.println("You can't interrupt the oven if it isn't even switched on.");
+        return null;
     }
 
     public Device switchOff(){
