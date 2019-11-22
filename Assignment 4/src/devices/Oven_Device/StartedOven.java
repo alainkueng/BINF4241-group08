@@ -55,11 +55,6 @@ public class StartedOven implements Oven {
         while (timeT.isRunning()) {
             System.out.println("Running");
         }
-        System.out.println("Available commands:\n");
-        for (String s : getAvailableCommands()) {
-            System.out.println("- " + s);
-        }
-
         if (!timeT.isRunning()) {
             System.out.println("Action has finished");
             return new SwitchedOnOven(commandList);
