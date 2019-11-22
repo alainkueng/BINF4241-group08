@@ -31,7 +31,7 @@ public class InitializedCleaningRobot implements CleaningRobot {
     }
 
     @Override
-    public Integer checkTimer() {
+    public Long checkTimer() {
         System.out.format("\nThe timer is set for %d", this.timer);
         return null;
     }
@@ -50,6 +50,7 @@ public class InitializedCleaningRobot implements CleaningRobot {
     public ArrayList<String> getAvailableCommands(){
         ArrayList<String> availableCommands = new ArrayList<>();
         availableCommands.add("Start");
+        availableCommands.add("Set Timer");
         availableCommands.add("Check timer");
         availableCommands.add("Check battery");
         availableCommands.add("Check completion");
@@ -61,6 +62,11 @@ public class InitializedCleaningRobot implements CleaningRobot {
     public Device interrupt() {
         System.out.println("You can't interrupt, since the cleaning Robot isn't cleaning.");
         return null;
+    }
+
+    @Override
+    public void setProgram() {
+        System.out.println("The cleaning robot has no programs.");
     }
 
     public void addCommandList(ArrayList commands){
