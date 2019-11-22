@@ -6,13 +6,10 @@ import java.util.ArrayList;
 
 public class SwitchedOffOven implements Oven {
     private ArrayList commandList;
-    private ArrayList<Command> availableCommands;
 
 
     SwitchedOffOven(ArrayList commandList){
         this.commandList = commandList;
-        availableCommands = new ArrayList<>();
-        availableCommands.add(new SwitchOnCommand(null));
     }
 
     @Override
@@ -64,16 +61,13 @@ public class SwitchedOffOven implements Oven {
     }
 
     @Override
-    public ArrayList<Command> getCommandList() {
-        for(Command command : availableCommands){
-            System.out.println(command.toString());
-        }
-        return this.availableCommands;
+    public ArrayList getCommandList() {
+        return this.commandList;
     }
 
+
     public String printState(){
-        System.out.println("Oven: Switched Off");
-        return "Oven: Switched Off";
+        return "Oven";
     }
 
     @Override

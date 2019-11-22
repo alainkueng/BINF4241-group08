@@ -10,10 +10,9 @@ public class SwitchedOnOven implements Oven {
 
     private ArrayList commandList;
     private ArrayList<String> programs;
-    int timer = -1;
-    int heat = -1;
+    private int timer = -1;
+    private int heat = -1;
     private String setting = "";
-    private ArrayList<Command> availableCommands;
 
     SwitchedOnOven(ArrayList commandList){
         this.commandList = commandList;
@@ -26,18 +25,23 @@ public class SwitchedOnOven implements Oven {
     @Override
     public void setProgram() {
         getPrograms();
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            String program = scanner.nextLine();
-            if(program instanceof String)
+        Scanner scanner = new Scanner(System.in);
+        String program = scanner.nextLine();
+        System.out.println("This doesn't exist in the menu, please choose something from the menu.");
+        while(program.equals("") || !program.matches("^[a-zA-Z]*$")){
+            program = scanner.nextLine();
             for (String p : programs) {
                 if (p.toLowerCase().equals(program.toLowerCase())) {
                     this.setting = p;
                     return;
+                } else {
+                    System.out.println("This doesn't exist in the menu, please choose something from the menu.");
+                    program = scanner.nextLine();
                 }
             }
         }
     }
+
     public void setHeat(int heat){
         if(0 < heat && heat <= 350){
             this.heat = heat;
@@ -60,14 +64,36 @@ public class SwitchedOnOven implements Oven {
 
     @Override
     public Device start() {
-        if(heat != -1 && timer != -1 && !setting.equals("")) {
+        if (heat != -1 && timer != -1 && !setting.equals("")) {
             System.out.println("Oven_Device is starting");
-            return new StartedOven(this.commandList, timer, setting, heat);
-        } else{
+            StartedOven sO = new StartedOven(this.commandList, timer, setting, heat);
+            Thread threadOven = new Thread(sO);
+            long elapsedTime = System.currentTimeMillis();
+            threadOven.start();
+
+            System.out.println("Write Interrupt to stop action: ");
+            Scanner scanner = new Scanner(System.in);
+            String command = scanner.nextLine();
+            while (command.equals("") || !command.matches("^[a-zA-Z]*$") || !(command.equals("interrupt"))) {
+                command = scanner.nextLine();
+                if (command.toLowerCase().equals("Interrupt".toLowerCase()) && sO.isRunning()) {
+                    threadOven = null;
+                    float time = System.currentTimeMillis() - elapsedTime;
+                    System.out.println("Elapsed time: " + time);
+                    return this;
+                } else {
+                    command = scanner.nextLine();
+                }
+            }
+        }
+        else {
             System.out.println("Please set timer, setting and heat to start the oven");
             return null;
         }
+        return null;
     }
+
+
 
     @Override
     public Device switchOn() {
@@ -96,16 +122,13 @@ public class SwitchedOnOven implements Oven {
     }
 
     @Override
-    public ArrayList<Command> getCommandList() {
-        for(Command command : availableCommands){
-            System.out.println(command.toString());
-        }
-        return this.availableCommands;
+    public ArrayList getCommandList() {
+        return this.commandList;
     }
 
+
     public String printState(){
-        System.out.println("Oven: Switched On");
-        return "Oven: Switched On";
+        return "Oven";
     }
 
     @Override

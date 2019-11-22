@@ -57,7 +57,7 @@ public class InitializedOven implements Oven {
     @Override
     public ArrayList<String> getAvailableCommands(){
         ArrayList<String> availableCommands = new ArrayList<>();
-        availableCommands.add("Start");
+        availableCommands.add("Switch on");
         return availableCommands;
     }
 

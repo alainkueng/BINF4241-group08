@@ -5,12 +5,15 @@ import devices.Oven_Device.Oven;
 
 import java.util.ArrayList;
 
-public class StartedOven implements Oven {
-
+public class StartedOven implements Oven, Runnable {
+    private boolean running;
+    private int time;
     private ArrayList commandList;
 
     StartedOven(ArrayList commandList, int timer, String program, int heat){
         this.commandList = commandList;
+        this.running = false;
+        this.time = timer;
     }
 
     @Override
@@ -25,7 +28,8 @@ public class StartedOven implements Oven {
 
     @Override
     public void interrupt() {
-
+//        if(isRunning()){
+//        }
     }
 
     @Override
@@ -64,12 +68,29 @@ public class StartedOven implements Oven {
     }
 
     @Override
-    public String printState(){
+    public void run() {
+        try {
+            running = true;
+            time = time*1000; // from seconds to milliseconds
+            Thread.sleep(time);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isRunning(){
+        return running;
+    }
+
+    @Override
+    public String printState() {
         return "Oven";
     }
 
     @Override
     public ArrayList<String> getAvailableCommands() {
-        return null;
+        ArrayList<String> availableCommands = new ArrayList<>();
+        availableCommands.add("Interrupt");
+        return availableCommands;
     }
 }
