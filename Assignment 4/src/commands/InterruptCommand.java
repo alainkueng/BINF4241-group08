@@ -18,4 +18,9 @@ public class InterruptCommand implements Command {
     public Device undo() {
         return null;
     }
+
+    @Override
+    public void updateDevice(Device device) {
+        this.device = device;
+    }
 }

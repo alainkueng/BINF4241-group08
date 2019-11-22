@@ -5,15 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Smartphone{
-    //every device stores an ArrayList with possible commands (implements Command)
-    //there exists a getCommandList-function for every device which returns the list
-    //then we process the user input with a HashMap "start" gets mapped to startCommand-object
-    //returnValue = hashMap.get(input).execute(), execute returns an object if the state gets changed or returns null
-    //if nothing is changed (in order to update the devices list accordingly
-    //if returnValue not null then
-    //  for device : devices
-    //      if device.getClass().getInterfaces()[0] == returnValue.getClass().getInterfaces()[0] then
-    //          device = returnValue, not sure if this works but it's just exchanging the device at this index basically
     private ArrayList<Device> devices;
     private ArrayList<Command> commands;
     private boolean appOpen;
@@ -77,6 +68,7 @@ public class Smartphone{
                             if(devices.get(j).printState().equals(statusChanged.printState())){
                                 devices.set(j,statusChanged);
                                 device = statusChanged;
+                                updateCommand(device);
                                 break;
                             }
                         }
@@ -106,5 +98,23 @@ public class Smartphone{
         return input;
     }
 
-    public void start(){mainMenu();}
+    public void addCommand(Command command){
+        this.commands.add(command);
+    }
+
+    private void updateCommand(Device device){
+        ArrayList<String>availableCommands = device.getAvailableCommands();
+        for(String availableCommand:availableCommands){
+            for(Command command:this.commands){
+                if(command.toString().equals(availableCommand)){
+                    command.updateDevice(device);
+                }
+            }
+        }
+
+    }
+
+    public void start(){
+        mainMenu();
+    }
 }

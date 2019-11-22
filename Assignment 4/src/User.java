@@ -7,17 +7,14 @@ public class User {
     public static void main(String args[]){
         Smartphone smartphone = new Smartphone();
         InitializedOven oven = new InitializedOven();
-        ArrayList<Command> ovenCommands = new ArrayList();
 
-        ovenCommands.add(new SwitchOnCommand(oven));
-        ovenCommands.add(new SwitchOffCommand(oven));
-        ovenCommands.add(new StartCommand(oven));
-        ovenCommands.add(new SetHeatCommand(oven));
-        ovenCommands.add(new SetProgramCommand(oven));
-        ovenCommands.add(new SetTimerCommand(oven));
-
-        oven.addCommandList(ovenCommands);
-
+        smartphone.addCommand(new SwitchOnCommand(oven));
+        smartphone.addCommand(new SwitchOffCommand(oven));
+        smartphone.addCommand(new StartCommand(oven));
+        smartphone.addCommand(new SetHeatCommand(oven));
+        smartphone.addCommand(new SetProgramCommand(oven));
+        smartphone.addCommand(new SetTimerCommand(oven));
+        
         smartphone.addDevice(oven);
         smartphone.start();
     }
