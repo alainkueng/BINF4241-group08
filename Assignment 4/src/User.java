@@ -1,7 +1,7 @@
 import commands.*;
+import devices.Dishwasher_Device.InitializedDishwasher;
 import devices.Microwave_Device.InitializedMicrowave;
 import devices.Oven_Device.*;
-import devices.cleaningrobot.InitializedCleaningRobot;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,7 @@ public class User {
         Smartphone smartphone = new Smartphone();
         InitializedOven oven = new InitializedOven();
         InitializedMicrowave microwave = new InitializedMicrowave();
+        InitializedDishwasher dish = new InitializedDishwasher();
         //InitializedCleaningRobot cleaningRobot = new InitializedCleaningRobot();
 
         smartphone.addCommand(new SwitchOnCommand(oven));
@@ -25,9 +26,17 @@ public class User {
         smartphone.addCommand(new SetWattCommand(microwave));
         smartphone.addCommand(new SetTimerCommand(microwave));
 
+        smartphone.addCommand(new SwitchOnCommand(dish));
+        smartphone.addCommand(new SwitchOffCommand(dish));
+        smartphone.addCommand(new StartCommand(dish));
+        smartphone.addCommand(new SetProgramCommand(dish));
+        smartphone.addCommand(new SetTimerCommand(dish));
+
 
         
         smartphone.addDevice(oven);
+        smartphone.addDevice(microwave);
+        smartphone.addDevice(dish);
         smartphone.start();
     }
 
