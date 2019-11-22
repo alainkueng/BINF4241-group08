@@ -55,9 +55,12 @@ public class SwitchedOnMicrowave implements Microwave {
 
     @Override
     public Long checkTimer() {
-        long tim = timer;
-        return tim;
-    }//Here
+        if(timer == -1)
+            System.out.println("No timer has been set yet");
+        else
+            System.out.println("Timer: " + timer);
+        return null;
+    }
 
     @Override
     public ArrayList getCommandList() {

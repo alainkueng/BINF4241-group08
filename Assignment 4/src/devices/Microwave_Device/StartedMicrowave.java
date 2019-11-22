@@ -61,6 +61,10 @@ public class StartedMicrowave implements Microwave {
 
     @Override
     public Long checkTimer() {// here
+        if(timer == -1)
+            System.out.println("No timer has been set yet");
+        else
+            System.out.println("Timer: " + timer);
         return null;
     }
 
