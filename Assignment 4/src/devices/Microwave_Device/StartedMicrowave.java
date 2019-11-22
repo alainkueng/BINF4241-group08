@@ -2,6 +2,7 @@ package devices.Microwave_Device;
 
 import commands.*;
 import devices.Device;
+import devices.TimeThread;
 
 import java.util.ArrayList;
 
@@ -9,10 +10,15 @@ public class StartedMicrowave implements Microwave {
     private ArrayList commandList;
     private int timer = -1;
     private int watt = -1;
+    TimeThread timeT;
+    Thread thread;
+    long elapsedT;
+    private boolean running;
 
     public StartedMicrowave(int timer, int watt) {
         this.timer = timer;
         this.watt = watt;
+        this.running = false;
     }
 
     @Override
@@ -33,13 +39,30 @@ public class StartedMicrowave implements Microwave {
 
     @Override
     public Device interrupt() {
-        return null;
-    }//here
+        if (timeT.isRunning()){
+            timeT = null;
+            float time = System.currentTimeMillis() - elapsedT;
+            System.out.println("Action was stopped\nElapsed time: " + time);
+        }
+        return new SwitchedOnMicrowave();
+    }
 
     @Override
     public Device start() {
-        System.out.println("You can't start the machine when it's already running");
-        return this;
+        this.timeT = new TimeThread(timer);
+        this.thread = new Thread(timeT);
+        elapsedT = System.currentTimeMillis();
+        thread.start(); //start thread
+        while (timeT.isRunning()) {
+            System.out.println("Running");
+        }
+        if (!timeT.isRunning()) {
+            System.out.println("Action has finished");
+            return new SwitchedOnMicrowave();
+        } else {
+            System.out.println("Action is still running");
+            return this;
+        }
     }
 
     @Override
@@ -50,8 +73,10 @@ public class StartedMicrowave implements Microwave {
 
     @Override
     public Device switchOff() { //here so you switch off?
-        System.out.println("You can't switch off while the microwave is running");
-        return this;
+        if(timeT.isRunning()) {
+            interrupt();
+        }
+        return new SwitchedOffMicrowave();
     }
 
     @Override
