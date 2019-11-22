@@ -5,11 +5,11 @@ import devices.Oven_Device.Oven;
 
 import java.util.Scanner;
 
-public class SetHeatCommand implements Command {
+public class SetHeatCommandOven implements Command {
     private Oven oven;
     private int heat;
 
-    public SetHeatCommand(Oven oven){
+    public SetHeatCommandOven(Oven oven){
         this.oven = oven;
     }
 

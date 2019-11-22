@@ -27,8 +27,9 @@ public class SwitchedOffOven implements Oven {
     }
 
     @Override
-    public void interrupt() {
+    public Device interrupt() {
         System.out.println("The oven is not running");
+        return this;
     }
 
     @Override

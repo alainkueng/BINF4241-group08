@@ -35,16 +35,16 @@ public class InitializedOven implements Oven {
     }
     public Device start(){
         System.out.println("You can't start baking if the oven isn't switched on.");
-        return null;
+        return this;
     }
     public Device interrupt(){
         System.out.println("You can't interrupt the oven if it isn't even switched on.");
-        return null;
+        return this;
     }
 
     public Device switchOff(){
         System.out.println("Thank you for caring about the environment, but it is already switched off.");
-        return null;
+        return this;
     }
     @Override
     public ArrayList getCommandList() {
