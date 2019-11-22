@@ -72,6 +72,13 @@ public class Smartphone{
                 Command command = commands.get(i);
                 if(command.toString().toLowerCase().equals(input)){
                     statusChanged = command.execute();
+                    if(statusChanged != null){
+                        for(int j = 0; j < devices.size(); j++){
+                            if(devices.get(j).printState().equals(device.printState())){
+                                devices.set(j, device);
+                            }
+                        }
+                    }
                     break;
                 }
                 if(i + 1 == commands.size()){
