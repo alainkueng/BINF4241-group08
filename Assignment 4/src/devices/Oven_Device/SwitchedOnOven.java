@@ -27,8 +27,7 @@ public class SwitchedOnOven implements Oven {
         getPrograms();
         Scanner scanner = new Scanner(System.in);
         String program = scanner.nextLine();
-        System.out.println("This doesn't exist in the menu, please choose something from the menu.");
-        while(program.equals("") || !program.matches("^[a-zA-Z]*$")){
+        while(program.equals("") || !program.matches("^[a-zA-Z]*$")) {
             program = scanner.nextLine();
             for (String p : programs) {
                 if (p.toLowerCase().equals(program.toLowerCase())) {
@@ -57,9 +56,10 @@ public class SwitchedOnOven implements Oven {
         return programs;
     }
 
-
-    public void interrupt() {
+    @Override
+    public Device interrupt() {
         System.out.println("Oven_Device is not running");
+        return this;
     }
 
     @Override

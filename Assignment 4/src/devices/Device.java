@@ -13,6 +13,6 @@ public interface Device {
     public ArrayList getCommandList();
     public String printState();
     public ArrayList<String> getAvailableCommands();
-    public void interrupt();
+    public Device interrupt();
 
 }
