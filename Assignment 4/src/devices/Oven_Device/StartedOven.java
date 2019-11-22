@@ -2,10 +2,9 @@ package devices.Oven_Device;
 import java.util.Scanner;
 
 import devices.Device;
-
 import devices.TimeThread;
-
 import java.util.ArrayList;
+import commands.*;
 
 public class StartedOven implements Oven {
     private boolean running;
@@ -19,8 +18,7 @@ public class StartedOven implements Oven {
         this.commandList = commandList;
         this.running = false;
         this.time = timer;
-        timeT = new TimeThread(time);
-        thread = new Thread(timeT);
+
     }
 
     @Override
@@ -50,25 +48,19 @@ public class StartedOven implements Oven {
 
     @Override
     public Device start() {
+        this.timeT = new TimeThread(time);
+        this.thread = new Thread(timeT);
         elapsedT = System.currentTimeMillis();
         thread.start(); //start thread
-
+        while (timeT.isRunning()) {
+            System.out.println("Running");
+        }
         System.out.println("Available commands:\n");
-        for(String s : getAvailableCommands()){
+        for (String s : getAvailableCommands()) {
             System.out.println("- " + s);
         }
-        Scanner scanner = new Scanner(System.in);
-        String command = scanner.nextLine();
-        while (command.equals("") && timeT.isRunning() || !command.matches("^[a-zA-Z]*$") && timeT.isRunning()
-                || !(command.equals("interrupt")) && timeT.isRunning()) {
-            command = scanner.nextLine();
-            if (command.toLowerCase().equals("Interrupt".toLowerCase()) && timeT.isRunning()) {
-                //interrupt thread, go back to SwitchedOn state
-                return interrupt();
-            } else {
-                command = scanner.nextLine();
-            }
-        } if(!timeT.isRunning()) {
+
+        if (!timeT.isRunning()) {
             System.out.println("Action has finished");
             return new SwitchedOnOven(commandList);
         } else {
@@ -76,6 +68,7 @@ public class StartedOven implements Oven {
             return this;
         }
     }
+
 
     @Override
     public Device switchOn() {
@@ -102,14 +95,22 @@ public class StartedOven implements Oven {
     }
 
     @Override
-    public long checkTimer() {
+    public Long checkTimer() {
         long time = System.currentTimeMillis() - elapsedT;
-        return time;
+        System.out.println("Timer : " + time);
+        return null;
     }
 
     @Override
     public ArrayList getCommandList() {
-        return commandList;
+        ArrayList<Command> placeholder = new ArrayList<>();
+        placeholder.add(new SetProgramCommand(this));
+        placeholder.add(new SetTimerCommand(this));
+        placeholder.add(new SetHeatCommand(this));
+        placeholder.add(new InterruptCommand(this));
+        placeholder.add(new SwitchOffCommand(this));
+        placeholder.add(new CheckTimerCommand(this));
+        return placeholder;
     }
 
 
@@ -124,7 +125,7 @@ public class StartedOven implements Oven {
     @Override
     public ArrayList<String> getAvailableCommands() {
         ArrayList<String> availableCommands = new ArrayList<>();
-        availableCommands.add("Interrupt");
+        availableCommands.add("- Interrupt\n- Check Timer \n- Set timer\n- Switch off \n- Set heat\n- Set program");
         return availableCommands;
     }
 

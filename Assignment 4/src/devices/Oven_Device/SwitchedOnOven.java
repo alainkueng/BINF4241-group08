@@ -75,11 +75,7 @@ public class SwitchedOnOven implements Oven {
             System.out.println("Please set timer, setting and heat to start the oven ");
             return this;
         }
-
-
     }
-
-
 
     @Override
     public Device switchOn() {
@@ -102,17 +98,23 @@ public class SwitchedOnOven implements Oven {
     }
 
     @Override
-    public long checkTimer() {
+    public Long checkTimer() {
         if(timer == -1)
             System.out.println("No timer has been set yet");
         else
             System.out.println("Timer: " + timer);
-        return timer;
+        return null;
     }
 
     @Override
     public ArrayList getCommandList() {
-        return this.commandList;
+        ArrayList<Command> placeholder = new ArrayList<>();
+        placeholder.add(new SetProgramCommand(this));
+        placeholder.add(new SetTimerCommand(this));
+        placeholder.add(new SetHeatCommand(this));
+        placeholder.add(new StartCommand(this));
+        placeholder.add(new SwitchOffCommand(this));
+        return placeholder;
     }
 
 

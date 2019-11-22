@@ -55,7 +55,7 @@ public class Smartphone{
             }
             System.out.println("\nBack to devices menu\n");
             input = inputCheck().toLowerCase();
-            if(input.equals("back to devices menu")){
+            if(input.equals("Back to devices menu")){
                 break;
             }
             for(int i = 0; i < commands.size(); i++){
@@ -67,7 +67,8 @@ public class Smartphone{
                             if(devices.get(j).printState().equals(statusChanged.printState())){
                                 devices.set(j,statusChanged);
                                 device = statusChanged;
-                                updateCommand(device);
+                                commands = device.getCommandList();
+//                                updateCommand(device);
                                 break;
                             }
                         }

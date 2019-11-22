@@ -27,8 +27,9 @@ public class SwitchedOffOven implements Oven {
     }
 
     @Override
-    public void interrupt() {
+    public Device interrupt() {
         System.out.println("The oven is not running");
+        return null;
     }
 
     @Override
@@ -55,14 +56,16 @@ public class SwitchedOffOven implements Oven {
 
 
     @Override
-    public Integer checkTimer() {
+    public Long checkTimer() {
         System.out.println("Please turn the oven on first");
         return null;
     }
 
     @Override
     public ArrayList getCommandList() {
-        return this.commandList;
+        ArrayList<Command> placeholder = new ArrayList<>();
+        placeholder.add(new SwitchOnCommand(this));
+        return placeholder;
     }
 
 

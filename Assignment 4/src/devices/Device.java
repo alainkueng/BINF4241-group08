@@ -9,7 +9,7 @@ public interface Device {
     public Device switchOn();
     public Device switchOff();
     public void setTimer(int time);
-    public long checkTimer();
+    public Long checkTimer();
     public ArrayList getCommandList();
     public String printState();
     public ArrayList<String> getAvailableCommands();
