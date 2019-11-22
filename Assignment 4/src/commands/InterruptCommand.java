@@ -20,6 +20,11 @@ public class InterruptCommand implements Command {
     }
 
     @Override
+    public String toString() {
+        return "Interrupt";
+    }
+
+    @Override
     public void updateDevice(Device device) {
         this.device = device;
     }

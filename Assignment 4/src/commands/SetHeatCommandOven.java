@@ -18,24 +18,25 @@ public class SetHeatCommandOven implements Command {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter temperature in Celcius: ");
         String input = scanner.nextLine();
-        while (!input.matches("^[0-9]*$")) {
-            System.out.println("Only degrees between 1 and 350 are allowed!\n Try again: ");
-            input = scanner.nextLine();
-            if(0 < heat && heat <= 350) {
-                break;
-            } else{
+        while (input.matches("^[0-9]*$") || !input.matches("^[0-9]*$") ) {
+            if(input.matches("^[0-9]*$")){
+                heat = Integer.parseInt(input);
+                if(0 < heat && heat <= 350) {
+                    break;
+                }
+            } else {
                 System.out.println("Only degrees between 1 and 350 are allowed!\n Try again: ");
                 input = scanner.nextLine();
             }
         }
-        int time = Integer.parseInt(input);
-        oven.setHeat(time);
+        int heat = Integer.parseInt(input);
+        oven.setHeat(heat);
         return null;
     }
 
     @Override
     public Device undo() {
-        heat = 0;
+        heat = -1;
         oven.setHeat(heat);
         return null;
     }

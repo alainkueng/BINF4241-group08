@@ -110,8 +110,6 @@ public class SwitchedOnDishwasher implements Dishwasher{
         placeholder.add(new SetProgramCommand(this));
         placeholder.add(new InterruptCommand(this));
         placeholder.add(new SwitchOffCommand(this));
-        placeholder.add(new SwitchOnCommand(this));
-        placeholder.add(new CheckTimerCommand(this));
         return placeholder;
     }
 

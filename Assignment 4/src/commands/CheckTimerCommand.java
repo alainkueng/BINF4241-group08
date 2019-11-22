@@ -20,6 +20,10 @@ public class CheckTimerCommand implements Command {
         System.out.println("");
         return device;
     }
+    @Override
+    public String toString() {
+        return "Check timer";
+    }
 
     @Override
     public void updateDevice(Device device) {

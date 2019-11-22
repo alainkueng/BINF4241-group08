@@ -12,7 +12,7 @@ public class InitializedDishwasher implements Dishwasher {
     @Override
     public ArrayList<String> getAvailableCommands() {
         ArrayList<String> availableCommands = new ArrayList<>();
-        availableCommands.add("Start");
+        availableCommands.add("Switch on");
         return availableCommands;
     }
 
@@ -30,12 +30,7 @@ public class InitializedDishwasher implements Dishwasher {
     @Override
     public ArrayList getCommandList() {
         ArrayList<Command> placeholder = new ArrayList<>();
-        placeholder.add(new SetTimerCommand(this));
-        placeholder.add(new SetProgramCommand(this));
-        placeholder.add(new InterruptCommand(this));
-        placeholder.add(new SwitchOffCommand(this));
         placeholder.add(new SwitchOnCommand(this));
-        placeholder.add(new CheckTimerCommand(this));
         return placeholder;
     }
 

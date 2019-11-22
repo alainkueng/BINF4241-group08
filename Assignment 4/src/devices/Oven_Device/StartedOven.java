@@ -52,13 +52,7 @@ public class StartedOven implements Oven {
         this.thread = new Thread(timeT);
         elapsedT = System.currentTimeMillis();
         thread.start(); //start thread
-        while (timeT.isRunning()) {
-            System.out.println("Running");
-        }
-        System.out.println("Available commands:\n");
-        for (String s : getAvailableCommands()) {
-            System.out.println("- " + s);
-        }
+
 
         if (!timeT.isRunning()) {
             System.out.println("Action has finished");
@@ -125,7 +119,12 @@ public class StartedOven implements Oven {
     @Override
     public ArrayList<String> getAvailableCommands() {
         ArrayList<String> availableCommands = new ArrayList<>();
-        availableCommands.add("- Interrupt\n- Check Timer \n- Set timer\n- Switch off \n- Set heat\n- Set program");
+        availableCommands.add("Interrupt");
+        availableCommands.add("Check timer");
+        availableCommands.add("Set timer");
+        availableCommands.add("Switch off");
+        availableCommands.add("Set heat");
+        availableCommands.add("Set program");
         return availableCommands;
     }
 

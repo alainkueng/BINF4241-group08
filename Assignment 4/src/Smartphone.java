@@ -61,6 +61,7 @@ public class Smartphone{
             for(int i = 0; i < commands.size(); i++){
                 Command command = commands.get(i);
                 if(command.toString().toLowerCase().equals(input)){
+//                    updateCommand(device);
                     statusChanged = command.execute();
                     if(statusChanged != null){
                         for(int j = 0; j < devices.size(); j++){

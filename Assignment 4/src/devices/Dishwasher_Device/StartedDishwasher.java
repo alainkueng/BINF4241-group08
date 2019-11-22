@@ -2,6 +2,8 @@ package devices.Dishwasher_Device;
 
 import commands.*;
 import devices.Device;
+//import devices.Oven_Device.SwitchedOnOven;
+import devices.TimeThread;
 
 import java.util.ArrayList;
 
@@ -13,6 +15,9 @@ public class StartedDishwasher implements Dishwasher {
     int timer;
     int heat;
     private String setting;
+    TimeThread timeT;
+    Thread thread;
+    long elapsedT;
 
     public StartedDishwasher(ArrayList commandList, int timer, int heat, String setting){
         this.commandList = commandList;
@@ -63,9 +68,22 @@ public class StartedDishwasher implements Dishwasher {
 
     @Override
     public Device start() {
-        System.out.println("The machine is already running");
-        return this;
+        this.timeT = new TimeThread(timer);
+        this.thread = new Thread(timeT);
+        elapsedT = System.currentTimeMillis();
+        thread.start(); //start thread
+
+
+        if (!timeT.isRunning()) {
+            System.out.println("Action has finished");
+            return new SwitchedOnDishwasher(commandList);
+        } else {
+            System.out.println("Action is still running");
+            return this;
+        }
     }
+
+
 
     @Override
     public Device switchOn() {
@@ -100,7 +118,6 @@ public class StartedDishwasher implements Dishwasher {
         placeholder.add(new SetProgramCommand(this));
         placeholder.add(new InterruptCommand(this));
         placeholder.add(new SwitchOffCommand(this));
-        placeholder.add(new SwitchOnCommand(this));
         placeholder.add(new CheckTimerCommand(this));
         return placeholder;
     }
