@@ -1,5 +1,8 @@
-import commands.Command;
-import devices.Device;
+import commands.*;
+import devices.*;
+import devices.Microwave_Device.*;
+import devices.Oven_Device.*;
+import devices.Dishwasher_Device.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,6 +11,9 @@ public class Smartphone{
     private ArrayList<Device> devices;
     private ArrayList<Command> commands;
     private boolean appOpen;
+    InitializedMicrowave initializedMicrowave;
+    InitializedOven initializedOven;
+    InitializedDishwasher initializedDishwasher;
 
 
     public Smartphone(){
@@ -58,6 +64,7 @@ public class Smartphone{
             if(input.equals("Back to devices menu")){
                 break;
             }
+            commands = device.getCommandList();
             for(int i = 0; i < commands.size(); i++){
                 Command command = commands.get(i);
                 if(command.toString().toLowerCase().equals(input)){

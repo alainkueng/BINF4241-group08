@@ -43,4 +43,8 @@ public class SetWattCommand implements Command {
     public void updateDevice(Device device) {
 
     }
+    @Override
+    public String toString() {
+        return "Set watt";
+    }
 }

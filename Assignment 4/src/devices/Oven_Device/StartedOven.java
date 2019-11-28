@@ -36,7 +36,7 @@ public class StartedOven implements Oven {
         if (timeT.isRunning()){
             timeT = null;
             float time = System.currentTimeMillis() - elapsedT;
-            System.out.println("Action was stopped\nElapsed time: " + time);
+            System.out.println("Action was stopped\nElapsed time: " + time/1000);
         }
         return new SwitchedOnOven(commandList);
     }
@@ -90,8 +90,9 @@ public class StartedOven implements Oven {
 
     @Override
     public Long checkTimer() {
-        long time = System.currentTimeMillis() - elapsedT;
-        System.out.println("Timer : " + time);
+        long time = (System.currentTimeMillis() -  elapsedT)/1000;
+        long t2 = (this.time) - time;
+        System.out.println("Timer : " + t2 + "s remaining");
         return null;
     }
 

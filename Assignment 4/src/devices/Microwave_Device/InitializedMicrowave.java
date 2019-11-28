@@ -62,12 +62,7 @@ public class InitializedMicrowave implements Microwave {
     @Override
     public ArrayList getCommandList() {
         ArrayList<Command> placeholder = new ArrayList<>();
-        placeholder.add(new SetTimerCommand(this));
-        placeholder.add(new SetWattCommand(this));
-        placeholder.add(new InterruptCommand(this));
-        placeholder.add(new SwitchOffCommand(this));
         placeholder.add(new SwitchOnCommand(this));
-        placeholder.add(new CheckTimerCommand(this));
         return placeholder;
     }
 
