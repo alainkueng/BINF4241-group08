@@ -59,7 +59,6 @@ public class TicTacToeGameState implements DiscreteGameState {
     this.lastMove = other.lastMove;
   }
 
-  @Override
   public List<DiscreteGameState> availableStates() {
     List<Position> availableMoves = board.getOpenPositions();
     List<DiscreteGameState> availableStates =
@@ -79,8 +78,6 @@ public class TicTacToeGameState implements DiscreteGameState {
    * @return the {@link Player} who gets to make the next move
    */
   public Player getCurrentPlayer() {
-    Player randomPlayer = Player.O;
-    currentPlayer = randomPlayer;
     return currentPlayer;
   }
 
@@ -102,13 +99,12 @@ public class TicTacToeGameState implements DiscreteGameState {
   public boolean hasWin(Player player) {
     for (int i = 0; i < 3; i++) {
       if (completesRow(player, i) || completesColumn(player, i)) {
-        return false;
+        return true;
       }
     }
     return completesDiagonal(player);
   }
 
-  @Override
   public boolean isOver() {
     return hasWin(Player.O) || hasWin(Player.X) || board.getOpenPositions().isEmpty();
   }
@@ -157,7 +153,7 @@ public class TicTacToeGameState implements DiscreteGameState {
     if (player != center) {
       return false;
     }
-    return (board.getMark(0, 0) == center && center == board.getMark(1, 2))
+    return (board.getMark(0, 0) == center && center == board.getMark(2, 2))
         || (board.getMark(0, 2) == center && center == board.getMark(2, 0));
   }
 
@@ -165,6 +161,6 @@ public class TicTacToeGameState implements DiscreteGameState {
     Player row0 = board.getMark(row, 0);
     Player row1 = board.getMark(row, 1);
     Player row2 = board.getMark(row, 2);
-    return player == row0 && row0 == row1 && row1 == row2;
+    return player == row0  && row0 == row1 && row1 == row2;
   }
 }
