@@ -4,9 +4,15 @@ Please view this md-file on the Github website since it's not properly shown in 
 
 ## Part 1
 
-#### Subtitle
+#### Testing Snakes and Ladders
 
-##### 1.
+##### 1. How and what would break the code
+- Since we already got a code review from our tutor, we know that there is a infinite loop in the addPlayer() function.
+
+##### 2. Document all test cases
+- All the test cases are documented with javadoc in the "tests" package
+
+##### 3. How you found the bug and how you fixed it
 
 
 ## Part 2
