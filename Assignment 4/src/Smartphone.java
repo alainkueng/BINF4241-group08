@@ -61,11 +61,14 @@ public class Smartphone{
             }
             System.out.println("\nBack to devices menu\n");
             input = inputCheck().toLowerCase();
-            if(input.equals("Back to devices menu")){
+            if(input.equals("Back to devices menu")|| input.equals("Back")){
                 break;
             }
             commands = device.getCommandList();
             for(int i = 0; i < commands.size(); i++){
+                if(input.equals("Back to devices menu")|| input.equals("Back".toLowerCase())){
+                    return;
+                }
                 Command command = commands.get(i);
                 if(command.toString().toLowerCase().equals(input)){
 //                    updateCommand(device);
@@ -83,6 +86,7 @@ public class Smartphone{
                     }
                     break;
                 }
+
                 if(i + 1 == commands.size()){
                     System.out.println("This doesn't exist in the menu, please choose something from the menu.\n");
                     input = inputCheck().toLowerCase();

@@ -41,9 +41,10 @@ public class StartedMicrowave implements Microwave {
     @Override
     public Device interrupt() {
         if (timeT.isRunning()){
+            timeT.a = false;
             timeT = null;
             float time = System.currentTimeMillis() - elapsedT;
-            System.out.println("Action was stopped\nElapsed time: " + time/1000);
+            System.out.println("Microwave was stopped\nElapsed time: " + time/1000);
         }
         return new SwitchedOnMicrowave();
     }
@@ -54,15 +55,12 @@ public class StartedMicrowave implements Microwave {
         this.thread = new Thread(timeT);
         elapsedT = System.currentTimeMillis();
         thread.start(); //start thread
-        while (timeT.isRunning()) {
-            System.out.println("Running");
-            break;
-        }
+
         if (!timeT.isRunning()) {
-            System.out.println("Action has finished");
+            System.out.println("Microwave is running");
             return new SwitchedOnMicrowave();
         } else {
-            System.out.println("Action is still running");
+            System.out.println("Microwave is done");
             return this;
         }
     }
@@ -75,9 +73,8 @@ public class StartedMicrowave implements Microwave {
 
     @Override
     public Device switchOff() { //here so you switch off?
-        if(timeT.isRunning()) {
-            interrupt();
-        }
+        System.out.println("Microwave is turning off");
+        interrupt();
         return new SwitchedOffMicrowave();
     }
 
@@ -90,7 +87,12 @@ public class StartedMicrowave implements Microwave {
     public Long checkTimer() {// here
         long time = (System.currentTimeMillis() -  elapsedT)/1000;
         long t2 = (timer) - time;
-        System.out.println("Timer : " + t2 + "s remaining");
+        if(t2 <= 0){
+            t2 = 0;
+            System.out.println("Timer : " + t2 + "s remaining");
+        } else {
+            System.out.println("Timer : " + t2 + "s remaining");
+        }
         return null;
     }
 

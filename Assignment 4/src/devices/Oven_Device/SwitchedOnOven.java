@@ -26,14 +26,18 @@ public class SwitchedOnOven implements Oven {
     public void setProgram() {
         getPrograms();
         Scanner scanner = new Scanner(System.in);
-        String program = scanner.nextLine();
-        while(program.equals("") || !program.matches("^[a-zA-Z]*$")) {
+        String program = "";
+        boolean b = true;
+        int i = 0;
+        while(b) {
             program = scanner.nextLine();
             for (String p : programs) {
+                i+=1;
                 if (p.toLowerCase().equals(program.toLowerCase())) {
                     this.setting = p;
-                    return;
-                } else {
+                    b = false;
+                    break;
+                } else if(i >= program.length()) {
                     System.out.println("This doesn't exist in the menu, please choose something from the menu.");
                     program = scanner.nextLine();
                 }
