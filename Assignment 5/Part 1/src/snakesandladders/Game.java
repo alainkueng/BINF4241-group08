@@ -116,6 +116,9 @@ public class Game {
             }
             i = 1;
         }
+        if(!numberInput.matches("[0-9]+")){
+            return false;
+        }
         for (; i < length; i++) {
             char c = numberInput.charAt(i);
             if (c < '0' || c > '9') {

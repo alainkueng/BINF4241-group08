@@ -24,9 +24,6 @@ public class inputPlayersToGameTest {
         assertTrue(((Square)(game.squares.get(0))).player_list.get(1).getName() == "TestName2","There is something wrong with the addPlayerToBoard function");
         assertTrue(((Square)(game.squares.get(0))).player_list.get(2).getName() == "TestName3","There is something wrong with the addPlayerToBoard function");
         assertTrue(((Square)(game.squares.get(0))).player_list.get(3).getName() == "TestName4","There is something wrong with the addPlayerToBoard function");
-        //test players.add(user);
-        //test user.square.enter(user);
-
     }
     @Test
     public void checkNumberStringForAddPlayerTest(){
@@ -47,15 +44,14 @@ public class inputPlayersToGameTest {
     }
     @Test
     public void compareNamesTest(){//this method should only test if the names in the list already exist
-        //check when none is added and compared
         Game game = new Game();
         game.createBoard(6,6);
+        assertTrue(game.compareNames("TestName1"));//checks when none is added and compared
         game.addPlayerToBoard("TestName1");
+        assertTrue(game.compareNames("TestName2"));
         game.addPlayerToBoard("TestName2");
         assertFalse(game.compareNames("TestName1"));
         assertFalse(game.compareNames("TestName2"));
-
-
     }
 
     @Test
