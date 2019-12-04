@@ -18,39 +18,53 @@ public class SwitchedOnDishwasher implements Dishwasher{
     public SwitchedOnDishwasher(ArrayList commandList){
         this.commandList = commandList;
         programs = new ArrayList<>();
-        programs.add("Intensive"); //55 C, 150 minutes
-        programs.add("Heavy"); // 65 C, 135 minutes
-        programs.add("Normal");// 50 C, 113 minutes
-        programs.add("Rinse");// 70 C, 67 minutes
-        programs.add("Rapid");// 50 C, 50 minutes
+        programs.add("Intensive"); //55 C,
+        programs.add("Heavy"); // 65 C,
+        programs.add("Normal");// 50 C,
+        programs.add("Rinse");// 70 C,
+        programs.add("Rapid");// 50 C,
     }
 
     @Override
     public void setProgram() {
         getPrograms();
         Scanner scanner = new Scanner(System.in);
-        String program = scanner.nextLine();
-        while(program.equals("") || !program.matches("^[a-zA-Z]*$")){
+        boolean b = true;
+        String program = "";
+        int i = 0;
+        while(b){
             program = scanner.nextLine();
-            for (String p : programs) {
-                if (p.toLowerCase().equals(program.toLowerCase())) {
-                    this.setting = p;
-                    if (p == "Intensive"){ timer = 150; heat = 55;
-                    }
-                    if (p == "Heavy"){ timer = 135; heat = 65;
-                    }
-                    if (p == "Normal"){ timer = 113; heat = 50;
-                    }
-                    if (p == "Rinse"){ timer = 67; heat = 70;
-                    }
-                    if (p == "Rapid"){ timer =50; heat = 50;
-                    }
-                    return;
-
-                } else {
-                    System.out.println("This doesn't exist in the menu, please choose something from the menu.");
-                    program = scanner.nextLine();
-                }
+            if (programs.get(0).toLowerCase().equals(program.toLowerCase())) {
+                timer = 400;
+                heat = 100;
+                this.setting = programs.get(0).toLowerCase();
+                break;
+            }
+            else if (programs.get(1).toLowerCase().equals(program.toLowerCase())){
+                timer = 300;
+                heat = 55;
+                this.setting = programs.get(1).toLowerCase();
+                break;
+            }
+            else if (programs.get(2).toLowerCase().equals(program.toLowerCase())){
+                timer = 200;
+                heat = 65;
+                this.setting = programs.get(2).toLowerCase();
+                break;
+            }
+            else if (programs.get(3).toLowerCase().equals(program.toLowerCase())){
+                timer = 150;
+                heat = 50;
+                this.setting = programs.get(3).toLowerCase();
+                break;
+            }
+            else if (programs.get(4).toLowerCase().equals(program.toLowerCase())){
+                timer = 67;
+                heat = 70;
+                this.setting = programs.get(4).toLowerCase();
+                break;
+            } else {
+                System.out.println("This doesn't exist in the menu, please choose something from the menu.");
             }
         }
     }
@@ -72,8 +86,16 @@ public class SwitchedOnDishwasher implements Dishwasher{
     }
 
     @Override
-    public Device start() {//anpassen Thread
-        return null;
+    public Device start() {
+        if (timer > 0 && heat > 0) {
+            StartedDishwasher sD = new StartedDishwasher(commandList, timer, heat, setting);
+            sD.start();
+            return sD;
+        }
+        else{
+            System.out.println("Choose a program first");
+            return this;
+        }
     }
 
     @Override
@@ -106,10 +128,9 @@ public class SwitchedOnDishwasher implements Dishwasher{
     @Override
     public ArrayList getCommandList() {
         ArrayList<Command> placeholder = new ArrayList<>();
-        placeholder.add(new SetTimerCommand(this));
         placeholder.add(new SetProgramCommand(this));
-        placeholder.add(new InterruptCommand(this));
         placeholder.add(new SwitchOffCommand(this));
+        placeholder.add(new StartCommand(this));
         return placeholder;
     }
 

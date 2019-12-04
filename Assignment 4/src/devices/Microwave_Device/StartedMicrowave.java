@@ -15,10 +15,11 @@ public class StartedMicrowave implements Microwave {
     long elapsedT;
     private boolean running;
 
-    public StartedMicrowave(int timer, int watt) {
+    public StartedMicrowave(ArrayList commandList,int timer, int watt) {
         this.timer = timer;
         this.watt = watt;
         this.running = false;
+        this.commandList = commandList;
     }
 
     @Override
@@ -40,9 +41,10 @@ public class StartedMicrowave implements Microwave {
     @Override
     public Device interrupt() {
         if (timeT.isRunning()){
+            timeT.a = false;
             timeT = null;
             float time = System.currentTimeMillis() - elapsedT;
-            System.out.println("Action was stopped\nElapsed time: " + time);
+            System.out.println("Microwave was stopped\nElapsed time: " + time/1000);
         }
         return new SwitchedOnMicrowave();
     }
@@ -53,14 +55,12 @@ public class StartedMicrowave implements Microwave {
         this.thread = new Thread(timeT);
         elapsedT = System.currentTimeMillis();
         thread.start(); //start thread
-        while (timeT.isRunning()) {
-            System.out.println("Running");
-        }
+
         if (!timeT.isRunning()) {
-            System.out.println("Action has finished");
+            System.out.println("Microwave is running");
             return new SwitchedOnMicrowave();
         } else {
-            System.out.println("Action is still running");
+            System.out.println("Microwave is done");
             return this;
         }
     }
@@ -73,9 +73,8 @@ public class StartedMicrowave implements Microwave {
 
     @Override
     public Device switchOff() { //here so you switch off?
-        if(timeT.isRunning()) {
-            interrupt();
-        }
+        System.out.println("Microwave is turning off");
+        interrupt();
         return new SwitchedOffMicrowave();
     }
 
@@ -86,10 +85,14 @@ public class StartedMicrowave implements Microwave {
 
     @Override
     public Long checkTimer() {// here
-        if(timer == -1)
-            System.out.println("No timer has been set yet");
-        else
-            System.out.println("Timer: " + timer);
+        long time = (System.currentTimeMillis() -  elapsedT)/1000;
+        long t2 = (timer) - time;
+        if(t2 <= 0){
+            t2 = 0;
+            System.out.println("Timer : " + t2 + "s remaining");
+        } else {
+            System.out.println("Timer : " + t2 + "s remaining");
+        }
         return null;
     }
 
@@ -97,11 +100,11 @@ public class StartedMicrowave implements Microwave {
     public ArrayList getCommandList() {//here
         ArrayList<Command> placeholder = new ArrayList<>();
         placeholder.add(new SetTimerCommand(this));
+        placeholder.add(new CheckTimerCommand(this));
         placeholder.add(new SetWattCommand(this));
         placeholder.add(new InterruptCommand(this));
         placeholder.add(new SwitchOffCommand(this));
         placeholder.add(new SwitchOnCommand(this));
-        placeholder.add(new CheckTimerCommand(this));
         return placeholder;
     }
 
@@ -113,7 +116,11 @@ public class StartedMicrowave implements Microwave {
     @Override
     public ArrayList getAvailableCommands() {
         ArrayList<String> availableCommands = new ArrayList<>();
-        availableCommands.add("- Interrupt\n- Check Timer \n- Set timer\n- Switch off \n- Set watt");
+        availableCommands.add("Interrupt");
+        availableCommands.add("Check Timer");
+        availableCommands.add("Set timer");
+        availableCommands.add("Switch off");
+        availableCommands.add("Set watt");
         return availableCommands;
     }
 }

@@ -12,8 +12,8 @@ public class StartedDishwasher implements Dishwasher {
 
     private ArrayList commandList;
     private ArrayList<String> programs;
-    int timer;
-    int heat;
+    int timer = -1;
+    int heat = -1;
     private String setting;
     TimeThread timeT;
     Thread thread;
@@ -35,10 +35,10 @@ public class StartedDishwasher implements Dishwasher {
     @Override
     public ArrayList<String> getAvailableCommands() {
         ArrayList<String> availableCommands = new ArrayList<>();
-        availableCommands.add("Set program");
         availableCommands.add("Start");
         availableCommands.add("Switch off");
         availableCommands.add("Interrupt");
+        availableCommands.add("Check timer");
         return availableCommands;
     }
 
@@ -63,7 +63,12 @@ public class StartedDishwasher implements Dishwasher {
 
     @Override
     public Device interrupt() {//Thread anpassen
-        return null;
+        if (timeT.isRunning()){
+            timeT = null;
+            float time = System.currentTimeMillis() - elapsedT;
+            System.out.println("Dishwasher was stopped\nElapsed time: " + time/1000);
+        }
+        return new SwitchedOnDishwasher(commandList);
     }
 
     @Override
@@ -75,14 +80,13 @@ public class StartedDishwasher implements Dishwasher {
 
 
         if (!timeT.isRunning()) {
-            System.out.println("Action has finished");
+            System.out.println("Dishwasher is running");
             return new SwitchedOnDishwasher(commandList);
         } else {
-            System.out.println("Action is still running");
+            System.out.println("Dishwasher has finished");
             return this;
         }
     }
-
 
 
     @Override
@@ -94,6 +98,7 @@ public class StartedDishwasher implements Dishwasher {
     @Override
     public Device switchOff() {//Thread? anpassen
         System.out.println("Dishwasher is turning off");
+        interrupt();
         return new SwitchedOffDishwasher(this.commandList);
     }
 
@@ -104,10 +109,14 @@ public class StartedDishwasher implements Dishwasher {
 
     @Override
     public Long checkTimer() {
-        if(timer == -1)
-            System.out.println("No timer has been set yet");
-        else
-            System.out.println("Timer: " + timer);
+        long time = (System.currentTimeMillis() -  elapsedT)/1000;
+        long t2 = (timer) - time;
+        if(t2 <= 0){
+            t2 = 0;
+            System.out.println("Timer : " + t2 + "s remaining");
+        } else {
+            System.out.println("Timer : " + t2 + "s remaining");
+        }
         return null;
     }
 

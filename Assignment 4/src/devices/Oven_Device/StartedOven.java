@@ -23,7 +23,7 @@ public class StartedOven implements Oven {
 
     @Override
     public void setProgram() {
-
+        System.out.println("Cant set a new timer while the oven is running, please interrupt the program first");
     }
 
     @Override
@@ -34,9 +34,10 @@ public class StartedOven implements Oven {
     @Override
     public Device interrupt() {
         if (timeT.isRunning()){
+            timeT.a = false;
             timeT = null;
             float time = System.currentTimeMillis() - elapsedT;
-            System.out.println("Action was stopped\nElapsed time: " + time);
+            System.out.println("Action was stopped\nElapsed time: " + time/1000);
         }
         return new SwitchedOnOven(commandList);
     }
@@ -55,10 +56,10 @@ public class StartedOven implements Oven {
 
 
         if (!timeT.isRunning()) {
-            System.out.println("Action has finished");
+            System.out.println("Oven is running");
             return new SwitchedOnOven(commandList);
         } else {
-            System.out.println("Action is still running");
+            System.out.println("Oven is finished");
             return this;
         }
     }
@@ -72,34 +73,32 @@ public class StartedOven implements Oven {
 
     @Override
     public Device switchOff() {
-        if(timeT.isRunning()) {
-            interrupt();
-        }
+        System.out.println("Oven is turning off");
+        interrupt();
         return new SwitchedOffOven(commandList);
     }
 
     @Override
     public void setTimer(int time) {
-        if(timeT.isRunning()){
-            System.out.printf("Timer was adjusted to %d seconds", time);
-            timeT = new TimeThread(time);
-            thread = new Thread(timeT);
-            thread.start();
-        }
+        System.out.println("Cant set a new timer while the oven is running, please interrupt the program first");
     }
 
     @Override
     public Long checkTimer() {
-        long time = System.currentTimeMillis() - elapsedT;
-        System.out.println("Timer : " + time);
+        long time = (System.currentTimeMillis() -  elapsedT)/1000;
+        long t2 = (this.time) - time;
+        if(t2 <= 0){
+            t2 = 0;
+            System.out.println("Timer : " + t2 + "s remaining");
+        } else {
+            System.out.println("Timer : " + t2 + "s remaining");
+        }
         return null;
     }
 
     @Override
     public ArrayList getCommandList() {
         ArrayList<Command> placeholder = new ArrayList<>();
-        placeholder.add(new SetProgramCommand(this));
-        placeholder.add(new SetTimerCommand(this));
         placeholder.add(new SetHeatCommandOven(this));
         placeholder.add(new InterruptCommand(this));
         placeholder.add(new SwitchOffCommand(this));
@@ -121,10 +120,8 @@ public class StartedOven implements Oven {
         ArrayList<String> availableCommands = new ArrayList<>();
         availableCommands.add("Interrupt");
         availableCommands.add("Check timer");
-        availableCommands.add("Set timer");
         availableCommands.add("Switch off");
         availableCommands.add("Set heat");
-        availableCommands.add("Set program");
         return availableCommands;
     }
 

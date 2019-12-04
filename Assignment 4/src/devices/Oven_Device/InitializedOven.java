@@ -48,7 +48,9 @@ public class InitializedOven implements Oven {
     }
     @Override
     public ArrayList getCommandList() {
-        return this.commandList;
+        ArrayList<Command> placeholder = new ArrayList<>();
+        placeholder.add(new SwitchOnCommand(this));
+        return placeholder;
     }
 
     public String printState(){

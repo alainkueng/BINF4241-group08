@@ -40,7 +40,7 @@ public class InitializedDishwasher implements Dishwasher {
     }
 
     public Device switchOn(){
-        return new StartedDishwasher(this.commandList);
+        return new SwitchedOnDishwasher(this.commandList);
     }
 
     public Long checkTimer(){

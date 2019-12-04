@@ -10,8 +10,7 @@ public class InterruptCommand implements Command {
     }
     @Override
     public Device execute() {
-        device.interrupt();
-        return null;
+        return device.interrupt();
     }
 
     @Override

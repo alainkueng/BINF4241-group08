@@ -1,5 +1,8 @@
-import commands.Command;
-import devices.Device;
+import commands.*;
+import devices.*;
+import devices.Microwave_Device.*;
+import devices.Oven_Device.*;
+import devices.Dishwasher_Device.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,6 +11,9 @@ public class Smartphone{
     private ArrayList<Device> devices;
     private ArrayList<Command> commands;
     private boolean appOpen;
+    InitializedMicrowave initializedMicrowave;
+    InitializedOven initializedOven;
+    InitializedDishwasher initializedDishwasher;
 
 
     public Smartphone(){
@@ -55,10 +61,14 @@ public class Smartphone{
             }
             System.out.println("\nBack to devices menu\n");
             input = inputCheck().toLowerCase();
-            if(input.equals("Back to devices menu")){
+            if(input.equals("Back to devices menu")|| input.equals("Back")){
                 break;
             }
+            commands = device.getCommandList();
             for(int i = 0; i < commands.size(); i++){
+                if(input.equals("Back to devices menu")|| input.equals("Back".toLowerCase())){
+                    return;
+                }
                 Command command = commands.get(i);
                 if(command.toString().toLowerCase().equals(input)){
 //                    updateCommand(device);
@@ -76,6 +86,7 @@ public class Smartphone{
                     }
                     break;
                 }
+
                 if(i + 1 == commands.size()){
                     System.out.println("This doesn't exist in the menu, please choose something from the menu.\n");
                     input = inputCheck().toLowerCase();
