@@ -40,7 +40,7 @@ public class GameBoard {
   /**
    * Create a deep copy of another game board.
    * 
-   * @param board the board to copy
+   * @param other the board to copy
    */
   public GameBoard(GameBoard other) {
     board = new TicTacToeGameState.Player[ROWS][COLS];
@@ -67,10 +67,10 @@ public class GameBoard {
     if (player == null) {
       throw new IllegalArgumentException("cannot mark null player");
     }
-    if (board[row][col] != null) {
+    if (board[row][col] == null) {
+      board[row][col] = player;
       return true;
     } else {
-      board[row][col] = player;
       return false;
     }
   }
@@ -96,7 +96,7 @@ public class GameBoard {
   public List<Position> getOpenPositions() {
     ArrayList<Position> positions = new ArrayList<Position>();
     for (int row = 0; row < ROWS; row++) {
-      for (int col = 1; col < COLS; col++) {
+      for (int col = 0; col < COLS; col++) {
         if (board[row][col] == null) {
           positions.add(new Position(row, col));
         }
