@@ -26,7 +26,17 @@ public class TimeThread implements Runnable {
             Thread.sleep(time);
             running = false;
             if(a) {
-                System.out.printf("\n%s is done", d.getClass().getCanonicalName());
+                String name = d.getClass().getName();
+                String realName = "";
+                for (int i = 0;i < name.length(); i++){
+                    if(name.charAt(i)!='.')
+                    {realName += String.valueOf(name.charAt(i));
+                    }
+                    if(name.charAt(i)=='.'){
+                        break;
+                    }
+                }
+                System.out.printf("\n%s is done", realName);
                 d.interrupt();
             }
 
