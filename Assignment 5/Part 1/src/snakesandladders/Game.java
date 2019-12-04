@@ -17,6 +17,7 @@ public class Game {
     public int numPlayer;
     public List<Player> players;
     public List<Square> squares;
+    public String Players;
 
 
     //Constructor
@@ -26,8 +27,60 @@ public class Game {
         this.winner = null;
         this.current = 0;
         this.squares = new ArrayList<Square>();
-        createBoard();
-        addPlayer();
+    }
+
+    public void run(){
+        boolean checkWidthSize = false;
+        boolean checkHeightSize = false;
+        boolean boardSize = false;
+        while(!boardSize) {
+            while (!checkWidthSize) {
+                System.out.println("Please enter board width: ");
+                String width = readInput();
+                if (checkNumberStringForCreateBoard(width)) {
+                    this.board_width = Integer.parseInt(width);
+                    checkWidthSize = true;
+                }
+            }
+            while (!checkHeightSize) {
+                System.out.println("Please enter board height: ");
+                String height = readInput();
+                if (checkNumberStringForCreateBoard(height)) {
+                    this.board_height = Integer.parseInt(height);
+                    checkHeightSize = true;
+                }
+            }
+            if (createBoard(board_height, board_width)){
+                boardSize = true;
+            }
+            else{
+                System.out.println("Sorry but there is something wrong with the board. " +
+                        "It has to be more than 1 and less than 10000. Please retry");
+                checkHeightSize = false;
+                checkWidthSize = false;
+            }
+        }
+        boolean checkNumber = false;
+        while(!checkNumber){
+            System.out.println("Please enter how many players:");
+            checkNumber = checkNumberStringForAddPlayer(readInput());
+        }
+        for (int i = 1; i<= numPlayer; i++) {
+                boolean checkName = false;
+                boolean checkExisting = false;
+                while (!checkName & !checkExisting) {
+                    System.out.printf("Please enter player name for player %d\n", i);
+                    String checkExist = readInput();
+                    if(checkPlayerString(checkExist)&& compareNames(checkExist)){
+                        checkExisting = true;
+                        Players = checkExist;
+                        checkName = true;
+                    }
+
+                }
+                addPlayerToBoard(Players);
+        }
+        System.out.println("\nGame starting now!");
         System.out.print("Initial state:\t");
         printGame();
         Dice dice = new Dice();
@@ -43,33 +96,41 @@ public class Game {
             checkLast(current_player);
             nextPlayer();
         }
+
+    }
+    public boolean checkNumberStringForCreateBoard(String numberInput){
+        if ( numberInput == null) {
+            System.out.println("Sorry but this input is invalid, please enter a board size that isn't greater than 10000");
+            return false;
+        }
+        int length = numberInput.length();
+        if (length == 0) {
+            System.out.println("Sorry but this input is invalid, please enter a board size that isn't greater than 10000");
+            return false;
+        }
+        int i = 0;
+        if (numberInput.charAt(0) == '-') {
+            if (length == 1) {
+                System.out.println("Sorry but this input is invalid, please enter a board size that isn't greater than 10000");
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = numberInput.charAt(i);
+            if (c < '0' || c > '9') {
+                System.out.println("Sorry but this input is invalid, please enter a board size that isn't greater than 10000");
+                return false;
+            }
+        }
+        return true;
     }
 
     // create Board with squares
-    public void createBoard() {
-
-        while (this.board_size < 2) {
-            System.out.println("Please input height: ");
-            Scanner s = new Scanner(System.in);
-
-            while (!s.hasNextInt()) {
-                System.out.println("Input is not a number, please input height: ");
-                s.nextLine();
-            }
-            int h_size = s.nextInt();
-            this.board_height = h_size;  // for board_size
-
-            System.out.println("Please input width: ");
-            while (!s.hasNextInt()) {
-                System.out.println("Input is not a number, please input width: ");
-                s.nextLine();
-            }
-            int w_size = s.nextInt();
-            this.board_width = w_size;
-            board_size = this.board_height * this.board_width;
-            if (board_size < 2) {
-                System.out.println("Don't be silly, have you ever played Snakes and Ladders in real life?");
-            }
+    public boolean createBoard(int height, int width) {
+        board_size = height*width;
+        if(board_size>10001 || board_size < 2){
+            return false;
         }
         Square square = new FirstSquare(1, this);
         squares.add(square);
@@ -140,44 +201,56 @@ public class Game {
             }
 
         }
+        return true;
+    }
+    public String readInput(){
+        Scanner stringInput = new Scanner(System.in);
+        String input = stringInput.next();
+        return input;
+    }
+
+    public boolean checkPlayerString(String playerName){
+        if(playerName.matches("[A-Za-z ]+") && playerName.length() < 16 && playerName.length() > 0 && !playerName.matches("[ ]+")){
+            return true;
+        }
+        else{
+            System.out.println( "I'm sorry but this name is not valid. " +
+                                "Only alphabet letters and the name length should be smaller than 16");
+            return false;
+        }
     }
 
 
-    //add players to the board + muss noch jedem player den ersten Square zuteilen
-    public void addPlayer() {
 
-        Scanner numPlayers = new Scanner(System.in);
-        System.out.println("Number of players?");
-        while(!numPlayers.hasNextInt()){
-            System.out.println("Wrong input, please enter number of players: ");
-            numPlayers.nextLine();
+    public boolean checkNumberStringForAddPlayer(String numberPlayers){
+        if (numberPlayers.matches("[1-4]") && numberPlayers.length() == 1){
+            numPlayer = Integer.parseInt(numberPlayers);
+            return true;
         }
-        numPlayer = numPlayers.nextInt();
-        while(numPlayer < 1 || numPlayer > 4){
-            System.out.println("This game is for 1 to 4 players, please adjust: ");
-            while(!numPlayers.hasNextInt()){
-                System.out.println("Wrong input, please enter number of players: ");
-            }
-            numPlayer = numPlayers.nextInt();
+        else{
+            System.out.println("I'm sorry but this isn't a valid Input. Max 4 Players.");
+            return false;
         }
-        for (int i = 1; i <= numPlayer; i++) {
-            Player user = new Player(squares.get(0));
-            user.setName(i, this.players);
-            while (user.getName().equals("") && players.isEmpty()) {
-                System.out.println("Please input a Name");
-                user.setName(i, this.players);
-
-            }
-            if (numPlayer < 2) {
-                System.out.println("One is the loneliest number, but sure play by yourself");
-            }
-            players.add(user);
-            user.square.enter(user);
-        }
-        System.out.println("\nGame starting now!");
-
     }
 
+
+    public void addPlayerToBoard(String playerName) {
+        Player user = new Player(squares.get(0));
+        user.setName(playerName);
+        players.add(user);
+        user.square.enter(user);
+    }
+
+
+    public boolean compareNames(String playerName){
+        for (Player Player: this.players){
+            if (Player.getName().equals(playerName)){
+                System.out.println("Sorry but this name is already taken");
+                return false;
+            }
+        }
+        return true;
+    }
 
     public Square getSquare(int square_number) {
         return squares.get(square_number - 1);
@@ -235,7 +308,11 @@ public class Game {
             }
             System.out.println("");
         }
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.run();
     }
+}
 
 
 

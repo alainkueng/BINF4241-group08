@@ -12,25 +12,8 @@ public class Player { // Attribute
        this.square = number;
     }
 
-    public void setName(int number, List<Player> player_list) {
-        Scanner s = new Scanner(System.in);
-        System.out.println("Player " + number + ":");
-        name = s.nextLine();
-        if (player_list.size() > 0) {
-            for (int i = 0; i < player_list.size(); i++) {
-                // no repeated names
-                while (name.equals(player_list.get(i).name)) {
-                    System.out.println("This name has already been used, please try another one:");
-                    name = s.nextLine();
-                    i = 0;
-                }
-            }
-        }
-        while(!name.matches("[a-zA-Z ]+" )) {
-            System.out.println("Please enter a valid name!");
-            name = s.nextLine();
-        }
-        this.name = name;
+    public void setName(String playerName) {
+    this.name = playerName;
     }
 
 
