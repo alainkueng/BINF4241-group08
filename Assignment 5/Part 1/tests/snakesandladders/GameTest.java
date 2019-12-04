@@ -8,7 +8,7 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GameBoardInitializeTest {
+public class GameTest {
     @Test
     public void createBoardTest() {
         Game game = new Game();
@@ -53,5 +53,8 @@ public class GameBoardInitializeTest {
         assertTrue(game.checkNumberStringForCreateBoard("2"));
 
     }
+    @Test
+    public void runTest(){
 
+    }
 }

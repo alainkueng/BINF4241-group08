@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class inputPlayersToGameTest {
+public class InputPlayersToGameTest {
 
     // We won't test readInput() since it only contains java integrated functions
     @Test
