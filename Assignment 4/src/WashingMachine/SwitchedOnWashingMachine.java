@@ -1,28 +1,26 @@
-package devices.Dishwasher_Device;
+package WashingMachine;
 
 import commands.*;
 import devices.Device;
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// maybe a Checkheat function?
-public class SwitchedOnDishwasher implements Dishwasher{
-
+public class SwitchedOnWashingMachine implements WashingMachine{
     private ArrayList commandList;
     private ArrayList<String> programs;
     int timer = -1;
     int heat = -1;
     private String setting = "";
 
-    public SwitchedOnDishwasher(ArrayList commandList){
-        this.commandList = commandList;
+    public SwitchedOnWashingMachine(ArrayList commandList){
+        this.commandList = getCommandList();
         programs = new ArrayList<>();
-        programs.add("Intensive"); //55 C,
-        programs.add("Heavy"); // 65 C,
-        programs.add("Normal");// 50 C,
-        programs.add("Rinse");// 70 C,
-        programs.add("Rapid");// 50 C,
+        programs.add("Double Rinse"); //55 C,
+        programs.add("Intense"); // 65 C,
+        programs.add("Quick");// 50 C,
+        programs.add("Spin");// 70 C,
     }
 
     @Override
@@ -31,37 +29,30 @@ public class SwitchedOnDishwasher implements Dishwasher{
         Scanner scanner = new Scanner(System.in);
         boolean b = true;
         String program = "";
-        int i = 0;
         while(b){
             program = scanner.nextLine();
             if (programs.get(0).toLowerCase().equals(program.toLowerCase())) {
-                timer = 400;
-                heat = 100;
+                timer = 200;
+                heat = 55;
                 this.setting = programs.get(0).toLowerCase();
                 break;
             }
             else if (programs.get(1).toLowerCase().equals(program.toLowerCase())){
-                timer = 300;
-                heat = 55;
+                timer = 150;
+                heat = 80;
                 this.setting = programs.get(1).toLowerCase();
                 break;
             }
             else if (programs.get(2).toLowerCase().equals(program.toLowerCase())){
-                timer = 200;
-                heat = 65;
+                timer = 20;
+                heat = 30;
                 this.setting = programs.get(2).toLowerCase();
                 break;
             }
-            else if (programs.get(3).toLowerCase().equals(program.toLowerCase())){
-                timer = 150;
-                heat = 50;
+            else if (programs.get(3).toLowerCase().equals(program.toLowerCase())) {
+                timer = 70;
+                heat = 40;
                 this.setting = programs.get(3).toLowerCase();
-                break;
-            }
-            else if (programs.get(4).toLowerCase().equals(program.toLowerCase())){
-                timer = 67;
-                heat = 70;
-                this.setting = programs.get(4).toLowerCase();
                 break;
             } else {
                 System.out.println("This doesn't exist in the menu, please choose something from the menu.");
@@ -80,7 +71,7 @@ public class SwitchedOnDishwasher implements Dishwasher{
 
     @Override
     public Device interrupt() {
-        System.out.println("Dishwasher_Device is not running");
+        System.out.println("Washing Machine is not running");
         return null;
 
     }
@@ -88,9 +79,9 @@ public class SwitchedOnDishwasher implements Dishwasher{
     @Override
     public Device start() {
         if (timer > 0 && heat > 0) {
-            StartedDishwasher sD = new StartedDishwasher(commandList, timer, heat, setting);
-            sD.start();
-            return sD;
+            StartedWashingMachine sM = new StartedWashingMachine(commandList, timer, heat, setting);
+            sM.start();
+            return sM;
         }
         else{
             System.out.println("Choose a program first");
@@ -100,19 +91,19 @@ public class SwitchedOnDishwasher implements Dishwasher{
 
     @Override
     public Device switchOn() {
-        System.out.println("Dishwasher is already switched on");
+        System.out.println("Washing Machine is already switched on");
         return this;
     }
 
     @Override
     public Device switchOff() {
-        System.out.println("Dishwasher is turning off");
-        return new SwitchedOffDishwasher(this.commandList);
+        System.out.println("Washing Machine is turning off");
+        return new SwitchedOffWashingMachine(this.commandList);
     }
 
     @Override
     public void setTimer(int time) {
-        System.out.println("You can't set a timer for the dishwasher");
+        System.out.println("You can't set a timer for the Washing Machine");
     }
 
     @Override
@@ -121,23 +112,24 @@ public class SwitchedOnDishwasher implements Dishwasher{
             System.out.println("No program has been chosen yet");
         }
         else{System.out.printf("\nTimer is set to %d", timer);
-    }
+        }
         return null;
     }
 
     @Override
     public ArrayList getCommandList() {
         ArrayList<Command> placeholder = new ArrayList<>();
+
         placeholder.add(new SetProgramCommand(this));
         placeholder.add(new SwitchOffCommand(this));
         placeholder.add(new StartCommand(this));
-        return placeholder;
+        commandList = placeholder;
+        return commandList;
     }
 
     @Override
     public String printState() {
-        System.out.println("Dishwasher");
-        return "Dishwasher";
+        return "Washing Machine";
     }
 
     @Override

@@ -1,11 +1,13 @@
-package devices;
+package WashingMachine;
+
+import devices.Device;
 
 import java.util.ArrayList;
 
 public interface WashingMachine extends Device {
 
-    void setTemperature();
-    void setProgram(String program);
+
+    void setProgram();
     ArrayList getPrograms();
 
 }

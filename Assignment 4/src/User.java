@@ -1,3 +1,4 @@
+import WashingMachine.InitializedWashingMachine;
 import commands.*;
 import devices.Dishwasher_Device.InitializedDishwasher;
 import devices.Microwave_Device.InitializedMicrowave;
@@ -11,6 +12,7 @@ public class User {
         InitializedOven oven = new InitializedOven();
         InitializedMicrowave microwave = new InitializedMicrowave();
         InitializedDishwasher dish = new InitializedDishwasher();
+        InitializedWashingMachine wash = new InitializedWashingMachine();
         //InitializedCleaningRobot cleaningRobot = new InitializedCleaningRobot();
 
 //        smartphone.addCommand(new SwitchOnCommand(oven));
@@ -37,6 +39,7 @@ public class User {
         smartphone.addDevice(oven);
         smartphone.addDevice(microwave);
         smartphone.addDevice(dish);
+        smartphone.addDevice(wash);
         smartphone.start();
     }
 

@@ -1,15 +1,12 @@
-package devices.Dishwasher_Device;
+package WashingMachine;
 
 import commands.*;
 import devices.Device;
-//import devices.Oven_Device.SwitchedOnOven;
 import devices.TimeThread;
 
 import java.util.ArrayList;
 
-
-public class StartedDishwasher implements Dishwasher {
-
+public class StartedWashingMachine implements WashingMachine{
     private ArrayList commandList;
     private ArrayList<String> programs;
     int timer = -1;
@@ -19,8 +16,8 @@ public class StartedDishwasher implements Dishwasher {
     Thread thread;
     long elapsedT;
 
-    public StartedDishwasher(ArrayList commandList, int timer, int heat, String setting){
-        this.commandList = commandList;
+    public StartedWashingMachine(ArrayList commandList, int timer, int heat, String setting){
+        this.commandList = getCommandList();
         this.timer = timer;
         this.heat = heat;
         this.setting = setting;
@@ -43,13 +40,13 @@ public class StartedDishwasher implements Dishwasher {
     }
 
 
-    public StartedDishwasher(ArrayList commandList){
+    public StartedWashingMachine(ArrayList commandList){
         this.commandList = commandList;
     }
 
     @Override
     public void setProgram() {
-        System.out.println("You can't set a program while the machine is running");
+        System.out.println("You can't set a program while the  Washing Machine is running");
     }
 
     @Override
@@ -62,28 +59,33 @@ public class StartedDishwasher implements Dishwasher {
     }
 
     @Override
-    public Device interrupt() {//Thread anpassen
-        if (timeT.isRunning()){
-            timeT = null;
-            float time = System.currentTimeMillis() - elapsedT;
-            System.out.println("Dishwasher was stopped\nElapsed time: " + time/1000);
+    public Device interrupt() {
+        if(timeT != null) {
+            if (timeT.isRunning()) {
+                timeT.a = false;
+                timeT = null;
+                float time = System.currentTimeMillis() - elapsedT;
+                System.out.println("Action was stopped\nElapsed time: " + time / 1000);
+            }
         }
-        return new SwitchedOnDishwasher(commandList);
+        return new SwitchedOnWashingMachine(this.commandList);
     }
 
     @Override
     public Device start() {
         this.timeT = new TimeThread(timer);
         this.thread = new Thread(timeT);
+        timeT.setDevice(this);
         elapsedT = System.currentTimeMillis();
         thread.start(); //start thread
+        long time = (System.currentTimeMillis() -  elapsedT)/1000;
 
 
         if (!timeT.isRunning()) {
-            System.out.println("Dishwasher is running");
-            return new SwitchedOnDishwasher(commandList);
+            System.out.println("Washing machine is running");
+            return new SwitchedOnWashingMachine(commandList);
         } else {
-            System.out.println("Dishwasher has finished");
+            System.out.println("Washing machine has finished");
             return this;
         }
     }
@@ -91,20 +93,19 @@ public class StartedDishwasher implements Dishwasher {
 
     @Override
     public Device switchOn() {
-        System.out.println("The machine is already on");
+        System.out.println("The Washing Machine is already on");
         return this;
     }
 
     @Override
     public Device switchOff() {//Thread? anpassen
-        System.out.println("Dishwasher is turning off");
-        interrupt();
-        return new SwitchedOffDishwasher(this.commandList);
+        System.out.println("Washing Machine is turning off");
+        return new SwitchedOffWashingMachine(this.commandList);
     }
 
     @Override
     public void setTimer(int time) {
-        System.out.println("You can't set a timer for the dishwasher");
+        System.out.println("You can't set a timer for the Washing Machine");
     }
 
     @Override
@@ -114,25 +115,26 @@ public class StartedDishwasher implements Dishwasher {
         if(t2 <= 0){
             t2 = 0;
             System.out.println("Timer : " + t2 + "s remaining");
+            interrupt();
         } else {
             System.out.println("Timer : " + t2 + "s remaining");
         }
-        return null;
+        return t2;
     }
 
     @Override
     public ArrayList getCommandList() {
         ArrayList<Command> placeholder = new ArrayList<>();
-        placeholder.add(new SetTimerCommand(this));
-        placeholder.add(new SetProgramCommand(this));
         placeholder.add(new InterruptCommand(this));
         placeholder.add(new SwitchOffCommand(this));
         placeholder.add(new CheckTimerCommand(this));
-        return placeholder;
+        commandList = placeholder;
+        return commandList;
     }
 
     @Override
     public String printState() {
-        return "Dishwasher";
+        return "Washing Machine";
     }
+
 }
