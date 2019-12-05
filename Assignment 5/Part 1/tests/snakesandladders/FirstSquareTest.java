@@ -10,6 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class FirstSquareTest {
+
+    /**
+     * leave() gets as input the Player that should leave the field and removes the Player from it's square.
+     * Before the test two players will spawn at the firstSquare. Then the first Player moves.
+     * The assert tests if the firstSquare.playerList is size of 1 since one got removed.
+     * Then the next Player moves.
+     * The second assert Tests if the FirstSquare is now empty.
+     */
     @Test
     public void leaveTest(){
         Game game = new Game();
@@ -29,8 +37,12 @@ public class FirstSquareTest {
         assertTrue(game.squares.get(0).player_list.size() == 0);
     }
 
+    /**
+     * This method tests if the FirstSquare is occupied. Since we implemented that this square can have as many
+     * Players on it as wanted, the FirstSquare will always say it's not occupied (i.e. has space for more Players)
+     */
     @Test
-    public void isOccupied() {
+    public void isOccupiedTest() {
         Game game = new Game();
         game.createBoard(6,1);
         game.addPlayerToBoard("TestName");

@@ -6,9 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InputPlayersToGameTest {
 
-    // We won't test readInput() since it only contains java integrated functions
+    /**
+     * This test checks the addPlayerToBoard method from Game(). This method gets an already checked String as input and
+     * adds it to the firstSquare. It also adds to the generated Player the corresponding Square. Both gets
+     * tested.
+     */
     @Test
-    public void addPlayerIsInListTest(){// we don't have to know how many players or if the string is correct. this is tested in other methods
+    public void addPlayerIsInListTest(){
         Game game = new Game();
         game.createBoard(6,6);
         game.addPlayerToBoard("TestName1");
@@ -19,7 +23,18 @@ public class InputPlayersToGameTest {
         assertTrue(((Square)(game.squares.get(0))).player_list.get(1).getName() == "TestName2");
         assertTrue(((Square)(game.squares.get(0))).player_list.get(2).getName() == "TestName3");
         assertTrue(((Square)(game.squares.get(0))).player_list.get(3).getName() == "TestName4");
+        assertTrue(((game.players.get(0))).square.getClass()  == FirstSquare.class);
+        assertTrue(((game.players.get(1))).square.getClass()  == FirstSquare.class);
+        assertTrue(((game.players.get(2))).square.getClass()  == FirstSquare.class);
+        assertTrue(((game.players.get(3))).square.getClass()  == FirstSquare.class);
     }
+
+    /**
+     * This tests the checkNumberStringForAddPlayer method from Game(). It checks how many players the user wants to add to the game.
+     * If the String input is lower than 1 or higher than 4 it will return false. It adds the number to the numPlayer
+     * global variable which we test below and it should remain the same if the String is false.
+     *
+     */
     @Test
     public void checkNumberStringForAddPlayerTest(){
         Game game = new Game();
@@ -37,8 +52,13 @@ public class InputPlayersToGameTest {
         assertTrue(game.numPlayer == 4);//since it should remain 4
 
     }
+
+    /**
+     * This test checks the compareNames method from Game(). We input a String name and it will return a boolean if
+     * the player name is already used before.
+     */
     @Test
-    public void compareNamesTest(){//this method should only test if the names in the list already exist
+    public void compareNamesTest(){
         Game game = new Game();
         game.createBoard(6,6);
         assertTrue(game.compareNames("TestName1"));//checks when none is added and compared
@@ -49,6 +69,11 @@ public class InputPlayersToGameTest {
         assertFalse(game.compareNames("TestName2"));
     }
 
+    /**
+     * This test checks the checkPlayerStringTest method from Game() . It returns false when the
+     * input string contains not-alphabetic words or is just an empty name. Here we found a bug where you could
+     * name yourself the same as the person before and you could input a empty string. All this is tested below.
+     */
     @Test
     public void checkPlayerStringTest(){
         Game game = new Game();
