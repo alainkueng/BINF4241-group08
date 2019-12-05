@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
-    private Player winner;
+    public Player winner;
     public int current;
     public int board_width;
     public int board_height;

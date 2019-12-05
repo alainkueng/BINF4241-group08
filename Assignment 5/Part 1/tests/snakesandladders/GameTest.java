@@ -81,4 +81,21 @@ public class GameTest {
         game.numPlayer = 1;
         assertTrue(game.checkNumber(6, game.players.get(0))== 0);
     }
+
+    /**
+     * This method checks if a player has reached the lastSquare which will lead to the end of the Game. This should
+     * change the winner to the player name.
+     */
+    @Test
+    public void checkLast(){
+        Game game = new Game();
+        game.createBoard(1,6);
+        game.addPlayerToBoard("TestName");
+        game.numPlayer = 1;
+        Player current_player = game.players.get(game.current);
+        int to_move = game.checkNumber(5, current_player);
+        current_player.move(to_move);
+        game.checkLast(current_player);
+        assertTrue(game.winner == current_player);
+    }
 }
