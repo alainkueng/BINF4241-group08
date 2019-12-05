@@ -67,8 +67,18 @@ public class GameTest {
         assertTrue(game.checkNumberStringForCreateBoard("2"));
 
     }
+
+    /**
+     * This method checks if the move goes over the boardSize. In this case it would calculate a new number to move.
+     * For example we test a boardSize of 4. If the user rolls 6 the player would reach the end and then logically come
+     * back to the FirstSquare.
+     */
     @Test
     public void checkNumberTest(){
-
+        Game game = new Game();
+        game.createBoard(2,2);
+        game.addPlayerToBoard("TestName");
+        game.numPlayer = 1;
+        assertTrue(game.checkNumber(6, game.players.get(0))== 0);
     }
 }
