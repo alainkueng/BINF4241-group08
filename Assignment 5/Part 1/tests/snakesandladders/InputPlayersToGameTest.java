@@ -1,10 +1,5 @@
 package snakesandladders;
-import org.junit.*;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-
-import java.util.Scanner;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,10 +15,10 @@ public class InputPlayersToGameTest {
         game.addPlayerToBoard("TestName2");
         game.addPlayerToBoard("TestName3");
         game.addPlayerToBoard("TestName4");
-        assertTrue(((Square)(game.squares.get(0))).player_list.get(0).getName() == "TestName1","There is something wrong with the addPlayerToBoard function");
-        assertTrue(((Square)(game.squares.get(0))).player_list.get(1).getName() == "TestName2","There is something wrong with the addPlayerToBoard function");
-        assertTrue(((Square)(game.squares.get(0))).player_list.get(2).getName() == "TestName3","There is something wrong with the addPlayerToBoard function");
-        assertTrue(((Square)(game.squares.get(0))).player_list.get(3).getName() == "TestName4","There is something wrong with the addPlayerToBoard function");
+        assertTrue(((Square)(game.squares.get(0))).player_list.get(0).getName() == "TestName1");
+        assertTrue(((Square)(game.squares.get(0))).player_list.get(1).getName() == "TestName2");
+        assertTrue(((Square)(game.squares.get(0))).player_list.get(2).getName() == "TestName3");
+        assertTrue(((Square)(game.squares.get(0))).player_list.get(3).getName() == "TestName4");
     }
     @Test
     public void checkNumberStringForAddPlayerTest(){

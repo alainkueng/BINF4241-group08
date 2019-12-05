@@ -1,10 +1,5 @@
 package snakesandladders;
-import org.junit.*;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-
-import java.util.Scanner;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -51,10 +46,6 @@ public class GameTest {
         assertTrue(game.checkNumberStringForCreateBoard("0"));
         assertTrue(game.checkNumberStringForCreateBoard("100000"));
         assertTrue(game.checkNumberStringForCreateBoard("2"));
-
-    }
-    @Test
-    public void runTest(){
 
     }
 }

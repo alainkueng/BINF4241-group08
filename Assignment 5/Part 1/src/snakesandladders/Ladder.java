@@ -16,5 +16,4 @@ public class Ladder extends Square {
         player.move(new_position-this.position);
 
     }
-
-    }
+}

@@ -91,8 +91,6 @@ public class Game {
             int to_move = checkNumber(random_number, current_player);
             printGame();
             current_player.move(to_move);
-
-
             checkLast(current_player);
             nextPlayer();
         }
