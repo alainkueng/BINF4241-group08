@@ -6,14 +6,37 @@ Please view this md-file on the Github website since it's not properly shown in 
 
 #### Testing Snakes and Ladders
 
-##### 1. How and what would break the code
-- Since we already got a code review from our tutor, we know that there is a infinite loop in the addPlayer() function.
+-First off we decided to move the game logic out of the Game() constructer. To do so, we made an extra method that is called run() in the Game class, so we don't have to play a Game everytime we create a new Game class in the test package. run() will now start the game. In addition we deleted the main class since it's useless ands solely for starting the Game.run(). Because of this we moved the public static void main to the Game class. You can now run the Game in the Game class.
+We also redesigned the addPlayer method. It's four methods now:
+1. Renamed addPlayer() to addPlayerToBoard() and removed some logic to other methods.
+2. Added checkNumberStringForAddPlayer() that checks how many players you want to add.
+3. Added checkPlayerString() that checks the input name for possible errors (Integer, empty,..).
+4. Added compareNames() that checks if the player name is already used.
+
+Plus we added readInput() that solely purpose is reading the commandLine input. In addition to that we redesigned createBoard() into two methods:
+1. Changed createBoard() that now requires to Integers as Input.
+2. Added checkNumberStringForCreateBoard() that checks if the given input string is an integer.
+
+All this changes were made that we can better test our code, they were just moved in other methods, not changed. Now we don't have to input strings while running a test. We didn't write tests for: 
+- readInput() since it's only java.scanner code. 
+- run() method since it just executes all the methods in the game in the right order.
+- all getters and setters since they just have one line of code (return).
+- printGame() since it just reflects all the results of the executed code.
+- Lastsquare.class since it's a square.class with one changed boolean.
+
+##### 1. Think of how and what would break the code
+- Possible wrong inputs from the user that would crash the game
+- Edge cases that the game can't handle
+- Infinite loops
 
 ##### 2. Document all test cases
-- All the test cases are documented with javadoc in the "tests" package
+- All the test cases are documented with javadoc in the "tests" package that you find in part 1. Each test can be started on it's own.
 
 ##### 3. How you found the bug and how you fixed it
-
+- There was a bug in the old addPlayer() method were you could add the same name for every player, we found it while writing the test. We fixed it now in the compareNames() that checks the list of players properly and returns a boolean. 
+- From our first meeting with the tutor we know that we coded the createBoard() in such a way that you could create huge boards that the memory can't handle. We restricted it to 10000 fields max. and 2 min.
+- In addition to the first bug, you could enter an empty string or "spaces" as names. This is now restricted as we used the java matches function from strings in the checkPlayerString() method.
+- We found a bug while testing that you can add a negative number for the boardsize in checkNumberStringForCreateBoard() that crashes the game. We fixed it that you can only write integers and no "-".
 
 ## Part 2
 ### GameBoardTest
