@@ -30,7 +30,7 @@ All this changes were made that we can better test our code, they were just move
 - Infinite loops
 
 ##### 2. Document all test cases
-- All the test cases are documented with javadoc in the "tests" package that you find in part 1. Each test can be started on it's own.
+- All the test cases are documented with javadoc in the "tests" package that you find in part 1. Each test can be started on its own.
 
 ##### 3. How you found the bug and how you fixed it
 - There was a bug in the old addPlayer() method were you could add the same name for every player, we found it while writing the test. We fixed it now in the compareNames() that checks the list of players properly and returns a boolean. 
