@@ -1,4 +1,4 @@
-package Deck;
+package Decks;
 
 public class DrawDeck extends Deck{
 }
