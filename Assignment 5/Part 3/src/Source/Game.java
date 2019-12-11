@@ -14,12 +14,15 @@ public class Game {
     Player currentPlayer = new Player();
 
 
-    Player getNextPlayer(){
+    private Player getNextPlayer(){
         return null;
     }
 
+    private boolean addPlayer(String name){return false;}
+
     public void run(){}
 
+    private void numberCard(){}
     public void addPlayer(Player p){}
 
     /**
@@ -31,28 +34,34 @@ public class Game {
         return false;
     }
 
-    public void wild(){}
+    private void wild(){}
 
-    public void wildDrawFour(){}
+    private void wildDrawFour(){}
 
-    public void drawTwo(){}
+    private void drawTwo(){}
 
-    public void skip(){}
+    private void skip(){}
 
-    public void reverse(){}
+    private void reverse(){}
 
-    public void reshuffle(){}
+    private void reshuffle(){}
 
-    public void readInput(){}
+    private String readInput(){return null;}
 
-    public boolean validPlayCheck(String s){
+    private boolean validPlayCheck(Card card){
         return false;
     }
 
-    public void printScore(){}
+    private void printScore(){}
 
-    private void addCardToPlayDeck(Card card){}
+    private ArrayList<Enum> convertInputToEnums(String input){return null;}
 
-    private void removeFromDrawDeck(Card card){}
+    private boolean play(Card card){return false;}
+
+    private void checkWin(){}
+
+    private void askForRematch(){}
+
+    private void newDrawDeck(){}
 
 }

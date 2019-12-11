@@ -2,7 +2,6 @@ package Source;
 
 import java.util.ArrayList;
 
-
 public class Player {
     ArrayList<Card> handCards = new ArrayList<Card>();
     String name = "";
@@ -11,4 +10,14 @@ public class Player {
     public String getName(){return null;}
 
     public int getScore(){return 0;}
+
+    public void printCards(){}
+
+    public void addCard(Card card){}
+
+    public void getCard(CardColor color, CardType type, int number){}
+
+    public void removeCard(Card card){}
+
+    public void removeAllCard(){}
 }
