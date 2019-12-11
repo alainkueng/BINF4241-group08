@@ -31,15 +31,15 @@ public class Game {
      */
     public boolean numberCard(Card card){return false;}
 
-    private void wild(){}
+    public boolean wild(){return false;}
 
-    private void wildDrawFour(){}
+    public boolean wildDrawFour(){return false;}
 
-    private void drawTwo(){}
+    public boolean drawTwo(){return false;}
 
-    private void skip(){}
+    public boolean skip(){return false;}
 
-    private void reverse(){}
+    public boolean reverse(){return false;}
 
     private void reshuffle(){}
 
