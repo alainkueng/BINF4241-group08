@@ -1,4 +1,4 @@
 package Cards;
 
-abstract class ActionCard extends Card implements Action{
+abstract class ActionCard extends Card {
 }
