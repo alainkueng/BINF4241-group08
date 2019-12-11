@@ -11,7 +11,7 @@ public class Game {
     boolean isOver = false;
     DrawDeck drawDeck = new DrawDeck();
     PlayDeck playDeck = new PlayDeck();
-    Player currentPlayer = new Player();
+    Player currentPlayer = null;
 
 
     public Player getNextPlayer(){

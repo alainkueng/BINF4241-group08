@@ -7,6 +7,10 @@ public class Player {
     String name = "";
     int score = -1;
 
+    public Player(String name){
+        this.name = name;
+    }
+
     public String getName(){return null;}
 
     public int getScore(){return 0;}

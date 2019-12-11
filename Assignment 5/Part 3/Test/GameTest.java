@@ -3,8 +3,9 @@ import Decks.PlayDeck;
 import Source.*;
 import Source.Game;
 import Source.Player;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
     Game game = new Game();
@@ -24,20 +25,20 @@ public class GameTest {
         playDeck.cards.push(blueFive);
 
         //red on blue with different numbers
-        Assert.assertFalse(game.numberCard(redFour));
+       assertFalse(game.numberCard(redFour));
         //yellow on blue with same number
-        Assert.assertTrue(game.numberCard(yellowFive));
+        assertTrue(game.numberCard(yellowFive));
 
         playDeck.cards.pop();
         playDeck.cards.push(greenTwo);
         //yellow on green with different numbers
-        Assert.assertFalse(game.numberCard(yellowFive));
+        assertFalse(game.numberCard(yellowFive));
         //blue on green with different numbers
-        Assert.assertFalse(game.numberCard(blueFive));
+        assertFalse(game.numberCard(blueFive));
         //redFour on green with different numbers
-        Assert.assertFalse(game.numberCard(redFour));
+        assertFalse(game.numberCard(redFour));
         //green on green with different numbers
-        Assert.assertTrue(game.numberCard(greenTwo));
+        assertTrue(game.numberCard(greenTwo));
 
     }
 
@@ -56,9 +57,9 @@ public class GameTest {
         playDeck.cards.pop();
         playDeck.cards.push(wildPlusFour);
         // yellow card on wildPlusFour with chosen color: green
-        Assert.assertFalse(game.numberCard(yellowFive));
+        assertFalse(game.numberCard(yellowFive));
         // green card on wildPlusFour with chosen color: green
-        Assert.assertTrue(game.numberCard(greenTwo));
+        assertTrue(game.numberCard(greenTwo));
 
     }
 
@@ -76,9 +77,9 @@ public class GameTest {
         Card yellowFive = new Card(CardColor.YELLOW, CardType.NORMAL, 5);
         playDeck.cards.push(bluePlusTwo);
         //blue card on a blue draw 2 card
-        Assert.assertTrue(game.numberCard(blueFive));
+        assertTrue(game.numberCard(blueFive));
         //red card on a blue draw 2 card
-        Assert.assertFalse(game.numberCard(redFour));
+        assertFalse(game.numberCard(redFour));
     }
 
     /**
@@ -96,9 +97,9 @@ public class GameTest {
         playDeck.cards.push(wild);
 
         //green card on wild card of color blue
-        Assert.assertFalse(game.numberCard(greenTwo));
+        assertFalse(game.numberCard(greenTwo));
         //blue card on wild card of color blue
-        Assert.assertTrue(game.numberCard(blueFive));
+        assertTrue(game.numberCard(blueFive));
 
 
 
@@ -110,11 +111,11 @@ public class GameTest {
      */
     @Test
     public void testGetNextPlayer(){
-        Player p = new Player();
-        Player r = new Player();
+        Player p = new Player("p");
+        Player r = new Player("r");
         game.addPlayer(p);
         game.addPlayer(r);
         Player next = game.getNextPlayer();
-        Assert.assertEquals(next,r);
+        assertEquals(next,r);
     }
 }
