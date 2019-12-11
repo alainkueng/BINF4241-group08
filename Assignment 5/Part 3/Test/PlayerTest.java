@@ -20,8 +20,6 @@ class PlayerTest {
     @Test
     void getScore() {
         Game game = new Game();
-        String playerName = "testOne";
-        Player player = new Player(playerName);
-        game.addPlayer(player);
+        game.addPlayer("player");
     }
 }

@@ -1,10 +1,8 @@
-import Cards.WildDraw4Test;
 import Decks.PlayDeck;
 import Source.*;
 import Source.Game;
 import Source.Player;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
@@ -111,11 +109,10 @@ public class GameTest {
      */
     @Test
     public void testGetNextPlayer(){
-        Player p = new Player("p");
-        Player r = new Player("r");
-        game.addPlayer(p);
-        game.addPlayer(r);
+        Game game = new Game();
+        game.addPlayer("p");
+        game.addPlayer("r");
         Player next = game.getNextPlayer();
-        assertEquals(next,r);
+        assertEquals(next,game.currentPlayer);
     }
 }
