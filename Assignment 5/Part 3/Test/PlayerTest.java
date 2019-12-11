@@ -1,5 +1,4 @@
-import Source.Game;
-import Source.Player;
+import Source.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,9 +16,20 @@ class PlayerTest {
         assertEquals(playerName, playerOne.getName());
     }
 
+    /**
+     * Scenario: A player holds certain cards which is specified in the test.
+     * Testing if the getScore() method calculates the correct score and returns it afterwards.
+     */
     @Test
     void getScore() {
         Game game = new Game();
-        game.addPlayer("player");
+        String playerName = "test";
+        game.addPlayer(playerName);
+        Player player = game.players.get(0);
+        player.addCard(new Card(CardColor.BLUE, CardType.NORMAL, 2));
+        player.addCard(new Card(CardColor.RED, CardType.NORMAL, 8));
+        player.addCard(new Card(CardColor.BLACK, CardType.WILD, 50));
+        player.addCard(new Card(CardColor.BLACK, CardType.SKIP, 20));
+        assertEquals(80, player.getScore());
     }
 }
