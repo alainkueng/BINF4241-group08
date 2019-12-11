@@ -13,7 +13,8 @@ public class User {
         InitializedMicrowave microwave = new InitializedMicrowave();
         InitializedDishwasher dish = new InitializedDishwasher();
         InitializedWashingMachine wash = new InitializedWashingMachine();
-        //InitializedCleaningRobot cleaningRobot = new InitializedCleaningRobot();
+        //InitializedCleaningRobot cleaningRobot = new InitializedCleaningRo
+        // bot();
 
 //        smartphone.addCommand(new SwitchOnCommand(oven));
 //        smartphone.addCommand(new SwitchOffCommand(oven));
