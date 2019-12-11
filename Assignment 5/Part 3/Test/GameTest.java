@@ -1,5 +1,6 @@
+import Cards.WildDraw4Test;
 import Decks.PlayDeck;
-import Source.Card;
+import Source.*;
 import Source.Game;
 import Source.Player;
 import org.junit.Assert;
@@ -12,17 +13,19 @@ public class GameTest {
      * Tests if the card that the current player wants to play is a legal play
      */
     @Test
-    public void testNumberCard(){
+    public void testNumberCardOnNumberCard(){
         PlayDeck playDeck = new PlayDeck();
-        Card blueFive = new Card(Card.color.BLUE, Card.type.NORMAL,5);
-        Card redFour = new Card(Card.color.RED, Card.type.NORMAL, 4);
-        Card greenTwo = new Card(Card.color.GREEN, Card.type.NORMAL, 2);
-        Card yellowFive = new Card(Card.color.YELLOW, Card.type.NORMAL, 5);
+        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
+        Card redFour = new Card(CardColor.RED, CardType.NORMAL, 4);
+        Card greenTwo = new Card(CardColor.GREEN, CardType.NORMAL, 2);
+        Card yellowFive = new Card(CardColor.YELLOW, CardType.NORMAL, 5);
 
 
         playDeck.cards.push(blueFive);
 
+        //red on blue with different numbers
         Assert.assertFalse(game.numberCard(redFour));
+        //yellow on blue with same number
         Assert.assertTrue(game.numberCard(yellowFive));
 
         playDeck.cards.pop();
@@ -35,12 +38,75 @@ public class GameTest {
         Assert.assertFalse(game.numberCard(redFour));
         //green on green with different numbers
         Assert.assertTrue(game.numberCard(greenTwo));
+
     }
 
     /**
+     * Scenario: After a draw four wildcard was played and the chosen color: green
+     * Testing if the normal card played immediately after is a legal play
+     */
+    @Test
+    public void testNumberCardAfterWildCardDrawFour(){
+        PlayDeck playDeck = new PlayDeck();
+
+        Card greenTwo = new Card(CardColor.GREEN, CardType.NORMAL, 2);
+        Card yellowFive = new Card(CardColor.YELLOW, CardType.NORMAL, 5);
+        Card wildPlusFour = new Card(CardColor.BLACK, CardType.WILD_D4, 50);
+
+        playDeck.cards.pop();
+        playDeck.cards.push(wildPlusFour);
+        // yellow card on wildPlusFour with chosen color: green
+        Assert.assertFalse(game.numberCard(yellowFive));
+        // green card on wildPlusFour with chosen color: green
+        Assert.assertTrue(game.numberCard(greenTwo));
+
+    }
+
+    /**
+     * Scenario: After a draw two wildcard of color blue was played
+     * Test if the next normal card of the next player is a legal play
+     */
+    @Test
+    public void testNumberCardAfterPlusTwoCard(){
+        PlayDeck playDeck = new PlayDeck();
+        Card bluePlusTwo = new Card(CardColor.BLUE, CardType.DRAW_2,20);
+        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
+        Card redFour = new Card(CardColor.RED, CardType.NORMAL, 4);
+        Card greenTwo = new Card(CardColor.GREEN, CardType.NORMAL, 2);
+        Card yellowFive = new Card(CardColor.YELLOW, CardType.NORMAL, 5);
+        playDeck.cards.push(bluePlusTwo);
+        //blue card on a blue draw 2 card
+        Assert.assertTrue(game.numberCard(blueFive));
+        //red card on a blue draw 2 card
+        Assert.assertFalse(game.numberCard(redFour));
+    }
+
+    /**
+     * Scenario: After a wildcard was played and the color blue was chosen
+     * Test if the next normal card of the next player is a legal play
+     */
+    public void testNumberCardAfterWildCard(){
+        PlayDeck playDeck = new PlayDeck();
+        Card wild = new Card(CardColor.BLACK, CardType.WILD,50);
+        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
+        Card redFour = new Card(CardColor.RED, CardType.NORMAL, 4);
+        Card greenTwo = new Card(CardColor.GREEN, CardType.NORMAL, 2);
+        Card yellowFive = new Card(CardColor.YELLOW, CardType.NORMAL, 5);
+
+        playDeck.cards.push(wild);
+
+        //green card on wild card of color blue
+        Assert.assertFalse(game.numberCard(greenTwo));
+        //blue card on wild card of color blue
+        Assert.assertTrue(game.numberCard(blueFive));
+
+
+
+
+    }
+    /**
      * Adds two players and checks if the next player is equal to the
      * second player
-     *
      */
     @Test
     public void testGetNextPlayer(){
@@ -48,7 +114,7 @@ public class GameTest {
         Player r = new Player();
         game.addPlayer(p);
         game.addPlayer(r);
-//        Player next = game.getNextPlayer();
+        Player next = game.getNextPlayer();
         Assert.assertEquals(next,r);
     }
 }

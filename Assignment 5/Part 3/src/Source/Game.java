@@ -14,7 +14,7 @@ public class Game {
     Player currentPlayer = new Player();
 
 
-    private Player getNextPlayer(){
+    public Player getNextPlayer(){
         return null;
     }
 
