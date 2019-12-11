@@ -1,3 +1,5 @@
+package Source;
+
 import java.util.ArrayList;
 
 import Decks.DrawDeck;
@@ -12,13 +14,22 @@ public class Game {
     Player currentPlayer = new Player();
 
 
-    private Player getNextPlayer(){
+    Player getNextPlayer(){
         return null;
     }
 
     public void run(){}
 
-    public void numberCard(){}
+    public void addPlayer(Player p){}
+
+    /**
+     *
+     * @param card - card that the current player wants to play
+     * @return - true if the move is valid and move was completed, false if the move is invalid
+     */
+    public boolean numberCard(Card card){
+        return false;
+    }
 
     public void wild(){}
 

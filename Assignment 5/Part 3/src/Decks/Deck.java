@@ -1,4 +1,12 @@
 package Decks;
+import java.util.Stack;
+import Source.*;
 
-abstract public class Deck{
+
+public abstract class Deck {
+
+    public Stack<Card> cards = new Stack<Card>();
+    public boolean isEmpty(){return false;}
+
+
 }
