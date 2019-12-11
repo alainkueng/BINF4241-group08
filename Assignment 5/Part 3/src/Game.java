@@ -40,4 +40,8 @@ public class Game {
 
     public void printScore(){}
 
+    private void addCardToPlayDeck(Card card){}
+
+    private void removeFromDrawDeck(Card card){}
+
 }
