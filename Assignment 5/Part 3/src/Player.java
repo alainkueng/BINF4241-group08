@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import Decks.*;
-
 
 public class Player {
     ArrayList<Card> handCards = new ArrayList<Card>();

@@ -1,4 +1,4 @@
-package Decks;
+import Decks.Deck;
 
 public class Card extends Deck {
     public enum color {YELLOW,GREEN,RED,BLACK,BLUE};
