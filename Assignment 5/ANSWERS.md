@@ -131,5 +131,5 @@ deck.
 * After playing his last card, the application should announce the winner and end the game. This should only happen
 if the turn was legal and all rules were followed.
 
-#### 2.![Class_Diagramm]()
+#### 2.![Class_Diagramm](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%205/Class_Diagram.png)
 #### 3.
