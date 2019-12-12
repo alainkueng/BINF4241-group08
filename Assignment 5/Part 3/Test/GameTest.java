@@ -387,4 +387,22 @@ public class GameTest {
         game.checkWin();
         assertTrue(game.isOver);
     }
+
+    @Test
+    public void testInputCheckNumber(){
+        assertTrue(game.inputCheckForNumber("5"));
+        assertFalse(game.inputCheckForNumber("test"));
+    }
+
+    @Test
+    public void testInputCheckForName(){
+        assertFalse(game.inputCheckForName("5"));
+        assertTrue(game.inputCheckForName("test"));
+    }
+
+    @Test
+    public void inputCheckForCommand(){
+
+    }
+
 }
