@@ -3,6 +3,7 @@ import Source.*;
 import Source.Game;
 import Source.Player;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.BlacklistedExceptions;
 
 import static Source.CardColor.*;
 import static Source.CardType.*;
@@ -439,8 +440,8 @@ public class GameTest {
     }
 
     /**
-     * Scenario: User provides different inputs when trying to make a turn
-     * (and claim the one that has been previously done)
+     * Scenario: User provides different inputs when trying to make a turn<br>
+     * (and claim the one that has been previously done)<br>
      * Testing if inputCheckForCommand parses the input correctly and returns the correct array accordingly
      */
     @Test
@@ -520,4 +521,32 @@ public class GameTest {
         assertEquals(output.get(5), true);
     }
 
+    /**
+     * play() decides if the method wild(), skip(), reverse().., etc. will be executed. This just test if one method<br>
+     * will be executed.
+     */
+    @Test
+    public void playTest(){
+        Game game = new Game();
+        game.addPlayer("Test");
+        Card card1 = new Card(BLUE, NORMAL, 3); //First card on the PlayDeck.
+        Card card2 = new Card(BLACK, WILD_D4, 50);
+        Card card3 = new Card(BLUE, SKIP, 20);
+        Card card4 = new Card(BLUE, REVERSE, 20);
+        Card card5 = new Card(BLUE, DRAW_2, 20);
+        Card card6 = new Card(BLACK, WILD, 50);
+        game.playDeck.push(card1);
+        game.play(card1);
+        assertTrue(game.playDeck.pop()== card1);
+        game.play(card2);
+        assertTrue(game.playDeck.pop() == card2);
+        game.play(card3);
+        assertTrue(game.playDeck.pop() == card3);
+        game.play(card4);
+        assertTrue(game.playDeck.pop() == card4);
+        game.play(card5);
+        assertTrue(game.playDeck.pop() == card5);
+        game.play(card6);
+        assertTrue(game.playDeck.pop() == card6);
+    }
 }
