@@ -29,23 +29,24 @@ public class Game {
      * @param card - card that the current player wants to play
      * @return - true if the move is valid and move was completed, false if the move is invalid
      */
-    public boolean numberCard(Card card){return false;}
 
-    public boolean wild(){return false;}
+    public void numberCard(Card card){}
 
-    public boolean wildDrawFour(){return false;}
+    public void wild(Card card){}
 
-    public boolean drawTwo(){return false;}
+    public void wildDrawFour(Card card){}
 
-    public boolean skip(){return false;}
+    public void drawTwo(Card card){}
 
-    public boolean reverse(){return false;}
+    public void skip(Card card){}
+
+    public void reverse(Card card){}
 
     private void reshuffle(){}
 
     private String readInput(){return null;}
 
-    private boolean validPlayCheck(Card card){
+    public boolean validPlayCheck(Card card){
         return false;
     }
 
