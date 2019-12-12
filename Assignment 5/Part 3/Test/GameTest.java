@@ -207,42 +207,63 @@ public class GameTest {
         //plus four wild card after normal
 
 
-
-
-
     }
 
     /**
      * Scenario: After any card <br>
-     * Test if the draw two card is accepted
+     * Test if the draw two card is an accepted play and if the drawTwo method places the card on the deck.
      */
     @Test
     public void testDrawTwo(){
         game.playDeck = new PlayDeck();
-        Card bluePlusTwo = new Card(CardColor.BLUE, CardType.DRAW_2,20);
+        Card greenPlusTwo = new Card(CardColor.GREEN, CardType.DRAW_2,20);
+        Card greenOne = new Card(CardColor.GREEN, CardType.NORMAL,1);
+        Card bluePlusTwo = new Card(CardColor.BLUE, CardType.DRAW_2, 20);
+
+        game.playDeck.push(greenOne);
+        assertTrue(game.validPlayCheck(greenPlusTwo));
+        game.drawTwo(greenPlusTwo);
+        assertEquals(greenPlusTwo, game.playDeck.pop());
+
+
+        //plus two on plus two
+        assertTrue(game.validPlayCheck(bluePlusTwo));
+        game.drawTwo(bluePlusTwo);
+        assertEquals(bluePlusTwo,game.playDeck.pop());
 
     }
 
     /**
      * Scenario: After any card <br>
-     * Test if the skip card is accepted
+     * Test if the skip card is an accepted play and if the skip method places the skip card on the deck.
      */
     @Test
     public void testSkip(){
         game.playDeck = new PlayDeck();
-        Card skip = new Card(CardColor.BLUE, CardType.SKIP, 20);
+        Card skip = new Card(CardColor.YELLOW, CardType.SKIP, 20);
+        Card yellowSix = new Card(CardColor.YELLOW, CardType.NORMAL, 6);
 
-
+        game.playDeck.push(yellowSix);
+        assertTrue(game.validPlayCheck(skip));
+        game.skip(skip);
+        assertEquals(skip,game.playDeck.pop());
     }
 
     /**
      * Scenario: After any card <br>
-     * Test if the reverse card is accepted
+     * Test if the reverse card is an accepted play and if the reverse method places the reverse card on the deck
      */
     @Test
     public void testReverse(){
         game.playDeck = new PlayDeck();
         Card reverse = new Card(CardColor.GREEN, CardType.REVERSE,20);
+        Card redTwo = new Card(CardColor.RED, CardType.NORMAL, 2);
+
+        game.playDeck.push(redTwo);
+        assertTrue(game.validPlayCheck(reverse));
+        game.reverse(reverse);
+        assertEquals(reverse,game.playDeck.pop());
+
 
     }
 }
