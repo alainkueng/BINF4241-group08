@@ -69,16 +69,12 @@ there are 10 people. The input should be of type _string_, others are not accept
 characters, because this could be exploited.
 
 * While the game is on, the players should be able to input the color, number, of a card or the identifier for an
-action card (e.g. "Yellow 5", "Green 3" or "Red Draw 2", "Wild Draw 4 Blue", "Yellow Reverse", "Blue Skip", "Wild Red").
-The color provided after a wild card defines the next color to play. Enemy players can claim a missing "UNO"-call or
-a illegal "Wild Draw 4" by providing the input "Claim Wild Draw 4" or "Claim UNO".
-A player can of course also draw a card, which will be done with the "Draw" input. If the input is not recognizable,
-the game should ask for a retry.
+action card (e.g. "Yellow 5", "Green 3" or "Red Draw 2", "Wild Draw 4 Blue", "Yellow Reverse", "Blue Skip", "Wild Red")
+and before that any claims (e.g. "UNO Yellow 5", "Claim UNO Yellow 5", "Claim Plus Four Yellow 5").
+The color provided after a wild card defines the next color to play.
 
 * If a player has only two cards and wants to play one of them it is possible that he/she inputs "UNO" first, before
-declaring his turn, this is the only time it is possible, that a player can give two inputs but the first must be
-"UNO" otherwise, you only have the possibility to provide one input (if the input is correct and you're not asked
-to retry as stated above).
+declaring his turn, this is the only time it is possible.
 
 ##### b. What should happen with the inputs:
 
