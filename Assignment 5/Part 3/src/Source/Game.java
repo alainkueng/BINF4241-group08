@@ -15,18 +15,28 @@ public class Game {
     public Game(){}
 
 
+    /**
+     * @return - Gets the next player from the players list.
+     */
     public Player getNextPlayer(){
         return null;
     }
 
+    /**
+     * @param name - Adds the player to the Game with the string name given.
+     * @return - true if it worked
+     */
     public boolean addPlayer(String name){return false;}
 
+    /**
+     * runs all the methods in the right order.
+     */
     public void run(){}
 
     /**
      *
-     * @param card - card that the current player wants to play
-     * @return - true if the move is valid and move was completed, false if the move is invalid
+     * @param card - card that the current player wants to play.
+     * @return - true if the move is valid and move was completed, false if the move is invalid.
      */
 
     public void numberCard(Card card){}
