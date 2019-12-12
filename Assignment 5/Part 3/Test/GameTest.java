@@ -3,7 +3,12 @@ import Source.*;
 import Source.Game;
 import Source.Player;
 import org.junit.jupiter.api.Test;
+
+import static Source.CardColor.*;
+import static Source.CardType.*;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
 import java.util.Stack.*;
 
 public class GameTest {
@@ -18,8 +23,8 @@ public class GameTest {
     public void testNumberCardOnNumberCard(){
         game.playDeck = new PlayDeck();
 
-        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
-        Card redFive = new Card(CardColor.RED, CardType.NORMAL, 5);
+        Card blueFive = new Card(BLUE, NORMAL,5);
+        Card redFive = new Card(CardColor.RED, NORMAL, 5);
 
         game.playDeck.push(blueFive);
         assertTrue(game.validPlayCheck(redFive));
@@ -35,8 +40,8 @@ public class GameTest {
     public void testNumberCardAfterWildCardDrawFour(){
         game.playDeck = new PlayDeck();
 
-        Card greenTwo = new Card(CardColor.GREEN, CardType.NORMAL, 2);
-        Card yellowFive = new Card(CardColor.YELLOW, CardType.NORMAL, 5);
+        Card greenTwo = new Card(CardColor.GREEN, NORMAL, 2);
+        Card yellowFive = new Card(CardColor.YELLOW, NORMAL, 5);
         Card wildPlusFour = new Card(CardColor.BLACK, CardType.WILD_D4, 50);
 
         game.playDeck.push(wildPlusFour);
@@ -55,9 +60,9 @@ public class GameTest {
     @Test
     public void testNumberCardAfterPlusTwoCard(){
         game.playDeck = new PlayDeck();
-        Card bluePlusTwo = new Card(CardColor.BLUE, CardType.DRAW_2,20);
-        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
-        Card redFour = new Card(CardColor.RED, CardType.NORMAL, 4);
+        Card bluePlusTwo = new Card(BLUE, CardType.DRAW_2,20);
+        Card blueFive = new Card(BLUE, NORMAL,5);
+        Card redFour = new Card(CardColor.RED, NORMAL, 4);
 
         game.playDeck.push(bluePlusTwo);
         //red card on a blue draw 2 card
@@ -76,8 +81,8 @@ public class GameTest {
     public void testNumberCardAfterWildCard(){
         game.playDeck = new PlayDeck();
         Card wild = new Card(CardColor.BLACK, CardType.WILD,50);
-        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
-        Card greenTwo = new Card(CardColor.GREEN, CardType.NORMAL, 2);
+        Card blueFive = new Card(BLUE, NORMAL,5);
+        Card greenTwo = new Card(CardColor.GREEN, NORMAL, 2);
 
         game.playDeck.push(wild);
 
@@ -96,8 +101,8 @@ public class GameTest {
     @Test
     public void testNumberCardAfterSkipCard(){
         game.playDeck = new PlayDeck();
-        Card blueTwo = new Card(CardColor.BLUE, CardType.NORMAL,2);
-        Card skip = new Card(CardColor.BLUE, CardType.SKIP, 20);
+        Card blueTwo = new Card(BLUE, NORMAL,2);
+        Card skip = new Card(BLUE, CardType.SKIP, 20);
         game.playDeck.push(skip);
 
         //blue card on blue skip card
@@ -113,7 +118,7 @@ public class GameTest {
     @Test
     public void testNumberCardAfterReverse(){
         game.playDeck = new PlayDeck();
-        Card blueNine = new Card(CardColor.BLUE, CardType.NORMAL,9);
+        Card blueNine = new Card(BLUE, NORMAL,9);
         Card reverse = new Card(CardColor.GREEN, CardType.REVERSE,20);
 
         game.playDeck.push(reverse);
@@ -143,12 +148,12 @@ public class GameTest {
     @Test
     public void testWildCard(){
         game.playDeck = new PlayDeck();
-        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
-        Card bluePlusTwo = new Card(CardColor.BLUE, CardType.DRAW_2,20);
+        Card blueFive = new Card(BLUE, NORMAL,5);
+        Card bluePlusTwo = new Card(BLUE, CardType.DRAW_2,20);
         Card wildPlusFour = new Card(CardColor.BLACK, CardType.WILD_D4, 50);
 
         Card wild = new Card(CardColor.BLACK, CardType.WILD,50);
-        Card skip = new Card(CardColor.BLUE, CardType.SKIP, 20);
+        Card skip = new Card(BLUE, CardType.SKIP, 20);
         Card reverse = new Card(CardColor.GREEN, CardType.REVERSE,20);
 
 
@@ -201,9 +206,9 @@ public class GameTest {
         game.playDeck = new PlayDeck();
         Card wildPlusFour = new Card(CardColor.BLACK, CardType.WILD_D4, 50);
         Card wildPlusFourTwo = new Card(CardColor.BLACK, CardType.WILD_D4, 50);
-        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
+        Card blueFive = new Card(BLUE, NORMAL,5);
         Card wild = new Card(CardColor.BLACK, CardType.WILD,50);
-        Card skip = new Card(CardColor.BLUE, CardType.SKIP, 20);
+        Card skip = new Card(BLUE, CardType.SKIP, 20);
         Card reverse = new Card(CardColor.GREEN, CardType.REVERSE,20);
 
         //plus four wild card after normal
@@ -252,8 +257,8 @@ public class GameTest {
     public void testDrawTwo(){
         game.playDeck = new PlayDeck();
         Card greenPlusTwo = new Card(CardColor.GREEN, CardType.DRAW_2,20);
-        Card greenOne = new Card(CardColor.GREEN, CardType.NORMAL,1);
-        Card bluePlusTwo = new Card(CardColor.BLUE, CardType.DRAW_2, 20);
+        Card greenOne = new Card(CardColor.GREEN, NORMAL,1);
+        Card bluePlusTwo = new Card(BLUE, CardType.DRAW_2, 20);
 
         game.playDeck.push(greenOne);
         assertTrue(game.validPlayCheck(greenPlusTwo));
@@ -276,7 +281,7 @@ public class GameTest {
     public void testSkip(){
         game.playDeck = new PlayDeck();
         Card skip = new Card(CardColor.YELLOW, CardType.SKIP, 20);
-        Card yellowSix = new Card(CardColor.YELLOW, CardType.NORMAL, 6);
+        Card yellowSix = new Card(CardColor.YELLOW, NORMAL, 6);
 
         game.playDeck.push(yellowSix);
         assertTrue(game.validPlayCheck(skip));
@@ -293,7 +298,7 @@ public class GameTest {
     public void testReverse(){
         game.playDeck = new PlayDeck();
         Card reverse = new Card(CardColor.GREEN, CardType.REVERSE,20);
-        Card redTwo = new Card(CardColor.RED, CardType.NORMAL, 2);
+        Card redTwo = new Card(CardColor.RED, NORMAL, 2);
 
         game.playDeck.push(redTwo);
         assertTrue(game.validPlayCheck(reverse));
@@ -401,7 +406,78 @@ public class GameTest {
     }
 
     @Test
-    public void inputCheckForCommand(){
+    public void testInputCheckForCommand(){
+        assertTrue(game.inputCheckForCommand("Blue 5"));
+        assertTrue(game.inputCheckForCommand("Wild Blue"));
+        assertTrue(game.inputCheckForCommand("Green Draw Two"));
+        assertTrue(game.inputCheckForCommand("Wild Four Red"));
+        assertTrue(game.inputCheckForCommand("Yellow Reverse"));
+        assertTrue(game.inputCheckForCommand("Green Skip"));
+        assertTrue(game.inputCheckForCommand("UNO"));
+        assertTrue(game.inputCheckForCommand("Claim UNO"));
+        assertTrue(game.inputCheckForCommand("Claim Plus Four"));
+    }
+
+    public void testCorrectParsing(){
+        Game game = new Game();
+
+        ArrayList<Object> output = game.convertInputToCommand("Blue 5");
+        assertEquals(output.get(0), BLUE);
+        assertEquals(output.get(1), 5);
+        assertEquals(output.get(2), NORMAL);
+        assertEquals(output.get(3), false);
+        assertEquals(output.get(4), false);
+        assertEquals(output.get(5), false);
+
+        output = game.convertInputToCommand("Wild Blue");
+        assertEquals(output.get(0), BLUE);
+        assertEquals(output.get(1), 50);
+        assertEquals(output.get(2), WILD);
+        assertEquals(output.get(3), false);
+        assertEquals(output.get(4), false);
+        assertEquals(output.get(5), false);
+
+        output = game.convertInputToCommand("Green Draw Two");
+        assertEquals(output.get(0), GREEN);
+        assertEquals(output.get(1), 20);
+        assertEquals(output.get(2), DRAW_2);
+        assertEquals(output.get(3), false);
+        assertEquals(output.get(4), false);
+        assertEquals(output.get(5), false);
+
+        output = game.convertInputToCommand("Wild Four Red");
+        assertEquals(output.get(0), RED);
+        assertEquals(output.get(1), 20);
+        assertEquals(output.get(2), WILD_D4);
+        assertEquals(output.get(3), false);
+        assertEquals(output.get(4), false);
+        assertEquals(output.get(5), false);
+
+        //Add players to the game.
+        game.addPlayer("One");
+        game.addPlayer("Two");
+        game.addPlayer("Three");
+        game.addPlayer("Four");
+        game.addPlayer("Five");
+        game.addPlayer("Six");
+
+        //Player variables
+        Player one = game.players.get(0);
+        Player two = game.players.get(1);
+        Player three = game.players.get(2);
+        Player four = game.players.get(3);
+        Player five = game.players.get(4);
+        Player six = game.players.get(5);
+
+        //Add the wished cards to players
+        one.addCard(new Card(BLUE, NORMAL, 5));
+        two.addCard(new Card(CardColor.BLACK, CardType.WILD, 50));
+        three.addCard(new Card(CardColor.GREEN, CardType.DRAW_2, 20));
+        four.addCard(new Card(CardColor.YELLOW, CardType.WILD_D4, 50));
+        five.addCard(new Card(CardColor.YELLOW, CardType.REVERSE, 20));
+        six.addCard(new Card(CardColor.BLACK, CardType.SKIP, 20));
+
+
 
     }
 
