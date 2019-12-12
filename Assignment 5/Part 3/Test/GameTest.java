@@ -393,31 +393,55 @@ public class GameTest {
         assertTrue(game.isOver);
     }
 
+    /**
+     * Scenario: User provides a number input for the amount of players
+     * Testing if inputCheckNumber only accepts integers
+     */
     @Test
     public void testInputCheckNumber(){
         assertTrue(game.inputCheckForNumber("5"));
+        assertFalse(game.inputCheckForNumber("5.2"));
         assertFalse(game.inputCheckForNumber("test"));
     }
 
+    /**
+     * Scenario: User provides different inputs when providing player name
+     * Testing if inputCheckNumber only accepts integers
+     */
     @Test
     public void testInputCheckForName(){
         assertFalse(game.inputCheckForName("5"));
+        assertFalse(game.inputCheckForName("t€st"));
         assertTrue(game.inputCheckForName("test"));
     }
 
+    /**
+     * Scenario: User provides different inputs when trying to make a turn
+     * (and claim the one that has been previously done)
+     * Testing if inputCheckForCommand only accepts correct notations of turn inputs
+     */
     @Test
     public void testInputCheckForCommand(){
         assertTrue(game.inputCheckForCommand("Blue 5"));
         assertTrue(game.inputCheckForCommand("Wild Blue"));
-        assertTrue(game.inputCheckForCommand("Green Draw Two"));
-        assertTrue(game.inputCheckForCommand("Wild Four Red"));
+        assertTrue(game.inputCheckForCommand("Green Draw 2"));
+        assertTrue(game.inputCheckForCommand("Wild Draw 4 Red"));
         assertTrue(game.inputCheckForCommand("Yellow Reverse"));
         assertTrue(game.inputCheckForCommand("Green Skip"));
-        assertTrue(game.inputCheckForCommand("UNO"));
-        assertTrue(game.inputCheckForCommand("Claim UNO"));
-        assertTrue(game.inputCheckForCommand("Claim Plus Four"));
+        assertTrue(game.inputCheckForCommand("UNO Green 1"));
+        assertTrue(game.inputCheckForCommand("Claim UNO Yellow 9"));
+        assertTrue(game.inputCheckForCommand("Claim Plus Four Red 0"));
+        assertFalse(game.inputCheckForCommand("Claim Plus Four Red 10"));
+        assertFalse(game.inputCheckForCommand("Green UNO 2"));
+        assertFalse(game.inputCheckForCommand("5 Blue"));
     }
 
+    /**
+     * Scenario: User provides different inputs when trying to make a turn
+     * (and claim the one that has been previously done)
+     * Testing if inputCheckForCommand parses the input correctly and returns the correct array accordingly
+     */
+    @Test
     public void testCorrectParsing(){
         Game game = new Game();
 
@@ -453,32 +477,45 @@ public class GameTest {
         assertEquals(output.get(4), false);
         assertEquals(output.get(5), false);
 
-        //Add players to the game.
-        game.addPlayer("One");
-        game.addPlayer("Two");
-        game.addPlayer("Three");
-        game.addPlayer("Four");
-        game.addPlayer("Five");
-        game.addPlayer("Six");
+        output = game.convertInputToCommand("Yellow Reverse");
+        assertEquals(output.get(0), YELLOW);
+        assertEquals(output.get(1), 20);
+        assertEquals(output.get(2), REVERSE);
+        assertEquals(output.get(3), false);
+        assertEquals(output.get(4), false);
+        assertEquals(output.get(5), false);
 
-        //Player variables
-        Player one = game.players.get(0);
-        Player two = game.players.get(1);
-        Player three = game.players.get(2);
-        Player four = game.players.get(3);
-        Player five = game.players.get(4);
-        Player six = game.players.get(5);
+        output = game.convertInputToCommand("Green Skip");
+        assertEquals(output.get(0), GREEN);
+        assertEquals(output.get(1), 20);
+        assertEquals(output.get(2), SKIP);
+        assertEquals(output.get(3), false);
+        assertEquals(output.get(4), false);
+        assertEquals(output.get(5), false);
 
-        //Add the wished cards to players
-        one.addCard(new Card(BLUE, NORMAL, 5));
-        two.addCard(new Card(CardColor.BLACK, CardType.WILD, 50));
-        three.addCard(new Card(CardColor.GREEN, CardType.DRAW_2, 20));
-        four.addCard(new Card(CardColor.YELLOW, CardType.WILD_D4, 50));
-        five.addCard(new Card(CardColor.YELLOW, CardType.REVERSE, 20));
-        six.addCard(new Card(CardColor.BLACK, CardType.SKIP, 20));
+        output = game.convertInputToCommand("UNO Green 1");
+        assertEquals(output.get(0), GREEN);
+        assertEquals(output.get(1), 1);
+        assertEquals(output.get(2), NORMAL);
+        assertEquals(output.get(3), true);
+        assertEquals(output.get(4), false);
+        assertEquals(output.get(5), false);
 
+        output = game.convertInputToCommand("Claim UNO Yellow 9");
+        assertEquals(output.get(0), YELLOW);
+        assertEquals(output.get(1), 9);
+        assertEquals(output.get(2), NORMAL);
+        assertEquals(output.get(3), false);
+        assertEquals(output.get(4), true);
+        assertEquals(output.get(5), false);
 
-
+        output = game.convertInputToCommand("Claim Plus Four Red 0");
+        assertEquals(output.get(0), RED);
+        assertEquals(output.get(1), 0);
+        assertEquals(output.get(2), NORMAL);
+        assertEquals(output.get(3), false);
+        assertEquals(output.get(4), false);
+        assertEquals(output.get(5), true);
     }
 
 }
