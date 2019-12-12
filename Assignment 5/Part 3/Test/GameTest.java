@@ -149,31 +149,40 @@ public class GameTest {
         playDeck.push(blueFive);
         //wild card draw four after normal card
         assertTrue(game.validPlayCheck(wild));
+        game.wild(wild);
+        assertEquals(wild, playDeck.pop());
 
-        playDeck.cards.pop();
-        playDeck.cards.push(bluePlusTwo);
+        playDeck.pop();
+        playDeck.push(bluePlusTwo);
         //wild card after draw two card
         assertTrue(game.validPlayCheck(wild));
+        game.wild(wild);
+        assertEquals(wild, playDeck.pop());
+
 
         playDeck.cards.pop();
         playDeck.cards.push(wildPlusFour);
         //wild card after wild plus four
         assertTrue(game.validPlayCheck(wild));
+        assertEquals(wild, playDeck.pop());
 
         playDeck.cards.pop();
         playDeck.cards.push(skip);
         //wild card after skip
         assertTrue(game.validPlayCheck(wild));
+        assertEquals(wild, playDeck.pop());
 
         playDeck.cards.pop();
         playDeck.cards.push(reverse);
         //wild card after reverse
         assertTrue(game.validPlayCheck(wild));
+        assertEquals(wild, playDeck.pop());
 
         playDeck.cards.pop();
         playDeck.cards.push(wildPlusFour);
         //wild card after wild card
         assertTrue(game.validPlayCheck(wild));
+        assertEquals(wild, playDeck.pop());
     }
 
     /**
@@ -190,6 +199,7 @@ public class GameTest {
         Card reverse = new Card(CardColor.GREEN, CardType.REVERSE,20);
 
         //plus four wild card after normal
+
 
 
 
