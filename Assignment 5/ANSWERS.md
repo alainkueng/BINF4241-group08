@@ -57,9 +57,9 @@ All this changes were made that we can better test our code, they were just move
 
 ## Part 3
 
-#### Behavior of UNO-implementation
+#### 1. Behavior of UNO-implementation
 
-##### 1. Inputs that should be accepted:
+##### a. Inputs that should be accepted:
 
 * To start an _integer_ should be provided by the user in order to create the players. At this stage it shouldn't accept
 any inputs of a different type like _floats_, _strings_, _chars_ etc. The minimum amount is 2 and the maximum is 10.
@@ -80,7 +80,7 @@ declaring his turn, this is the only time it is possible, that a player can give
 "UNO" otherwise, you only have the possibility to provide one input (if the input is correct and you're not asked
 to retry as stated above).
 
-##### 2. What should happen with the inputs:
+##### b. What should happen with the inputs:
 
 * The _integer_ which is provided by the user should set the amount of player-object that should be created (It
 should set the upper bound for the loop which will ask the player to enter a name for each player).
@@ -111,7 +111,7 @@ draws a card and the card deck is empty. After each draw command the card deck i
 case it will take the played card stack except the last added one, shuffle it and reuse the shuffled cards as new card
 deck.
 
-##### 3. Expected outputs:
+##### c. Expected outputs:
 
 * The application should ask for the amount of players and their names afterwards.
 
@@ -130,3 +130,6 @@ deck.
 
 * After playing his last card, the application should announce the winner and end the game. This should only happen
 if the turn was legal and all rules were followed.
+
+#### 2.![Class_Diagramm]()
+#### 3.
