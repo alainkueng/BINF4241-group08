@@ -4,6 +4,7 @@ import Source.Game;
 import Source.Player;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Stack.*;
 
 public class GameTest {
     Game game = new Game();
@@ -95,7 +96,7 @@ public class GameTest {
     @Test
     public void testNumberCardAfterSkipCard(){
         game.playDeck = new PlayDeck();
-        Card blueTwo = new Card(CardColor.BLUE, CardType.NORMAL,5);
+        Card blueTwo = new Card(CardColor.BLUE, CardType.NORMAL,2);
         Card skip = new Card(CardColor.BLUE, CardType.SKIP, 20);
         game.playDeck.push(skip);
 
@@ -287,6 +288,7 @@ public class GameTest {
      * Scenario: After any card <br>
      * Test if the reverse card is an accepted play and if the reverse method places the reverse card on the deck
      */
+
     @Test
     public void testReverse(){
         game.playDeck = new PlayDeck();
@@ -297,6 +299,53 @@ public class GameTest {
         assertTrue(game.validPlayCheck(reverse));
         game.reverse(reverse);
         assertEquals(reverse,game.playDeck.pop());
+
+
+    }
+
+    /**
+     * Scenario: The draw deck is empty, so we take the play deck except the last card, reshuffle it and store <br>
+     *     as the draw deck. <br>
+     *     Test to see if the size of the new draw deck equals the size of the old played deck - 1.
+     */
+    @Test
+    public void testShuffle(){
+        game.playDeck = new PlayDeck();
+        int size = game.playDeck.cards.size() - 1;
+        game.drawDeck = game.reshuffle();
+
+        //play deck only consists of the last card on the stack after the reshuffle
+        assertEquals(game.playDeck.cards.size(),1);
+        //test if the new draw deck size is equal to the size of the past playdeck - 1;
+        assertEquals(game.drawDeck.cards.size(), size);
+    }
+
+    @Test
+    public void testCheckForUno(){
+        Player p = new Player("Ramon");
+        Player a = new Player("Raffi");
+
+        Card blueTwo = new Card(CardColor.BLUE, CardType.NORMAL,2);
+        Card greenTwo = new Card(CardColor.GREEN, CardType.NORMAL,2);
+        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
+        Card yellowSix = new Card(CardColor.YELLOW, CardType.NORMAL, 6);
+
+
+
+        p.addCard(blueTwo);
+        p.addCard(blueFive);
+
+        a.addCard(yellowSix);
+
+        //player p calls uno but still has >= 1 cards
+        p.setUno();
+        assertFalse(game.checkForUno());
+
+        //player a calls uno and has = 1 cards
+        game.getNextPlayer();
+        a.setUno();
+        assertTrue(game.checkForUno());
+
 
 
     }

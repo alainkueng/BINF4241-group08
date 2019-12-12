@@ -71,7 +71,7 @@ public class Game {
     /**
      * Shuffles the playDeck minus one and converts it to the drawDeck.
      */
-    public void reshuffle(){}
+    public DrawDeck reshuffle(){return null;}
 
     /**
      * @return Just reads the commandLine input. Not to be tested. Java methods only.
@@ -132,8 +132,10 @@ public class Game {
     public void askForRematch(){}
 
     /**
-     * Checks if someone has Uno and didn't announce it. Therefore let's him pick up two cards.
+     * 1. If someone announces UNO, check if they really only have one card.<br>
+     *     2. If someone forgets to say UNO and the next player denounces this: Player who forgot to say uno most
+     *     draw 2 cards.
      */
-    public void checkForUno(){}
+    public boolean checkForUno(){return false;}
 
 }
