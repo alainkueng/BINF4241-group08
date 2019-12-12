@@ -129,8 +129,10 @@ public class GameTest {
      */
     @Test
     public void testGetNextPlayer(){
+        Game game = new Game();
         game.addPlayer("p");
         game.addPlayer("r");
+        game.currentPlayer = game.players.get(0);
         Player next = game.getNextPlayer();
         assertEquals(next,game.currentPlayer);
     }
