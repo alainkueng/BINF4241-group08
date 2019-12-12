@@ -9,5 +9,7 @@ public abstract class Deck {
 
     public Card pop(){return cards.pop();}
 
-    public void push(Card card){}
+    public void push(Card card){
+        cards.push(card);
+    }
 }
