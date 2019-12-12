@@ -304,6 +304,7 @@ public class GameTest {
 
         game.playDeck.push(redTwo);
         assertTrue(game.validPlayCheck(reverse));
+        assertFalse(game.direction);
         game.reverse(reverse);
         assertEquals(reverse,game.playDeck.pop());
 
