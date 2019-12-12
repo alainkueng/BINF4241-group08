@@ -12,11 +12,12 @@ import org.junit.jupiter.api.Test;
 public class FirstSquareTest {
 
     /**
-     * leave() gets as input the Player that should leave the field and removes the Player from it's square.
+     * Scenario: The first player wants to start playing. leave() gets as input the player that should leave the first
+     * square and removes the player from it's square.
      * Before the test two players will spawn at the firstSquare. Then the first Player moves.
-     * The assert tests if the firstSquare.playerList is size of 1 since one got removed.
+     * Tests: The assert tests if the firstSquare.playerList is size of 1 since one got removed.
      * Then the next Player moves.
-     * The second assert Tests if the FirstSquare is now empty.
+     * The second assert Tests if the FirstSquare is now empty after both left.
      */
     @Test
     public void leaveTest(){
@@ -38,7 +39,9 @@ public class FirstSquareTest {
     }
 
     /**
-     * This method tests if the FirstSquare is occupied. Since we implemented that this square can have as many
+     * Scenario: The player wants to move to a field that's already occupied, therefore he gets moved back to the first
+     * square. The first square should never be occupied.
+     * Tests: This method tests if the FirstSquare is occupied. Since we implemented that this square can have as many
      * Players on it as wanted, the FirstSquare will always say it's not occupied (i.e. has space for more Players)
      */
     @Test

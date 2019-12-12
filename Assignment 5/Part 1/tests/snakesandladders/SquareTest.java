@@ -60,8 +60,9 @@ public class SquareTest {
     }
 
     /**
-     * This test return if the square we want to move our player to is occupied or not. It returns true if there is
-     * a player on the Square and will return false if the square is free.
+     * Scenario: A player moves to a square.
+     * Tests: This test return if the square we want to move our player to is occupied or not. It returns true if there is
+     * a player on the square and will return false if the square is free.
      */
     @Test
     public void isOccupiedTest(){
