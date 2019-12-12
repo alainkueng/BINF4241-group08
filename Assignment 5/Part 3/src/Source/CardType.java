@@ -1,5 +1,4 @@
 package Source;
-//penis
 public enum CardType {
     REVERSE,
     WILD,
