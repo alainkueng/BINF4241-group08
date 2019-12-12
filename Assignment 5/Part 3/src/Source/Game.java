@@ -111,7 +111,7 @@ public class Game {
 
     /**
      * @param input gets the input from readInput().
-     * @return Converts the string in int and enums into an ArrayList<Object>.
+     * @return Converts the string in int and enums into an ArrayList<Object>. [enum color, int number, enum type, boolean uno, boolean claimUno, boolean claimPlusFour]
      */
     public ArrayList<Object> convertInputToCommand(String input){return null;}
 
@@ -137,5 +137,12 @@ public class Game {
      *     draw 2 cards.
      */
     public boolean checkForUno(){return false;}
+
+    /**
+     * @param uno - if true, checks if he can set uno for the player and does it if he can do so.
+     * @param claimUno - if true, checks if the other said uno before ending, if false reverts the play.
+     * @param claimPlusFour - if true, checks if the other could have laid any card of the same color before, if true reverts the play.
+     */
+    public void checkClaims(boolean uno, boolean claimUno, boolean claimPlusFour){}
 
 }
