@@ -42,24 +42,24 @@ public class Game {
 
     public void reverse(Card card){}
 
-    private void reshuffle(){}
+    public void reshuffle(){}
 
-    private String readInput(){return null;}
+    public String readInput(){return null;}
 
     public boolean validPlayCheck(Card card){
         return false;
     }
 
-    private void printScore(){}
+    public void printScore(){}
 
-    private ArrayList<Enum> convertInputToEnums(String input){return null;}
+    public ArrayList<Enum> convertInputToEnums(String input){return null;}
 
-    private boolean play(Card card){return false;}
+    public boolean play(Card card){return false;}
 
-    private void checkWin(){}
+    public void checkWin(){}
 
-    private void askForRematch(){}
+    public void askForRematch(){}
 
-    private void newDrawDeck(){}
+    public void newDrawDeck(){}
 
 }
