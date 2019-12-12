@@ -309,7 +309,7 @@ public class GameTest {
      *     Test to see if the size of the new draw deck equals the size of the old played deck - 1.
      */
     @Test
-    public void testShuffle(){
+    public void testReshuffle(){
         game.playDeck = new PlayDeck();
         int size = game.playDeck.cards.size() - 1;
         game.drawDeck = game.reshuffle();
@@ -320,17 +320,23 @@ public class GameTest {
         assertEquals(game.drawDeck.cards.size(), size);
     }
 
+    /**
+     * We test two three scenarios.<br>
+     *     1. The current player calls uno but he has more than 1 card left
+     *     2. The current player calls uno and has exactly one card left
+     *     3. The current player forgets to say uno and the next player calls him out on this, <br>
+     *         so he has to take 2 cards
+     */
     @Test
     public void testCheckForUno(){
-        Player p = new Player("Ramon");
-        Player a = new Player("Raffi");
-
+        Game game = new Game();
+        game.addPlayer("Ramon");
+        game.addPlayer("Raffi");
+        Player p = game.players.get(0);
+        Player a = game.players.get(1);
         Card blueTwo = new Card(CardColor.BLUE, CardType.NORMAL,2);
-        Card greenTwo = new Card(CardColor.GREEN, CardType.NORMAL,2);
         Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
         Card yellowSix = new Card(CardColor.YELLOW, CardType.NORMAL, 6);
-
-
 
         p.addCard(blueTwo);
         p.addCard(blueFive);
@@ -342,12 +348,44 @@ public class GameTest {
         assertFalse(game.checkForUno());
 
         //player a calls uno and has = 1 cards
-        game.getNextPlayer();
         a.setUno();
         assertTrue(game.checkForUno());
 
+        //player a forgets to say uno while he has 1 card. Player p calls him out so player a has to take two cards.
+        game.currentPlayer = a;
+        game.getNextPlayer();
+        int size = a.handCards.size();
+        game.checkForUno();
+        assertEquals(size + 2, a.handCards.size());
+    }
+
+    /**
+     * CheckWin method checks if the current player has no more cards left and if yes sets the boolean isOver to true<br>
+     *     Test if game ends if current player has one card left and plays it.
+     */
+    @Test
+    public void testCheckWin(){
+        Game game = new Game();
+        game.addPlayer("Ramon");
+        game.addPlayer("Raffi");
+        Player p = game.players.get(0);
+        Player a = game.players.get(1);
+
+        Card blueTwo = new Card(CardColor.BLUE, CardType.NORMAL,2);
+        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
+        Card yellowSix = new Card(CardColor.YELLOW, CardType.NORMAL, 6);
 
 
+        p.addCard(blueTwo);
+        p.addCard(blueFive);
+        a.addCard(yellowSix);
+
+        // player a has no cards left
+        game.currentPlayer = p;
+        game.getNextPlayer();
+        game.currentPlayer.removeCard(yellowSix);
+        game.checkWin();
+        assertTrue(game.isOver);
     }
 
     @Test
