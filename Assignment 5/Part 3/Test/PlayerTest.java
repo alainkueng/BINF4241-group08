@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
 
     /**
-     * Scenario: A new Player object gets created with a specific name.
+     * Scenario: A new Player object gets created with a specific name.<br>
      * Testing if the getName() method returns the before entered string.
      */
     @Test
@@ -17,7 +17,7 @@ class PlayerTest {
     }
 
     /**
-     * Scenario: A player holds certain cards which is specified in the test.
+     * Scenario: A player holds certain cards which is specified in the test.<br>
      * Testing if the getScore() method calculates the correct score and returns it afterwards.
      */
     @Test
