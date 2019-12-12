@@ -9,22 +9,25 @@ public class GameTest {
     Game game = new Game();
 
     /**
-     * Tests if the normal card that the current player wants to play is a valid play
+     * Tests if the normal card that the current player wants to play is a valid play <br>
+     *     and if the numberCard method pushes the card to the deck.
      */
     @Test
-    public void testNumberCard(){
+    public void testNumberCardOnNumberCard(){
         PlayDeck playDeck = new PlayDeck();
+
         Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
         Card redFive = new Card(CardColor.RED, CardType.NORMAL, 5);
 
         playDeck.push(blueFive);
+        assertTrue(game.validPlayCheck(redFive));
         game.numberCard(redFive);
         assertEquals(redFive,playDeck.pop());
     }
 
     /**
-     * Scenario: After a draw four wildcard was played and the chosen color: green <br>
-     * Testing if the normal card played immediately after is a legal play
+     * Scenario: After a draw four wildcard was played and the chosen color = green <br>
+     *     Testing if the normal card played immediately after is a valid play.
      */
     @Test
     public void testNumberCardAfterWildCardDrawFour(){
@@ -41,13 +44,11 @@ public class GameTest {
         assertTrue(game.validPlayCheck(greenTwo));
         game.numberCard(greenTwo);
         assertEquals(greenTwo,playDeck.pop());
-
-
     }
 
     /**
      * Scenario: After a draw two wildcard of color blue was played <br>
-     * Test if the next normal card of the next player is a legal play
+     *     Test if the next normal card of the next player is a legal play.
      */
     @Test
     public void testNumberCardAfterPlusTwoCard(){
@@ -83,27 +84,29 @@ public class GameTest {
         assertFalse(game.validPlayCheck(greenTwo));
         //blue card on wild card of color blue
         assertTrue(game.validPlayCheck(blueFive));
-
+        game.numberCard(blueFive);
+        assertEquals(blueFive,playDeck.pop());
     }
     /**
      * Scenario: After a skip card was played <br>
-     * Test if the next normal card of the next player is a legal play
+     *      Test if the next normal card of the next player is a legal play
      */
     @Test
     public void testNumberCardAfterSkipCard(){
         PlayDeck playDeck = new PlayDeck();
-        Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
+        Card blueTwo = new Card(CardColor.BLUE, CardType.NORMAL,5);
         Card skip = new Card(CardColor.BLUE, CardType.SKIP, 20);
         playDeck.push(skip);
 
         //blue card on blue skip card
-        assertTrue(game.validPlayCheck(blueFive));
-
+        assertTrue(game.validPlayCheck(blueTwo));
+        game.numberCard(blueTwo);
+        assertEquals(blueTwo,playDeck.pop());
     }
 
     /**
      * Scenario: After a reverse card was played <br>
-     * Test if the next normal card of the next player is a legal play
+     *      Test if the next normal card of the next player is a legal play
      */
     @Test
     public void testNumberCardAfterReverse(){
@@ -115,10 +118,12 @@ public class GameTest {
 
         //blue card on green reverse card
         assertTrue(game.validPlayCheck(blueNine));
+        game.numberCard(blueNine);
+        assertEquals(blueNine,playDeck.pop());
     }
     /**
-     * Adds two players and checks if the next player is equal to the
-     * second player
+     * Adds two players to the game, sets current player to the first player of the list and checks if <br>
+     *     the getNextPlayer method returns the second player of the list.
      */
     @Test
     public void testGetNextPlayer(){
