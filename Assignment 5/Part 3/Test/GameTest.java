@@ -329,14 +329,15 @@ public class GameTest {
     }
 
     /**
-     * We test two three scenarios.<br>
+     * We test four scenarios.<br>
      *     1. The current player calls uno but he has more than 1 card left
      *     2. The current player calls uno and has exactly one card left
      *     3. The current player forgets to say uno and the next player calls him out on this, <br>
-     *         so he has to take 2 cards
+     *         so he has to take 2 cards.
+     *     4. The current player places a draw plus four wild card but he still has other cards he could have played.
      */
     @Test
-    public void testCheckForUno(){
+    public void testClaim(){
         Game game = new Game();
         game.addPlayer("Ramon");
         game.addPlayer("Raffi");
@@ -345,26 +346,37 @@ public class GameTest {
         Card blueTwo = new Card(CardColor.BLUE, CardType.NORMAL,2);
         Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
         Card yellowSix = new Card(CardColor.YELLOW, CardType.NORMAL, 6);
+        Card yellowTwo = new Card(CardColor.YELLOW, CardType.NORMAL, 2);
+
+        Card drawFourWild = new Card(BLACK, WILD_D4, 50);
 
         p.addCard(blueTwo);
         p.addCard(blueFive);
+        p.addCard(yellowSix);
 
-        a.addCard(yellowSix);
+        a.addCard(yellowTwo);
 
-        //player p calls uno but still has >= 1 cards
-        p.setUno();
-        assertFalse(game.checkForUno());
+        //player p calls uno but still has more than 2 cards
+        int size = p.handCards.size();
+        game.checkClaims(true,false,false);
+        assertEquals(size + 6, p.handCards.size());
 
-        //player a calls uno and has = 1 cards
-        a.setUno();
-        assertTrue(game.checkForUno());
+        //player a calls uno and has 2 cards
+        game.checkClaims(true,false,false);
+        assertEquals(0,a.handCards.size());
 
-        //player a forgets to say uno while he has 1 card. Player p calls him out so player a has to take two cards.
+        //player a forgets to say uno while he has 2 cards. Player p calls him out so player a has to take two cards.
         game.currentPlayer = a;
         game.getNextPlayer();
-        int size = a.handCards.size();
-        game.checkForUno();
+        size = a.handCards.size();
+        game.checkClaims(false,true,false);
         assertEquals(size + 2, a.handCards.size());
+
+        //player p plays a draw plus four wild card but still has another card he could play
+        game.currentPlayer = p;
+        size = p.handCards.size();
+        game.checkClaims(false,false,true);
+        assertEquals(size + 4, p.handCards.size());
     }
 
     /**
