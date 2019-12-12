@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerTest {
     /**
-     * Scenario: The player roles the dice and moves for that amount.
-     * Tests: This method tests if the move() function from Game() works. First we simulate a run(). Then we move the player
-     * to next corresponding square with the move function and check if the squareList now contains the Name and the
+     * Scenario: The player roles the dice and moves for that amount.<br>
+     * Tests: This method tests if the move() function from Game() works. First we simulate a run(). Then we move the player<br>
+     * to next corresponding square with the move function and check if the squareList now contains the Name and the<br>
      * player knows on what square he is.
      */
     @Test

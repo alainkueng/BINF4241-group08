@@ -8,7 +8,7 @@ public class DiceTest {
 
     @RepeatedTest( 1000 )
     /**
-     * This method tests if the returned number is between 1-6 for a 1000 times to be sure that the generation
+     * This method tests if the returned number is between 1-6 for a 1000 times to be sure that the generation<br>
      * will always be correct.
      */
     void diceTest() {

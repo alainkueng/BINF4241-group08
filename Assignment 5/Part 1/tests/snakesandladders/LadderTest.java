@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LadderTest {
     /**
-     * Scenario: A player moves to a ladder.
-     * Tests: This tests if the ladder moves the player down the ladder to the corresponding square. First we generate a Board
-     * and simulate a run(). Then we search for a ladder and move the player directly to the ladder to see if he appears
+     * Scenario: A player moves to a ladder.<br>
+     * Tests: This tests if the ladder moves the player down the ladder to the corresponding square. First we generate a Board<br>
+     * and simulate a run(). Then we search for a ladder and move the player directly to the ladder to see if he appears<br>
      * in the corresponding square and not the ladder.
      */
     @Test

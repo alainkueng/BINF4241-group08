@@ -13,9 +13,9 @@ import org.junit.jupiter.api.Test;
 
 public class SnakeTest {
         /**
-         * Scenario: A player moves to a snake.
-         * Tests: This method test the enter() method from Snake. First we generate a Board and simulate a run().
-         * Then we search for a snake and move the player directly to the snake to see if he appears in the
+         * Scenario: A player moves to a snake.<br>
+         * Tests: This method test the enter() method from Snake. First we generate a Board and simulate a run().<br>
+         * Then we search for a snake and move the player directly to the snake to see if he appears in the<br>
          * corresponding square and not the snake itself.
          */
         @Test

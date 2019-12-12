@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameTest {
     /**
-     * Scenario: The Board gets created in the game and receive an input for the size(). It should'nt be smaller than
-     * two.
-     * Tests: We test some different inputs for the createBoard to see if it will create a Board or not.
+     * Scenario: The Board gets created in the game and receive an input for the size(). It should'nt be smaller than<br>
+     * two.<br>
+     * Tests: We test some different inputs for the createBoard to see if it will create a Board or not.<br>
      * Resolve: Found a bug. We added a upper bound since you could create huge Board that would crash the game.
      */
     @Test
@@ -24,12 +24,12 @@ public class GameTest {
     }
 
     /**
-     * Scenario: The game generates a new Board with the createBoard() method. After it's executed, there should be at
-     * (boardSize/4) amount of snakes and ladders randomly generated if the board size is bigger than 5.
-     * Tests: The way we generate snakes and ladders is random but a fixed amount. There is a chance that this test
-     * will be marked false since it's possible that one (snake or ladder) will not find a corresponding partner where
-     * he gets the ladder up or gets the snake down, so the ladder or the snake will not be generated(i.e. there will be one less
-     * ladder or snake). But since this chance is very low and even lower the bigger the board gets, we didn't put this
+     * Scenario: The game generates a new Board with the createBoard() method. After it's executed, there should be at<br>
+     * (boardSize/4) amount of snakes and ladders randomly generated if the board size is bigger than 5.<br>
+     * Tests: The way we generate snakes and ladders is random but a fixed amount. There is a chance that this test<br>
+     * will be marked false since it's possible that one (snake or ladder) will not find a corresponding partner where<br>
+     * he gets the ladder up or gets the snake down, so the ladder or the snake will not be generated(i.e. there will be one less<br>
+     * ladder or snake). But since this chance is very low and even lower the bigger the board gets, we didn't put this<br>
      * in account for the test. It also checks if the boardSize is correct.
      */
     @Test
@@ -71,8 +71,8 @@ public class GameTest {
     }
 
     /**
-     * Scenario: It starts and the game wants to know how large the board should be.
-     * Tests: This method checks the users input. The input is correct when it's an integer and not negative.
+     * Scenario: It starts and the game wants to know how large the board should be.<br>
+     * Tests: This method checks the users input. The input is correct when it's an integer and not negative.<br>
      * It doesn't matter how high the number is.
      */
     @Test
@@ -89,9 +89,9 @@ public class GameTest {
     }
 
     /**
-     * Scenario: The player rolls the dice and gets a number that would lead him to reach beyond the last square.
-     * Tests: In this case it would calculate a new number to move. For example we test a boardSize of 4.
-     * If the user rolls 6 the player would reach the end and then logically come
+     * Scenario: The player rolls the dice and gets a number that would lead him to reach beyond the last square.<br>
+     * Tests: In this case it would calculate a new number to move. For example we test a boardSize of 4.<br>
+     * If the user rolls 6 the player would reach the end and then logically come<br>
      * back to the FirstSquare since he moves back 3 steps from the lastSquare. It should calculate 0.
      */
     @Test
@@ -110,8 +110,8 @@ public class GameTest {
     }
 
     /**
-     * Scenario: One player reaches the last square
-     * Tests: This method checks if a player has reached the last square which will lead to the end of the game. This should
+     * Scenario: One player reaches the last square<br>
+     * Tests: This method checks if a player has reached the last square which will lead to the end of the game. This should<br>
      * change the winner to the player name.
      */
     @Test
