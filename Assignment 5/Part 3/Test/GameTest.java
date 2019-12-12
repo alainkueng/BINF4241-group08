@@ -23,7 +23,7 @@ public class GameTest {
     }
 
     /**
-     * Scenario: After a draw four wildcard was played and the chosen color: green
+     * Scenario: After a draw four wildcard was played and the chosen color: green <br>
      * Testing if the normal card played immediately after is a legal play
      */
     @Test
@@ -86,7 +86,7 @@ public class GameTest {
 
     }
     /**
-     * Scenario: After a skip card was played
+     * Scenario: After a skip card was played <br>
      * Test if the next normal card of the next player is a legal play
      */
     @Test
@@ -102,7 +102,7 @@ public class GameTest {
     }
 
     /**
-     * Scenario: After a reverse card was played
+     * Scenario: After a reverse card was played <br>
      * Test if the next normal card of the next player is a legal play
      */
     @Test
@@ -130,7 +130,7 @@ public class GameTest {
 
 
     /**
-     * Scenario: After any card
+     * Scenario: After any card <br>
      * Test if a wild card is accepted as the next card in the game
      */
     @Test
@@ -177,7 +177,7 @@ public class GameTest {
     }
 
     /**
-     * Scenario: After any card
+     * Scenario: After any card <br>
      * Test if the draw four card is accepted
      */
     @Test
@@ -197,8 +197,8 @@ public class GameTest {
     }
 
     /**
-     * Scenario: After any card
-     * Test id the draw two card is accepted
+     * Scenario: After any card <br>
+     * Test if the draw two card is accepted
      */
     @Test
     public void testDrawTwo(){
@@ -208,7 +208,7 @@ public class GameTest {
     }
 
     /**
-     * Scenario: After any card
+     * Scenario: After any card <br>
      * Test if the skip card is accepted
      */
     @Test
@@ -218,7 +218,7 @@ public class GameTest {
     }
 
     /**
-     * Scenario: After any card
+     * Scenario: After any card <br>
      * Test if the reverse card is accepted
      */
     @Test
