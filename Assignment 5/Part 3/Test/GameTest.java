@@ -199,6 +199,7 @@ public class GameTest {
     public void testWildDrawFour(){
         game.playDeck = new PlayDeck();
         Card wildPlusFour = new Card(CardColor.BLACK, CardType.WILD_D4, 50);
+        Card wildPlusFourTwo = new Card(CardColor.BLACK, CardType.WILD_D4, 50);
         Card blueFive = new Card(CardColor.BLUE, CardType.NORMAL,5);
         Card wild = new Card(CardColor.BLACK, CardType.WILD,50);
         Card skip = new Card(CardColor.BLUE, CardType.SKIP, 20);
@@ -206,7 +207,40 @@ public class GameTest {
 
         //plus four wild card after normal
 
+        game.playDeck.push(blueFive);
+        game.wildDrawFour(wildPlusFour);
+        assertTrue(game.validPlayCheck(wildPlusFour));
+        assertEquals(wildPlusFour, game.playDeck.pop());
 
+        //plus four wild card after wild
+        game.playDeck.push(wild);
+        game.wildDrawFour(wildPlusFour);
+        assertTrue(game.validPlayCheck(wildPlusFour));
+        assertEquals(wildPlusFour, game.playDeck.pop());
+
+        //plus four wild card after skip
+        game.playDeck.push(skip);
+        game.wildDrawFour(wildPlusFour);
+        assertTrue(game.validPlayCheck(wildPlusFour));
+        assertEquals(wildPlusFour, game.playDeck.pop());
+
+        //plus four wild card after reverse
+        game.playDeck.push(reverse);
+        game.wildDrawFour(wildPlusFour);
+        assertTrue(game.validPlayCheck(wildPlusFour));
+        assertEquals(wildPlusFour, game.playDeck.pop());
+
+        //plus four wild card after reverse
+        game.playDeck.push(reverse);
+        game.wildDrawFour(wildPlusFour);
+        assertTrue(game.validPlayCheck(wildPlusFour));
+        assertEquals(wildPlusFour, game.playDeck.pop());
+
+        //plus four wild card after plus four wild card
+        game.playDeck.push(wildPlusFourTwo);
+        game.wildDrawFour(wildPlusFour);
+        assertTrue(game.validPlayCheck(wildPlusFourTwo));
+        assertEquals(wildPlusFourTwo, game.playDeck.pop());
     }
 
     /**
