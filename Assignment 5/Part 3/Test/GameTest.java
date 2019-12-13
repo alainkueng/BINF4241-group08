@@ -9,7 +9,6 @@ import static Source.CardType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Stack.*;
 
 public class GameTest {
     Game game = new Game();
@@ -129,7 +128,7 @@ public class GameTest {
         assertEquals(blueNine,game.playDeck.pop());
     }
     /**
-     * Adds two players to the game, sets current player to the first player of the list and checks if <br>
+     * Adds two players to the game, sets current player to the first player of the list and checks if
      *     the getNextPlayer method returns the second player of the list.
      */
     @Test
@@ -312,8 +311,7 @@ public class GameTest {
     }
 
     /**
-     * Scenario: The draw deck is empty, so we take the play deck except the last card, reshuffle it and store <br>
-     *     as the draw deck. <br>
+     * Scenario: The draw deck is empty, so we take the play deck except the last card, reshuffle it and store as the draw deck. <br>
      *     Test to see if the size of the new draw deck equals the size of the old played deck - 1.
      */
     @Test
@@ -330,10 +328,10 @@ public class GameTest {
 
     /**
      * We test four scenarios.<br>
-     *     1. The current player calls uno but he has more than 1 card left
-     *     2. The current player calls uno and has exactly one card left
-     *     3. The current player forgets to say uno and the next player calls him out on this, <br>
-     *         so he has to take 2 cards.
+     *     1. The current player calls uno but he has more than 1 card left <br>
+     *     2. The current player calls uno and has exactly one card left <br>
+     *     3. The current player forgets to say uno and the next player calls him out on this, so he has to take 2 cards. <br>
+     *
      *     4. The current player places a draw plus four wild card but he still has other cards he could have played.
      */
     @Test
