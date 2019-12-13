@@ -12,4 +12,4 @@
 
 [Assignment 4](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%204/README.md)
 
-[Assignment 5](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%205/ANSWERS.md)
+[Assignment 5](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%205/ANSWERS.md)
