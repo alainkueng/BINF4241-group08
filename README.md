@@ -9,3 +9,7 @@
 [Assignment 2](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%202/README.md)
 
 [Assignment 3](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%203/README.md)
+
+[Assignment 4](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%204/README.md)
+
+[Assignment 5](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%205/ANSWERS.md)

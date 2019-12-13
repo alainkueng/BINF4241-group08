@@ -130,3 +130,6 @@ if the turn was legal and all rules were followed.
 #### 2.
 ![Class_Diagramm](https://github.com/alainkueng/BINF4241-group08/blob/Dev/Assignment%205/Class%20Diagram.png)
 #### 3.
+[Javadocs Classes](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%205/Javadocs/Source%20Classes/allpackages-index.html)
+
+[Javadocs Test Classes](https://github.com/alainkueng/BINF4241-group08/blob/master/Assignment%205/Javadocs/Test%20Classes/allpackages-index.html)
