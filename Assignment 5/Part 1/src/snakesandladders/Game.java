@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
-    private Player winner;
+    public Player winner;
     public int current;
     public int board_width;
     public int board_height;
@@ -91,8 +91,6 @@ public class Game {
             int to_move = checkNumber(random_number, current_player);
             printGame();
             current_player.move(to_move);
-
-
             checkLast(current_player);
             nextPlayer();
         }

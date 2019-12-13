@@ -1,7 +1,5 @@
 package snakesandladders;
-import org.junit.*;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -9,9 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DiceTest {
 
     @RepeatedTest( 1000 )
-    /**@param randomInt Gets a random number from the dice.dice() method
-     * @return randomInt from dice.dice() that is generated there
-     * This method tests if the returned number is between 1-6 for a 1000 times to be sure that the generation
+    /**
+     * This method tests if the returned number is between 1-6 for a 1000 times to be sure that the generation<br>
      * will always be correct.
      */
     void diceTest() {
