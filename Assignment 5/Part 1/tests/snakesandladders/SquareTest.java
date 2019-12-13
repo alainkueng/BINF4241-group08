@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SquareTest {
     /**
-     * This test checks if the move from the player lands on the right square. We chose the lastSquare since
-     * it's for sure not a ladder or a snake. It only has an extra variable which differs it from the normal square.
-     * We first simulate run() and then we check in the assert if it worked. Snakes and Ladders will be tested in
+     * This test checks if the move from the player lands on the right square. We chose the lastSquare since<br>
+     * it's for sure not a ladder or a snake. It only has an extra variable which differs it from the normal square.<br>
+     * We first simulate run() and then we check in the assert if it worked. Snakes and Ladders will be tested in<br>
      * the LadderTest file and the SnakeTest file.
      */
     @Test
@@ -28,7 +28,7 @@ public class SquareTest {
     }
 
     /**
-     * Checks if the square get left correctly if the method get called. The Player should leave the squareList.
+     * Checks if the square get left correctly if the method get called. The Player should leave the squareList.<br>
      */
     @Test
     public void leaveTest(){
@@ -46,7 +46,7 @@ public class SquareTest {
     }
 
     /**
-     * Since one method calls the other in the return, we tests the two methods here in one test method. The method gets
+     * Since one method calls the other in the return, we tests the two methods here in one test method. The method gets<br>
      * the number after its checked. It will find and set the next square.
      */
     @Test
@@ -60,8 +60,8 @@ public class SquareTest {
     }
 
     /**
-     * Scenario: A player moves to a square.
-     * Tests: This test return if the square we want to move our player to is occupied or not. It returns true if there is
+     * Scenario: A player moves to a square.<br>
+     * Tests: This test return if the square we want to move our player to is occupied or not. It returns true if there is<br>
      * a player on the square and will return false if the square is free.
      */
     @Test
